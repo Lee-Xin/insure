@@ -1,0 +1,25 @@
+页面  ClaimsKnowledge
+
+模拟数据文件  src/mock/lipeidata.js
+
+
+
+使用接口
+
+GetLpclass, //获取课件顶级分类   模拟数据/src/mock/lipei.js
+
+getlpsdata,// 获取所有的理赔知识
+    请求参数
+        {PageIndex:,PageSize:,zhuangtaikey:'发布状态',date:'选择时间',author:'作者',title:'标题'}
+    返回数据
+        模拟数据文件  /src/mock/lipeidata.js
+addlpdata,  添加理赔知识
+     参数
+        {wxsubqrcode:‘封面图片’,classtype:'分类',titles:‘标题’,author:‘作者’,status:‘发布状态’,keydata:‘关键词数组’}
+dellpdata,
+    参数
+    {id:1}
+updlpdata
+    参数  key 关键词，keylist 关键词列表数据  classtype:选择的分类
+    {id:1,title:'121212','author':'作者','key':['1','2','3'],'classtype':[10001,10003],'status':'未发布','pic':'','content':''},
+

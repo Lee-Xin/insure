@@ -1,0 +1,42 @@
+页面   component/OrganizationListSearch
+
+模拟数据文件  src/mock/jigougunalidata.js
+
+
+接口
+setjigouclass  添加机构分类
+    {name:that.names}
+
+
+getjigoulist 机构管理-机构列表
+        {PageSize:that.PageSize,PageIndex:that.PageIndex,form:{
+                   name: '机构简称',
+                  date1: '代码',
+                  region: '机构类型',
+                  date2: '营业状态',
+                  delivery: '持证状态',
+                  type: '是否考核',
+                  }}
+
+getjigouclass  获取机构分类
+
+addjigoulist  添加机构
+
+  code : 机构代码
+  name : 名称
+  abbreviation : 简称
+  set_up_time : 设立时间
+  mobile : 联系电话
+  principal : 负责人
+  role : 角色
+  organization_type : 机构类型
+  affiliation : 所属机构
+  licensed_status : 持证状态
+  assessment : 是否考核
+  address : 注册地
+  isarea : 所属地区
+  status : 状态
+  appshow : app显示
+  postcode : 邮政编码
+  naddress : 地址
+

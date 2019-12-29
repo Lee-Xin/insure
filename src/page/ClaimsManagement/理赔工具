@@ -1,0 +1,15 @@
+
+页面 claimstool
+
+
+模拟数据文件  /src/mock/lipeigongsi.js
+
+
+接口
+
+lipeigongsi,获取理赔公司
+    参数无
+bindgongsi,绑定公司
+     {gs:'绑定的公司数组'}
+getlipeigongsidata  获取全部数据
+    {PageIndex:that.PageIndex,PageSize:that.PageSize}

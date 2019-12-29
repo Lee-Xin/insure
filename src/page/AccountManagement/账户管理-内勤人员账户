@@ -1,0 +1,12 @@
+页面  InsideStaffAccount
+
+模拟数据文件
+    src/mock/staffaccount.js
+
+使用接口
+    ReadPolicyGroup,读取策略组
+    GetAllStaff, 获取账号分页数据  {PageIndex:,PageSize:,key:'分支机构'}
+    AddStaff,添加账号 {account:'账号',role:角色组,created_at:创建时间}
+    UpdStaff,修改      'name': '机构简称1','account':'机构账号1','role':{id:1,name:'策略组1',index:1},'pwd':'1',
+    DelStaff 删除  {id:1}
+

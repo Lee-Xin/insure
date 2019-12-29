@@ -1,0 +1,38 @@
+页面  HeadlineNews
+模拟数据文件 src/mock/toutiao.js
+
+
+
+接口
+    toutiaolist 头条列表
+        {
+                            PageIndex: that.PageIndex,
+                            PageSize: that.PageSize,
+                            zhuangtaikey:发布状态,
+                            date: 日期,
+                            author: 作者,
+                            title: 标题
+                        }
+    addtoutiao 添加头条
+        {
+                            wxsubqrcode:封面,
+                            title:标题,
+                            author: 作者,
+                            status:'状态',
+                            comdetail: '详细内容'
+                        }
+     updtoutiao 修改头条
+            {
+                id:1,
+                                        wxsubqrcode:封面,
+                                        title:标题,
+                                        author: 作者,
+                                        status:'状态',
+                                        comdetail: '详细内容'
+                                    }
+      deltoutiao 删除头条
+        {id:1}
+      fabutoutiao  发布头条
+       {id:1}
+      quxiaotoutiao  取消头条
+       {id:1}

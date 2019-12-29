@@ -1,0 +1,25 @@
+页面  PermissionList
+
+模拟数据文件
+    src/mock/Strategygroup.js
+
+使用接口
+    ReadPolicyGroup,  读取策略组
+           参数 {PageIndex:that.PageIndex,PageSize:that.PageSize}
+    AddPolicyGroup,     添加策略组
+            'name':this.name, 策略组名称
+            'created_at':new Date(), 创建时间
+            'Permission':opt  权限信息
+    OnePolicyGroup,    根据ID获取信息
+           参数 {id:1}
+    DelPolicyGroup,     删除
+           参数 {id:1}
+    GetAllRuel,   获取全部权限  角色信息数据详情看 /src/mock/PermissionUrl.js
+
+    UpdsPolicyGroup  修改
+           参数 {
+                'id':this.updid,  //id
+                'name':this.updataname,  //策略组名称
+                'created_at':new Date(),  //时间
+                'Permission':opt   //权限信息
+            };

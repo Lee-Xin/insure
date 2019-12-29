@@ -1,0 +1,54 @@
+页面  claimslisy
+
+模拟数据文件
+
+
+接口
+
+lipeilist,理赔数据列表
+    参数
+    {PageIndex:,PageSize:,uname:出险人,searchdate:出险日期,udanhao:保险单号,yewuyuan:业务员,statuss:结案状态}
+addlipeidata  添加理赔
+      mechanism:'机构名称\t',
+                salesman:'业务员姓名',
+            insurance_company:'保险公司',
+            policy_number:'\t保单号',
+            insurance_name:'险种名称',
+            payment_period:'缴费年限',
+            insurance_amount:'保额',
+            risk_taker:'出险人姓名',
+            idcard:'身份证号',
+            risk_date:'出险日期',
+            risk_cause:'出险原因',
+            send_time:'寄出时间',
+            send_order_number:'寄出单号\t',
+            closing_case:'结案情况\t',
+            closing_time:'结案时间',
+            claim_amount:'理赔金额',
+            remark:'备注',
+        movie_info:[],图片列表
+updlipeidata,
+       id:1,
+       mechanism:'机构名称\t',
+       salesman:'业务员姓名',
+       insurance_company:'保险公司',
+       policy_number:'\t保单号',
+       insurance_name:'险种名称',
+       payment_period:'缴费年限',
+       insurance_amount:'保额',
+       risk_taker:'出险人姓名',
+       idcard:'身份证号',
+       risk_date:'出险日期',
+       risk_cause:'出险原因',
+       send_time:'寄出时间',
+       send_order_number:'寄出单号\t',
+       closing_case:'结案情况\t',
+       closing_time:'结案时间',
+       claim_amount:'理赔金额',
+       remark:'备注',
+        movie_info:[],图片列表
+dellipeidata, 删除理赔
+    {id:1}
+
+baoxiangongsi  获取保险公司列表
+    参数无

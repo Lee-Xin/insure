@@ -1,0 +1,43 @@
+模拟数据文件：mock\SupplierManagement\SupplierList.js
+
+组件一：    supplier-list-search     供应商列表搜索/供应商列表分页显示
+
+           使用的接口：   apiSupperlist()【搜索的选项，无参数】
+                         apiSupplierListSearch()【搜索内容，有参数】
+                                参数：{
+                                        supplier_niceName: '',  //供应商简称
+                                        type_cooperation: '',   //合作类型
+                                        state_cooperation: ''   //合作状态
+                                     }
+                         apiSupplierListSearchPageInation()【分页，有参数】
+                                参数：{
+                                        pageIndex: this.pageIndex,  //第几页，默认为1
+                                        pageSize: this.pageSize     //一页显示的数量，默认为50
+                                      }
+组件二：    new-supplier  新增供货商
+
+            使用的接口：   apiSupplierAdd()【保存/提交，有参数】
+                                参数：{
+                                        supplier_name: '',                  //供应商全称
+                                        address: '',                        //总部地址
+                                        supplier_niceName: '',              //供应商简称
+                                        type_cooperation: '',               //合作类型
+                                        state_cooperation: '',              //合作状态
+                                        supplier_id: '',                    //供应商代码
+                                        registered_capital: '',             //注册资本
+                                        createData: '',                     //设立时间
+                                        website_url: '',                    //官网网址
+                                        place_incorporation: '',            //公司注册地
+                                        service_hotline: '',                //服务热线
+                                        channel_service_telephone: '',      //渠道服务电话
+                                        startTime: '',                      //开始时间
+                                        endTime: '',                        //结束时间
+                                        imageUrl1: '',                      //logo上传
+                                        imageUrl2: '',                      //APP二维码
+                                        imageUrl3: '',                      //公众号二维码
+                                        app_name: '',                       //APP名称
+                                        weixin: '',                         //微信公众号
+                                        detail1: '',                        //公司简介
+                                        detail2: '',                        //公司荣誉
+                                        detail3: ''                         //发展历程
+                                }

@@ -1,0 +1,24 @@
+
+页面 classificationclaims
+
+模拟数据文件  /src/mock/lipei.js
+
+
+接口
+
+GetLpclass, 获取顶级分类数据
+    参数 无
+
+GetLpdata, 获取所有的分类数据
+    参数
+        {PageIndex:that.PageIndex,PageSize:that.PageSize}
+
+Addlipei,添加分类
+    参数
+    {name:'分类名',pid:'上级分类ID'}
+Dellipei
+    删除分类
+    {id:1}
+,Updlipei
+    修改分类
+    {pid:'上级分类ID','name':'分类名','id':1}

@@ -1,0 +1,76 @@
+1、页面：MyMessage
+
+模拟数据页面：/src/mock/MyMessage.js
+
+
+接口
+
+MyMessage，获取所有数据，及分页
+  参数
+  get：page=1&pageSize=10
+
+MyMessageSearch，我的消息搜索
+  参数
+  post：{"searchDate":"2019-11-01","page":1,"pageSize":10}
+
+addMyMessage，我的消息添加
+  参数
+  post：{content: "<p>12</p>", title: "12", date: ""}
+
+sendMyMessage，推送消息
+  参数
+  post：{id: 4, date: "2019-11-03", title: "王小虎", content: "上海市普陀区金沙江路 1516 弄"}
+
+addMyMessageDelete，我的消息删除
+  参数
+  post：{id: 2, date: "2019-11-02", title: "王小虎", content: "上海市普陀区金沙江路 1517 弄"}
+
+
+//////-
+
+2、页面：ExhibitionTools
+
+模拟数据页面：/src/mock/ExhibitionTools.js
+
+
+接口
+
+ExhibitionTools，获取所有数据，及分页
+  参数
+  get：page=1&pageSize=10
+
+ExhibitionToolsSearch，展业工具-搜索
+  参数
+  post：{"type":"双皮奶","supplier":"双皮奶"}
+
+addMyMessage，展业工具-删除
+  参数
+  post：{"id":2,"supplier":"双皮奶","type":"双皮奶","remarks":"上海市普陀区金沙江路 1518 弄"}
+
+
+
+//////-
+
+3、页面：APPHomepageModule
+
+模拟数据页面：/src/mock/APPHomepageModule.js
+
+
+热销产品 接口
+
+APPHomepageModule，获取所有数据，及分页
+  参数（type：寿险、医疗险、重疾险、意外险）
+  get：type=one&page=1&pageSize=10
+
+APPHomepageModuleDelete，热销产品-删除
+  参数
+  post：{"type":"one","id":4}
+
+
+
+3.1、轮播图管理 接口
+
+APPHomepageModuleBanner，获取所有数据，及分页
+  参数
+  get：page=1&pageSize=10
+

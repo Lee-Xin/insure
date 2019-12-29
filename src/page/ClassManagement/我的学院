@@ -1,0 +1,40 @@
+文件  mycollege
+
+模拟数据文件  src/mock/ketang.js
+
+
+
+接口
+
+GetLpclass  获取课件分类
+
+zhishilist  课堂管理列表
+    {
+                        PageIndex: that.PageIndex,
+                        PageSize: that.PageSize,
+                        zhuangtaikey: '发布状态',
+                        date: ‘日期’,
+                        author:作者,
+                        title: 标题
+                    }
+
+addzhishi  添加课堂管理
+    {
+        wxsubqrcode: 封面,
+        classtype: 分类数组,
+        title: 标题,
+        author: 作者,
+        status: 发布状态,
+        comdetail: 内容
+    }
+
+delzhishi  删除
+{id:1}
+
+updzhishi  修改
+ {id:1,title:'121212','author':'作者','classtype':[10001,10003],'status':'未发布','pic':'','content':''}
+
+qxfabuzhishi  发布
+{id:1}
+fabuzhishi  取消发布
+{id:1}

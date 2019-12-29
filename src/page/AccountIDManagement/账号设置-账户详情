@@ -1,0 +1,43 @@
+页面 accountIDManagerment
+
+模拟数据文件 src/mock/accountdetails.js
+
+参数
+
+接口
+    获取账户详情  getaccountdetailss   参数无
+
+    设置账户详情  accountdetailss
+    id:1,
+        comname:'',//公司名称
+        comaddress:'',//公司地址
+        comjc:'',//公司简称
+        comtype:'',//公司类型
+        comwebaddress:'',//官网地址
+        comcode:'',//统一社会信用代码
+        comprice:'',//注册资本
+        comdate:'',//成交日期
+        comrange:'',//经营范围
+        commobile:'',//服务热线
+        Complaint:'',//投诉电话
+        compostcode:'',//邮政编码
+        comemail:'',//电子邮箱
+        MechanismFullName:'',//披露机构全称
+        MechanismAbbreviationName:'',//披露机构简称
+        MechanismWebAddress:'',//机构网站地址
+        OperatingWebName:'',//保险业务网站名称
+        OperatingWebAddress:'',//保险业务网站地址
+        OperatingAppName:'',//网线业务APP名称
+        OperatingWechatName:'',//经营互联网保险业务微信公众号名称
+        ServiceMobile:'',//客户服务及消费者投诉电话
+        comdetail:'',//公司简介富文本
+        comhonor:'',//公司荣誉
+        comcourse:'',//发展历程
+        //图片===================================
+        Gsurl:'',//工商营业执照
+        xkzurl:'',//经营保险业务许可证
+        zzurl:'',//互联网资质信息
+        comlogo:'',//公司logo
+        appqrcode:'',//App二维码
+        wxserverqrcode:'',//微信服务号二维码
+        wxsubqrcode:'',//微信订阅号二维码

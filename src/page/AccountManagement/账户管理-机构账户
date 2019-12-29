@@ -1,0 +1,22 @@
+页面  InstitutionalAccount
+
+模拟数据文件  src/mock/MechanismAccount.js
+
+
+使用接口
+    ReadPolicyGroup,读取策略组
+
+    GetAllmechanism,  获取所有的机构
+            {}
+
+    GetAllmechanismAccount 获取所有的机构账号
+             {PageSize:that.PageSize,PageIndex:that.PageIndex,key:分支机构’}
+
+    ,AddMechanismAccount,  添加机构账号
+            {name:'机构',account:账户,role:策略组,created_at:时间}
+    DelMechanismAccount,  删除机构账号
+            {id：1}
+    UpdMechanismAccount  修改机构账号
+             { 'id': '10001', 'name': '机构','account':'机构账号1','role':'策略组','pwd':'1','pwd2':'1','created_at':'2019-10-5'},
+
+

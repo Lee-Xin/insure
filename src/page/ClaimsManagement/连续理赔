@@ -1,0 +1,20 @@
+页面 continuousclaims
+
+模拟数据文件  src/mock/lianxulipei.js
+
+
+接口
+
+lxlipei,获取所有的连续理赔
+    参数
+    {PageIndex:that.PageIndex,PageSize:that.PageSize}
+
+addlianxulipei, 添加连续理赔
+    {name:机构名,user:联系人,mobile:电话,address:地址,lnglat:经纬度}
+
+updlianxulipei, 修改连续理赔
+    { 'id': '10001', 'name': '机构名称1','user':'联系人1','mobile':'电话1','address':'地址1','lnglat':"34.772885,113.637256"},
+
+dellianxulipei  删除连续理赔
+    {id:1}
+

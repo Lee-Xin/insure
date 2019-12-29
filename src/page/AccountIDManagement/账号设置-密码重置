@@ -1,0 +1,8 @@
+页面  passwordreset
+
+参数
+        newpwd1:'新密码',
+        newpwd2:'新密码二次',
+        oldpwd:'旧密码'
+
+接口  /passwordReset

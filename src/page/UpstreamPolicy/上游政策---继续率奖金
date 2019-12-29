@@ -1,0 +1,32 @@
+模版数据：mock\UpstreamPolicy\ContinuationRateBouns.js
+
+子组件一：continuation-rate-bonus-search 【继续率奖金搜索，分页】
+
+            使用的接口：apiContinuationRateBounsParam【继续率奖金的选项，无参数】
+                       apiContinuationRateBounsSearch【继续率奖金搜索，有参数】
+                            参数：{
+                                    suplierName: '',        //供应商简称
+                                    productName: '',        //产品名称
+                                    product_id: '',         //产品代码
+                                    procurement_type: '',   //采购类型
+                                    channel_name: '',       //渠道名称
+                                    protocol_type: ''       //协议类型
+                            }
+                       apiContinuationRateBounsPageInation【继续率奖金分页，有参数】
+                            参数：{
+                                    pageIndex: 1,   //第几页，默认为1
+                                    pageSize: 50    //一页显示的数量，默认为50
+                            }
+子组件二：continuation-rate【添加继续率奖金】
+            使用的接口：apiContinuationRateBounsParam【同上】
+                       apiContinuationRateBounsAdd【新增继续率奖金，有参数】
+                       参数：{
+                                {
+                                     suplierName: '',
+                                     productId: '',
+                                     procurement_type: '',
+                                     protocol_type: '',
+                                     renewal_rates: '',
+                                     productName: ''
+                                }
+                       }

@@ -1,0 +1,40 @@
+const RenewalOfServiceSearch = [
+    {'id':1,'suplierName':'百年人寿','productName':'百年康盛保终身重大疾病保险',
+        'productId':'AWR-i9','channel_policy':'基本法','channel_name':'aj',
+        'protocol_type':'政策协议','renewal_service':[
+            {'policy_year':'2010年-2021年','5_year':'1%','10_year':'1.5%','15_yeary':'3%','20_yeary':'3%'},
+            {'policy_year':'2010年-2021年','5_year':'1%','10_year':'1.5%','15_yeary':'3%','20_yeary':'3%'},
+            {'policy_year':'2010年-2021年','5_year':'1%','10_year':'1.5%','15_yeary':'3%','20_yeary':'3%'},
+            {'policy_year':'2010年-2021年','5_year':'1%','10_year':'1.5%','15_yeary':'3%','20_yeary':'3%'},
+        ],
+        'startTime':'2019-08-12','endTime':'2019-12-31','procurement_type':'总对总'},
+    {'id':2,'suplierName':'百年人寿','productName':'百年康盛保终身重大疾病保险',
+        'productId':'AWR-i9','channel_policy':'基本法','channel_name':'aj',
+        'protocol_type':'政策协议','renewal_service':[
+            {'policy_year':'2010年-2021年','5_year':'1%','10_year':'1.5%','15_yeary':'3%','20_yeary':'3%'},
+            {'policy_year':'2010年-2021年','5_year':'1%','10_year':'1.5%','15_yeary':'3%','20_yeary':'3%'},
+            {'policy_year':'2010年-2021年','5_year':'1%','10_year':'1.5%','15_yeary':'3%','20_yeary':'3%'},
+            {'policy_year':'2010年-2021年','5_year':'1%','10_year':'1.5%','15_yeary':'3%','20_yeary':'3%'},
+        ],
+        'startTime':'2019-08-12','endTime':'2019-12-31','procurement_type':'总对总'},
+    {'id':3,'suplierName':'百年人寿','productName':'百年康盛保终身重大疾病保险',
+        'productId':'AWR-i9','channel_policy':'基本法','channel_name':'aj',
+        'protocol_type':'政策协议','renewal_service':[
+            {'policy_year':'2010年-2021年','5_year':'1%','10_year':'1.5%','15_yeary':'3%','20_yeary':'3%'},
+            {'policy_year':'2010年-2021年','5_year':'1%','10_year':'1.5%','15_yeary':'3%','20_yeary':'3%'},
+            {'policy_year':'2010年-2021年','5_year':'1%','10_year':'1.5%','15_yeary':'3%','20_yeary':'3%'},
+            {'policy_year':'2010年-2021年','5_year':'1%','10_year':'1.5%','15_yeary':'3%','20_yeary':'3%'},
+        ],
+        'startTime':'2019-08-12','endTime':'2019-12-31'},
+    {'id':4,'suplierName':'百年人寿','productName':'百年康盛保终身重大疾病保险',
+        'productId':'AWR-i9','channel_policy':'基本法','channel_name':'aj',
+        'protocol_type':'政策协议','renewal_service':[
+            {'policy_year':'2010年-2021年','5_year':'1%','10_year':'1.5%','15_yeary':'3%','20_yeary':'3%'},
+            {'policy_year':'2010年-2021年','5_year':'1%','10_year':'1.5%','15_yeary':'3%','20_yeary':'3%'},
+            {'policy_year':'2010年-2021年','5_year':'1%','10_year':'1.5%','15_yeary':'3%','20_yeary':'3%'},
+            {'policy_year':'2010年-2021年','5_year':'1%','10_year':'1.5%','15_yeary':'3%','20_yeary':'3%'},
+        ],
+        'startTime':'2019-08-12','endTime':'2019-12-31','procurement_type':'总对总'},
+]
+
+export default RenewalOfServiceSearch;
