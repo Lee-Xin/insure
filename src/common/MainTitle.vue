@@ -22,20 +22,22 @@
 </script>
 
 <style scoped>
-.main_title{
+.main_title {
   width: 100%;
   height: 65px;
   line-height: 65px;
+  padding-left: 15px;
   color: #4074e1;
   text-align: left;
   display: flex;
-
   justify-content: flex-start;
+  background-color: #fff;
 }
 .main_title h2{
   display: block;
   height: 65px;
   font-size: 22px;
+  font-weight: normal;
 }
 .main_title span{
   font-size: 14px;

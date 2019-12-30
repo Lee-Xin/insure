@@ -1,22 +1,21 @@
 <template>
-  <div>
-    <div class="box">
-      <header>
-        <div id="logo">
-          <router-link to="/" tag="a">
-            <img :src='imgSrc'/>
-          </router-link>
+    <div>
+        <div class="box">
+            <header>
+                <router-link to="/" tag="div" class="logo-wrapper">
+                    <img src="../assets/logo.png" alt="" class="cloud-logo">
+                    <h1 class="logo-text">云后台</h1>
+                </router-link>
+                <div class="login">
+                    <div class="login_icon" @click="showExit">
+                        <img src="../assets/avatar.jpeg"/>
+                    </div>
+                    <div>{{name}}</div>
+                    <div class="login_exit" v-show="isShow" @click="exitLogin">退出登录</div>
+                </div>
+            </header>
         </div>
-        <div id="login">
-          <div class="login_icon"  @click="showExit">
-            <img src="../assets/avatar.jpeg"/>
-          </div>
-          <div>{{name}}</div>
-          <div class="login_exit" v-show="isShow" @click="exitLogin">退出登录</div>
-        </div>
-      </header>
     </div>
-  </div>
 </template>
 
 <script>
@@ -55,71 +54,89 @@
     }
 </script>
 
-<style scoped>
-  header {
-    display: flex;
-    justify-content: space-between;
-  }
+<style scoped lang="scss">
+    .box {
+        width: 100%;
+        height: 56px;
+        background-color: #4074e1;
+    }
+    header {
+        height: 56px;
+        line-height: 56px;
+        position: relative;
+        text-align: left;
+        .logo-wrapper{
+            display: inline-block;
+            width: 194px;
+            height: 56px;
+            line-height: 56px;
+            background-color: #3664c8;
+        }
+        .cloud-logo{
+            display: inline-block;
+            margin: 0 14px;
+            vertical-align: middle;
+        }
+        .logo-text{
+            display: inline-block;
+            line-height: 28px;
+            margin: 0;
+            margin-bottom: 3px;
+            margin-left: 4px;
+            font-size: 28px;
+            color: #fff;
+            vertical-align: middle;
+            width: 112px;
+            overflow: hidden;
+            text-overflow: clip;
+            white-space: nowrap;
+        }
+        .login {
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            margin-top: -28px;
+            width: 80px;
+            height: 56px;
+            line-height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 14px;
+            padding-left: 14px;
+            padding-right: 14px;
+            cursor: pointer;
+            color: #fff;
+        }
+    }
 
-  .box {
-    width: 100%;
-    height: 48px;
-    background-color: #4074e1;
-  }
+    /*#login:hover .login_exit {*/
+    /*  display: block;*/
+    /*}*/
 
-  #logo {
-    height: inherit;
-    font-size: 0;
-  }
+    .login_icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        overflow: hidden;
+    }
 
-  #logo img {
-    max-width: 100%;
-    /*width: 200px;*/
-    /*height: 60px;*/
-  }
+    .login_icon img {
+        max-width: 100%;
+    }
 
-  #login {
-    width: 80px;
-    height: 48px;
-    line-height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 14px;
-    padding-left: 14px;
-    padding-right: 14px;
-    cursor: pointer;
-    color: #fff;
-    position: relative;
-  }
-
-  /*#login:hover .login_exit {*/
-  /*  display: block;*/
-  /*}*/
-
-  .login_icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    overflow: hidden;
-  }
-
-  .login_icon img {
-    max-width: 100%;
-  }
-
-  .login_exit {
-    display: block;
-    position: absolute;
-    top: 48px;
-    left: 0;
-    z-index:200;
-    width: 100%;
-    height: 48px;
-    line-height: 48px;
-    font-size: 16px;
-    color: #8e8e8e;
-    cursor: pointer;
-  }
+    .login_exit {
+        display: block;
+        position: absolute;
+        top: 56px;
+        left: 0;
+        z-index: 200;
+        width: 100%;
+        height: 56px;
+        line-height: 56px;
+        font-size: 16px;
+        color: #8e8e8e;
+        cursor: pointer;
+    }
 
 </style>

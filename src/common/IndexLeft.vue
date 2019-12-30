@@ -1,33 +1,43 @@
 <template>
-  <div id="left">
-    <el-row class="left_box">
-      <el-col :span="12" class="left_box">
-        <h5><router-link to="/">首页</router-link></h5>
-        <el-menu
-          default-active="2"
-          class="el-menu-vertical-demo">
-          <el-submenu :index="index" v-for="(item, index) in nums" :key="index" class="left_box_ul">
-            <template slot="title">
-              <span>{{index}}</span>
-            </template>
-            <el-menu-item-group>
-              <el-menu-item
-                class="left_box_li"
-                v-for="(it, ind) in item"
-                :key="ind"
-              >
-                <router-link class="left_box_link"
-                           v-for="(cont, i) in it"
-                           :key="i" :to="'/'+cont">
-                  {{i}}
+    <div id="left">
+        <el-row class="left_box">
+            <el-col :span="12" class="left_box">
+                <router-link to="/" tag="div" class="home-btn" :class="{active: $route.fullPath === '/Index'}">
+                    <i class="icon iconfont icon-xiangce"></i>
+                    <span>首页</span>
                 </router-link>
-              </el-menu-item>
-            </el-menu-item-group>
-          </el-submenu>
-        </el-menu>
-      </el-col>
-    </el-row>
-  </div>
+                <el-menu
+                    default-active="2"
+                    class="el-menu-vertical-demo"
+                    :unique-opened="true"
+                >
+                    <el-submenu :index="index" v-for="(item, index) in nums" :key="index" class="left_box_ul">
+                        <template slot="title">
+                            <i class="icon iconfont" :class="iconEnums[index]"></i>
+                            <span>{{index}}</span>
+                        </template>
+                        <el-menu-item-group>
+                            <el-menu-item
+                                class="left_box_li"
+                                v-for="(it, ind) in item"
+                                :key="ind"
+                            >
+                                <div class="left_box_link"
+                                     v-for="(cont, i) in it"
+                                     :key="i"
+                                     @click="$router.push({path:  '/' + cont})"
+                                     :class="{active: $route.fullPath === '/' + cont}"
+                                >
+                                    <i class="circle"></i>
+                                    {{i}}
+                                </div>
+                            </el-menu-item>
+                        </el-menu-item-group>
+                    </el-submenu>
+                </el-menu>
+            </el-col>
+        </el-row>
+    </div>
 </template>
 
 <script>
@@ -35,7 +45,23 @@
         name: 'IndexLeft',
         data() {
             return {
-                isCollapse:1,
+                isCollapse: 1,
+                iconEnums: {
+                    '供应商管理': 'icon-shouyetubiaogong1',
+                    '机构管理': 'icon-bentutuandui',
+                    '上游政策': 'icon-bentutuandui',
+                    '下游政策': 'icon-bentutuandui',
+                    '员工管理': 'icon-yuangongguanli',
+                    '保单中心': 'icon-shouyetubiaogong1',
+                    '基本法管理': 'icon-fenxi',
+                    '继续率报表': 'icon-jixiao',
+                    '统计管理': 'icon-jixiao',
+                    '课堂管理': 'icon-ketang',
+                    '理赔管理': 'icon-ketang',
+                    'APP首页管理': 'icon-image',
+                    '账户管理': 'icon-comiisshezhi',
+                    '账号设置': 'icon-comiisshezhi',
+                },
                 nums: {
                     '供应商管理': [{'供应商列表': 'supplier_list'}, {'产品列表': 'product_list'}],
                     '机构管理': [{'机构列表': 'organization_list'}, {'机构分类': 'organization_classif'}],
@@ -45,7 +71,7 @@
                         {'代理人费用': 'agent_fees'}],
                     '员工管理': [{'内勤列表': 'desk_list'}, {'营销员列表': 'marketer_list'}, {'营销员职级': 'marketing_staff_rank'},
                         {'组织架构': 'organisational_structure'}, {'应参保营销员': 'insurance_marketer'}],
-                    '报单中心': [{'报单列表': 'declaration_list'}],
+                    '保单中心': [{'报单列表': 'declaration_list'}],
                     '基本法管理': [{'新增基本法': 'new_basic_law'}, {'基本法管理': "basic_law_administration"},
                         {'续期数据': 'renewal_data'}, {'薪资结算': 'salary_settlement'}, {'晋升考核': 'promotion_assessment'},
                         {'考勤管理': 'attendance_management'}, {'加扣款项': 'deduction'}],
@@ -72,32 +98,89 @@
     }
 </script>
 
-<style scoped>
-  #left {
-    width: 182px;
-    height: auto;
-    min-height: 1000px;
-  }
+<style scoped lang="scss">
+    #left {
+        width: 194px;
+        height: calc(100vh - 56px);
+    }
 
-  .left_box {
-    width: 100%;
-    color: #fff;
-    background-color: #4074e1;
-  }
+    /deep/ .left_box {
+        width: 100%;
+        color: #fff;
 
-  .left_box_ul {
-    font-weight: bold;
-    color: #333333;
-  }
+        .icon {
+            display: inline;
+            line-height: 21px;
+            margin-right: 24px;
+            color: #4074e1;
+            font-size: 15px;
+            font-weight: normal;
+            vertical-align: middle;
+        }
+        .circle{
+            display: inline-block;
+            width: 9px;
+            height: 9px;
+            border-radius: 9px;
+            background-color: #bac6dd;
+            margin: 0 15px 0 16px;
+        }
+        .home-btn{
+            border-right: solid 1px #e6e6e6;
+        }
+        .home-btn, .el-submenu__title, .el-menu-item {
+            font-size: 14px;
+            height: 49px;
+            line-height: 49px;
+            padding: 0 7px 0 21px!important;
+            text-align: left;
+            color: #22222c;
+            font-weight: bold;
+            cursor: pointer;
+            > span {
+                line-height: 1;
+            }
 
-  .left_box_li {
-    color: #999;
-  }
+            &:hover {
+                background-color: #eef3ff
+            }
 
-  .left_box_link {
-    width: 100%;
-    height: inherit;
-    display: block;
-  }
+            &.active {
+                color: #fff;
+                background-color: #4074e1;
 
+                .icon {
+                    color: #fff;
+                }
+            }
+        }
+        .left_box_li{
+            padding-left: 0!important;
+            .left_box_link{
+                padding-left: 20px;
+                &:hover{
+                    color: #2d8cf0;
+                    >i{
+                        background-color: #2d8cf0;
+                    }
+                }
+                &.active{
+                    background-color: #4074e1;
+                    color: #fff;
+                    >i{
+                        background-color: #fff;
+                    }
+                }
+            }
+        }
+        .left_box_ul.is-opened {
+            background-color: #eef3ff;
+            .el-menu{
+                background-color: transparent;
+            }
+        }
+        .el-menu-item-group__title {
+            padding: 0;
+        }
+    }
 </style>

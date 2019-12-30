@@ -1,6 +1,5 @@
 <template>
   <div>
-    <main-title :title="title"></main-title>
     <div class="showData">
       <div class="showData_box">
         <div class="showData_box_th">
@@ -35,14 +34,12 @@
 </template>
 
 <script>
-    import MainTitle from '@/common/MainTitle';
     // import {apiUpstreamFolding} from "../request/api";
 
     export default {
         name: "index",
         data() {
             return {
-                title: '承保业绩统计',
                 showData: {
                     "YesterDay": [1, 2.00],
                     "ThisMonth": [3, 4.00],
@@ -127,10 +124,7 @@
                 let nowTime = new Date();
                 return nowTime.getFullYear() + '-' + (nowTime.getMonth() + 1) + '-' + (nowTime.getDay() - 1);
             }
-        },
-        components: {
-            MainTitle
-        },
+        }
     }
 </script>
 
