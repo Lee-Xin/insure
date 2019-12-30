@@ -29,8 +29,6 @@
   padding-left: 15px;
   color: #4074e1;
   text-align: left;
-  display: flex;
-  justify-content: flex-start;
   background-color: #fff;
 }
 .main_title h2{
