@@ -156,6 +156,8 @@
         }
         .left_box_li{
             padding-left: 0!important;
+            color: #495060;
+            font-weight: normal;
             .left_box_link{
                 padding-left: 20px;
                 &:hover{
