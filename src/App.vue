@@ -3,7 +3,7 @@
         <index-top v-if="showLogin"></index-top>
         <index-left v-if="showLogin"></index-left>
         <div id="main">
-            <main-title title="承保业绩统计"></main-title>
+            <main-title :title="title" :title_f="title_f"></main-title>
             <div class="main">
                 <router-view/>
             </div>
@@ -15,12 +15,13 @@
     import IndexTop from "@/common/IndexTop";
     import IndexLeft from "@/common/IndexLeft";
     import MainTitle from '@/common/MainTitle';
-
     export default {
         name: 'app',
         data() {
             return {
-                showLogin: true
+                showLogin: true,
+                title: '',
+                title_f: ''
             }
         },
         components: {
@@ -34,6 +35,8 @@
             } else {
                 this.showLogin = true;
             }
+            this.title = this.$route.meta.title || '';
+            this.title_f = this.$route.meta.subTitle || '';
         },
         watch: {
             '$route.path': function (newVal, oldVal) {
@@ -44,6 +47,8 @@
                     this.showLogin = true;
                     this.$router.push('/Index');
                 }
+                this.title = this.$route.meta.title || '';
+                this.title_f = this.$route.meta.subTitle || '';
             }
         }
     }
@@ -75,12 +80,13 @@
         left: 194px;
         right: 0;
         top: 56px;
-        height: calc(100vh - 121px);
+        height: calc(100vh - 56px);
         font-size: 0;
         background-color: #edf2f6;
     }
     .main{
         margin: 15px;
+        height: calc(100% - 30px);
     }
     *{
         margin: 0;

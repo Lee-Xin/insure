@@ -348,6 +348,60 @@ template {
   display: none;
 }
 
+.el-input__inner {
+  height: 36px;
+  line-height: 36px;
+  border: 1px solid #bebebe;
+  border-radius: 0 2px 2px 0;
+}
+.el-button{
+  padding: 6px 15px 7px 15px;
+  font-size: 14px;
+  border-radius: 0;
+  height: 36px;
+  vertical-align: middle;
+}
+.el-button--primary{
+  background-color: #2e7ee1;
+  border-color: #2e7ee1;
+}
+.el-button--primary:hover{
+  background-color: #3f8de1;
+  border-color: #3f8de1;
+}
+.el-button--warning{
+  background-color: #ff9628;
+  border-color: #ff9628;
+}
+.el-button--warning:hover{
+  background-color: #ffab53;
+  border-color: #ffab53;
+}
+.v-line{
+  display: inline-block;
+  width: 1px;
+  background-color: #edf2f6;
+  vertical-align: middle;
+}
+.el-table{
+  border: 1px solid #dddee1;
+}
+.el-table thead tr,.el-table thead th{
+  background-color: #f8f8f9;
+  color: #495060;
+  font-weight: bold;
+}
+.el-table th, .el-table td{
+  border-right: 1px solid #e9eaec;
+  padding: 12px 0;
+}
+.el-table--enable-row-hover .el-table__body tr:hover>td{
+  background-color: #d0e0f5;
+}
+.el-table tr:nth-child(even) {
+  background-color: #f8f8f9;
+}
+
 @font-face {font-family: "iconfont";
   src: url('//at.alicdn.com/t/font_371806_b2bsdqoyi9dg3nmi.eot?t=1527666114442'); /* IE9*/
   src: url('//at.alicdn.com/t/font_371806_b2bsdqoyi9dg3nmi.eot?t=1527666114442#iefix') format('embedded-opentype'), /* IE6-IE8 */

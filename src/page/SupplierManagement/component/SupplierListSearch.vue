@@ -1,42 +1,53 @@
 <template>
   <div>
     <el-form :inline="true" :model="formInline" class="demo-form-inline supplierListSearchForm">
-      <el-form-item class="supplierListSearch_label">
-        <el-input v-model="formInline.shortName" placeholder="请输入供应商简称"></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-select v-model="formInline.cooperationType" placeholder="请选择合作类型">
-          <el-option
-            v-for="(item, index) in type_cooperation"
-            :label="item.name"
-            :value="item.name"
-            :key="index"
-          ></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item>
-        <el-select v-model="formInline.cooperationStatus">
-          <el-option
-            v-for="(item, index) in state_cooperation"
-            :label="item.name"
-            :value="item.name"
-            :key="index"
-          ></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="searchData">搜索</el-button>
-        <el-button type="primary" @click="showNewSupplier">新增供应商</el-button>
-      </el-form-item>
+      <el-row :gutter="15" style="width: 100%;">
+        <el-col :span="7">
+          <el-form-item class="supplierListSearch_label">
+            <el-input v-model="formInline.shortName" placeholder="请输入供应商简称"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="7">
+          <el-form-item>
+            <el-select v-model="formInline.cooperationType" placeholder="请选择合作类型">
+              <el-option
+                      v-for="(item, index) in type_cooperation"
+                      :label="item.name"
+                      :value="item.name"
+                      :key="index"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="5">
+          <el-form-item>
+            <el-select v-model="formInline.cooperationStatus">
+              <el-option
+                      v-for="(item, index) in state_cooperation"
+                      :label="item.name"
+                      :value="item.name"
+                      :key="index"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="5">
+          <el-form-item>
+            <el-button type="primary" icon="el-icon-search" @click="searchData">搜索</el-button>
+            <i style="margin: 0 20px; height: 36px;" class="v-line"></i>
+            <el-button type="warning" icon="el-icon-plus" @click="showNewSupplier">新增供应商</el-button>
+          </el-form-item>
+        </el-col>
+      </el-row>
     </el-form>
 
     <div class="table_box">
-      <el-table :data="tableData">
+      <el-table :data="tableData" height="calc(100% - 120px)">
         <el-table-column label="序号" width="180" type="index" header-align="center" align="center"></el-table-column>
         <el-table-column prop="code" label="供应商代码" width="180"></el-table-column>
         <el-table-column prop="shortName" label="供应商简称" width="180">
           <template slot-scope="scope">
-            <el-button @click="clickShortName(scope.row)" type="primary">{{scope.row.shortName}}</el-button>
+            <a style="text-decoration: underline; color: #2D8cF0;" href="javascript: void(0);" @click="clickShortName(scope.row)" type="primary">{{scope.row.shortName}}</a>
           </template>
         </el-table-column>
         <el-table-column label="合约起止时间" width="180">
@@ -434,31 +445,21 @@
   }
   .el-form {
     width: 100%;
-    height: 36px;
     display: flex;
     justify-content: space-around;
-    /*background-color: red;*/
   }
 
   .el-form-item {
-    width: 300px;
-    height: 36px;
-    /*background-color: blue;*/
+    width: 100%;
+    margin: 0!important;
   }
 
   .el-form-item >>> .el-form-item__content {
     width: 100%;
-    height: 36px;
-    /*background-color: blue;*/
   }
 
   .el-form-item >>> .el-form-item__content .el-select {
     width: 100%;
-    height: 36px;
-  }
-
-  .el-form >>> button {
-    height: 36px;
   }
 
   .el-form >>> label {
@@ -467,11 +468,10 @@
 
   .table_box {
     width: 100%;
-    height: 500px;
+    height: calc(100% - 150px);
     overflow: hidden;
     margin-top: 30px;
-    overflow-y: scroll;
-    /*background-color: red;*/
+    overflow-y: auto;
   }
   .table_box button{
     font-size: 14px;

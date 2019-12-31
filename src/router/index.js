@@ -85,6 +85,7 @@ import PermissionList from "@/page/AccountManagement/PermissionList";
 import AccountDetails from "@/page/AccountIDManagement/AccountDetails";
 import HeadSet from "@/page/AccountIDManagement/HeadSet";
 import PasswordReset from "@/page/AccountIDManagement/PasswordReset";
+import NewSupplier from "../page/SupplierManagement/page/NewSupplier";
 
 Vue.use(Router)
 
@@ -92,23 +93,42 @@ const router = new Router({
     routes: [
         {
             path: '/',          //进入默认路由
-            redirect: '/Index'  //默认路由
+            redirect: '/Index',  //默认路由
         },
         {
             path: '/Index',
             name: 'Index',
-            component: Index
+            component: Index,
+            meta: {
+                title: '承保业绩统计'
+            }
         },
         //  供应商管理
         {
             path: '/product_list',
             name: 'product_list',
-            component: ProductList
+            component: ProductList,
+            meta: {
+                title: '产品列表',
+                subTitle: '这是产品列表页面'
+            }
         },
         {
             path: '/supplier_list',
             name: 'supplier_list',
-            component: SupplierList
+            component: SupplierList,
+            meta: {
+                title: '供应商一览表',
+                subTitle: 'Insurance Supplier List'
+            }
+        },
+        {
+            path:'/new_supplier',
+            name: 'new_supplier',
+            component: NewSupplier,
+            meta: {
+                title: '新增供应商'
+            }
         },
         //  员工管理
         {
