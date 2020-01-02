@@ -27,6 +27,7 @@
   height: 65px;
   line-height: 65px;
   padding-left: 15px;
+  box-sizing: border-box;
   color: #4074e1;
   text-align: left;
   background-color: #fff;

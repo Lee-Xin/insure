@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="height: calc(100% - 100px);">
     <el-form :inline="true" :model="formInline" class="demo-form-inline supplierListSearchForm">
       <el-row :gutter="15" style="width: 100%;">
         <el-col :span="7">
@@ -42,7 +42,7 @@
     </el-form>
 
     <div class="table_box">
-      <el-table :data="tableData" height="calc(100% - 120px)">
+      <el-table :data="tableData" height="100%">
         <el-table-column label="序号" width="180" type="index" header-align="center" align="center"></el-table-column>
         <el-table-column prop="code" label="供应商代码" width="180"></el-table-column>
         <el-table-column prop="shortName" label="供应商简称" width="180">
@@ -468,7 +468,7 @@
 
   .table_box {
     width: 100%;
-    height: calc(100% - 150px);
+    height: calc(100% - 80px);
     overflow: hidden;
     margin-top: 30px;
     overflow-y: auto;

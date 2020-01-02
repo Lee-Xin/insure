@@ -50,6 +50,7 @@
         height: 80px;
         text-align: right;
         position: absolute;
+        z-index: 2;
         right: 0;
         bottom: 0;
         background-color: #fff;

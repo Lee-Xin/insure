@@ -106,7 +106,9 @@
 
     /deep/ .left_box {
         width: 100%;
+        height: 100%;
         color: #fff;
+        overflow-y: auto;
 
         .icon {
             display: inline;

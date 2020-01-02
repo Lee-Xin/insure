@@ -55,9 +55,6 @@
 </script>
 
 <style>
-    html{
-        overflow: hidden;
-    }
     #app {
         text-align: center;
         box-sizing: border-box;
@@ -86,7 +83,7 @@
     }
     .main{
         margin: 15px;
-        height: calc(100% - 30px);
+        height: calc(100% - 120px);
     }
     *{
         margin: 0;

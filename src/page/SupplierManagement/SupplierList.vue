@@ -3,7 +3,7 @@
         <page-hr></page-hr>
         <div class="content_box">
             <span class="content_title_1">快速搜索</span>
-            <supplier-list-search style="height: 100%;" @showNewSupplier="showNew"></supplier-list-search>
+            <supplier-list-search @showNewSupplier="showNew"></supplier-list-search>
         </div>
     </div>
 </template>
