@@ -39,14 +39,22 @@ import ProductList from './SupplierManagement/productList';
 import MyMessage from './MyMessage';
 import ExhibitionTools from './ExhibitionTools';
 import APPHomepageModule from './APPHomepageModule';
-
+import HomeData from './home'
 
 let returnArray = {
     "StatusCode": 500,
     "Msg": '服务器错误',
     "Data": []
 };
-
+//-----------------首页-------------------------
+Mock.mock(RegExp(url + '/home'), 'get', () => {
+    returnArray = {
+        "StatusCode": 200,
+        "Msg": "数据请求成功",
+        "Data": HomeData
+    }
+    return returnArray;
+})
 //---------------供应商管理--------------------------
 //------供应商列表
 Mock.mock(RegExp(url + '/supplier_list'), 'get', () => {
