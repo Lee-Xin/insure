@@ -49,6 +49,15 @@ let returnArray = {
 
 //---------------供应商管理--------------------------
 //------供应商列表
+Mock.mock(RegExp(url + '/SupplierService/GetAll'), 'get', () => {
+    return {
+        "success": true,
+        "result": {
+            "totalCount": SupplierList.supplierList.length,
+            "items": SupplierList.supplierList
+        }
+    }
+});
 Mock.mock(RegExp(url + '/supplier_list'), 'get', () => {
     returnArray = {
         "StatusCode": 200,
@@ -56,7 +65,29 @@ Mock.mock(RegExp(url + '/supplier_list'), 'get', () => {
         "Data": SupplierList
     }
     return returnArray;
-})
+});
+Mock.mock(RegExp(url + '/SupplierService/GetCooperationStatus'), 'get', () => {
+    return {
+        success: true,
+        result: SupplierList.state_cooperation.map((t, index) => {
+            return {
+                value: index,
+                name: t
+            }
+        })
+    }
+});
+Mock.mock(RegExp(url + '/SupplierService/GetCooperationType'), 'get', () => {
+    return {
+        success: true,
+        result: SupplierList.type_cooperation.map((t, index) => {
+            return {
+                value: index,
+                name: t
+            }
+        })
+    }
+});
 //供应商查询
 Mock.mock(url + '/supplier_list_search', 'post', (param) => {
     param = qs.parse(param.body);
