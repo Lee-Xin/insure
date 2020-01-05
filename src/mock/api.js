@@ -3,7 +3,7 @@
  * api接口统一管理
  */
 
-import {post,get,getUrl,gets,posts} from './http'
+import {post,get,getUrl,gets,posts} from '@/request/http'
 
 
 /**
@@ -23,7 +23,7 @@ export const apiSupplierAdd = p => post('/supplier_add', p);
 //---产品列表
 export const apiProductList = () => get('/product_list');
 export const apiProductListSearch = p => post('/product_list_search',p);
-export const apiProductListPageInation = p => getUrl('/product_list_pageInation', p);
+export const apiProductListPageInation = p => getUrl('/product_list', p);
 export const apiProductListAdd = p => post('/product_list_add', p);
 //----------------上游折标-----------------
 //---上游折标search参数

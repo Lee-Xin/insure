@@ -1,7 +1,7 @@
 import Mock from 'mockjs'
 import qs from 'qs'
 // import md5 from 'js-md5'
-const url = '/api/test';
+const url = 'http://localhost:8080';
 
 import userData from './user';
 
@@ -49,7 +49,7 @@ let returnArray = {
 
 //---------------供应商管理--------------------------
 //------供应商列表
-Mock.mock(url + '/supplier_list', 'get', () => {
+Mock.mock(RegExp(url + '/supplier_list'), 'get', () => {
     returnArray = {
         "StatusCode": 200,
         "Msg": "供应商列表查询成功",
@@ -102,7 +102,7 @@ Mock.mock(url + '/supplier_add', 'post', param => {
 //-------------------------end------
 
 //------产品搜索的选项
-Mock.mock(url + '/product_list', 'get', () => {
+Mock.mock(/http:\/\/localhost:8080\/product_list/, 'get', () => {
     returnArray = {
         "StatusCode": 200,
         "Msg": 'query success',

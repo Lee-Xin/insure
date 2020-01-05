@@ -10,7 +10,7 @@ import store from "@/store";
 import '@/assets/css/normalize.css';
 import '@/assets/css/border.css';
 
-// import Mock from '@/mock';
+import '@/mock/index.js';
 
 Vue.use(ElementUI);
 

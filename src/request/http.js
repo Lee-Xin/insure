@@ -9,7 +9,7 @@ import QS from 'qs' //序列化post数据
  */
 axios.defaults.baseURL = 'http://39.98.148.210/api/services/app'
 if (process.env.NODE_ENV === 'development') {
-    axios.defaults.baseURL = 'http://39.98.148.210/api/services/app'
+    axios.defaults.baseURL = 'http://localhost:8080'
 } else if (process.env.NODE_ENV === 'production') {
     axios.defaults.baseURL = '/api/v1'
 }

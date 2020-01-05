@@ -163,11 +163,9 @@
 
 <script>
     import {
-        apiSupplierListSearchPageInation,
-        apiSupperListSearchType,
-        apiSupplierListSearchStatus,
-        apiSupplierListGetById,
-    } from "../../../request/api";
+      apiSupperlist,
+    } from "@/mock/api";
+
     import PageInation from "../../../common/PageInation";
 
     export default {
@@ -221,7 +219,7 @@
             };
         },
         created() {
-            //  获取合作类型
+            /*//  获取合作类型
             apiSupperListSearchType().then(res => {
                 // console.log(res)
                 if (res.success) {
@@ -239,14 +237,15 @@
                         this.state_cooperation.push(result[i]);
                     }
                 }
-            });
+            });*/
             //  初始化时的分页
-            apiSupplierListSearchPageInation(this.formInline).then(res => {
-                if (res.success) {
-                    this.totablNum = res.result["totalCount"];
-                    this.tableData = res.result["items"];
-                }
-            });
+          apiSupperlist(this.formInline).then(res => {
+            console.log(res);
+            /*if (res.success) {
+                this.totablNum = res.result["totalCount"];
+                this.tableData = res.result["items"];
+            }*/
+          });
         },
         methods: {
             clickShortName(row) {

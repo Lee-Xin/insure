@@ -127,7 +127,8 @@ const router = new Router({
             name: 'new_supplier',
             component: NewSupplier,
             meta: {
-                title: '新增供应商'
+                title: '供应商管理',
+                subTitle: '这是供应商管理页面'
             }
         },
         //  员工管理

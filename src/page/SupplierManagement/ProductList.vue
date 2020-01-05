@@ -1,6 +1,5 @@
 <template>
   <div>
-    <main-title :title="title" :title_f="title_f"></main-title>
     <page-hr></page-hr>
     <div>
       <product-list-search @showAddProduct="isAddProduct" v-if="showSearch"></product-list-search>
@@ -10,7 +9,6 @@
 </template>
 
 <script>
-    import MainTitle from '@/common/MainTitle'
     import PageHr from "@/common/PageHr";
     import ProductListSearch from "@/page/SupplierManagement/component/ProductListSearch";
     import NewProduct from "@/page/SupplierManagement/page/NewProduct";
@@ -24,7 +22,7 @@
                 showSearch: true
             }
         },
-        components: {NewProduct, ProductListSearch, PageHr, MainTitle},
+        components: {NewProduct, ProductListSearch, PageHr},
         methods: {
             isAddProduct () {
                 this.showSearch = false

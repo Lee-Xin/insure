@@ -1,5 +1,6 @@
 <template>
   <div>
+    <page-hr></page-hr>
     <el-form :model="formSubmit" status-icon :rules="rules" ref="formSubmit" label-width="120px">
       <el-form-item label="基本信息" prop="delivery"></el-form-item>
       <div class="row_2">
@@ -142,6 +143,7 @@
 </template>
 
 <script>
+    import PageHr from "@/common/PageHr";
     import EditorItem from "@/common/wangEnduit/EditorItem";
     import {apiSupplierAdd, apiSupplierListSearchPageInation} from "../../../request/api";
 
