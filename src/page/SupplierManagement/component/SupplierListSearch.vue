@@ -78,8 +78,11 @@
                     <span>查询详情</span>
                     <i @click="hideDetailPopup()" class="el-icon-close"></i>
                 </div>
-                <div class="each" v-for="(item, index) in formEnum" :class="`width-${item.span || 12}`" :key="index">
-                    <span class="label">{{item.key}}</span>
+                <div class="body">
+                    <div class="each" v-for="(item, index) in formEnum" :class="`width-${item.span || 12}`" :key="index">
+                        <span class="label">{{item.label}}</span>
+                        <span class="value">{{formDetail[item.key]}}</span>
+                    </div>
                 </div>
                 <div class="showD_popup_content_bottom">
                     <el-button @click="hideDetailPopup()" type="primary">关闭</el-button>
@@ -233,7 +236,70 @@
         }
     };
 </script>
+<style scoped lang="scss">
+    .showD_popup_content {
+        width: 1000px;
+        height: 686px;
+        background-color: #fff;
+        .body{
+            padding: 15px;
+            height: calc(100% - 103px);
+            overflow-y: auto;
+            box-sizing: border-box;
+            .each {
+                height: 50px;
+                float: left;
+                .label {
+                    float: left;
+                    display: inline-block;
+                    width: 140px;
+                    padding-left: 20px;
+                    text-align: left;
+                    line-height: 50px;
+                    height: 100%;
+                    box-sizing: border-box;
+                    border: 1px solid #E6E6E6;
+                    border-right-width: 0;
+                    border-bottom-width: 0;
+                    font-size: 14px;
+                    background-color: #F4F4F4;
+                    font-weight: bold;
+                }
 
+                .value {
+                    display: block;
+                    padding: 0 20px;
+                    height: 100%;
+                    line-height: 50px;
+                    box-sizing: border-box;
+                    border: 1px solid #E6E6E6;
+                    border-bottom-width: 0;
+                    font-size: 14px;
+                    margin-left: 140px;
+                    text-align: left;
+                }
+
+                &:last-child {
+                    .label, .value {
+                        border-bottom-width: 1px;
+                    }
+                }
+
+                &.width-12 {
+                    width: 50%;
+                }
+
+                &.width-8 {
+                    width: 33.33%;
+                }
+
+                &.width-24 {
+                    width: 100%;
+                }
+            }
+        }
+    }
+</style>
 <style scoped>
     .showDetail_popup {
         position: fixed;
@@ -257,12 +323,6 @@
         justify-content: flex-end;
         padding-right: 15px;
         box-sizing: border-box;
-    }
-
-    .showD_popup_content {
-        width: 1000px;
-        height: 686px;
-        background-color: #fff;
     }
 
     .showD_popup_content_top {
