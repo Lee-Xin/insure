@@ -1,162 +1,182 @@
 <template>
-  <div>
-    <page-hr></page-hr>
-    <el-form :model="formSubmit" status-icon :rules="rules" ref="formSubmit" label-width="120px">
-      <el-form-item label="基本信息" prop="delivery"></el-form-item>
-      <div class="row_2">
-        <el-form-item label="供应商全称" prop="supplier_name">
-          <el-select v-model="formSubmit.fullName" placeholder="请选择供应商">
-            <el-option v-for="(item, index) in fullName" :label="item" :value="item" :key="index"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="总部地址" prop="address">
-          <el-input v-model="formSubmit.headAddress" placeholder="请输入总部地址"></el-input>
-        </el-form-item>
-      </div>
-      <div class="row_4">
-        <el-form-item label="供应商简称" prop="supplier_niceName">
-          <el-input v-model="formSubmit.shortName" placeholder="请输入供应商简称"></el-input>
-        </el-form-item>
-        <el-form-item label="供应商代码" prop="supplier_id">
-          <el-input v-model="formSubmit.code" placeholder="请输入供应商代码"></el-input>
-        </el-form-item>
-        <el-form-item label="注册资本" prop="registered_capital">
-          <el-input v-model="formSubmit.registerCapital" placeholder="请输入注册资本"></el-input>
-        </el-form-item>
-        <el-form-item label="设立时间">
-          <el-col :span="11">
-            <el-form-item prop="createData">
-              <el-date-picker type="date" placeholder="选择日期" v-model="formSubmit.createDate"></el-date-picker>
+    <div class="wrapper">
+        <page-hr></page-hr>
+        <el-row :gutter="20">
+            <el-col v-for="(item, index) in forms" :key="index" :span="item.span || 12">
+                <form-item
+                    :type="item.type"
+                    :label="item.label"
+                    :options="item.options"
+                    v-model="item.value"
+                    :required="item.required"
+                    :placeholder="item.placeholder"
+                >
+                </form-item>
+            </el-col>
+        </el-row>
+
+        <el-form :model="formSubmit" status-icon :rules="rules" ref="formSubmit" label-width="120px">
+            <el-form-item label="基本信息" prop="delivery"></el-form-item>
+            <div class="row_2">
+                <el-form-item label="供应商全称" prop="supplier_name">
+                    <el-select v-model="formSubmit.fullName" placeholder="请选择供应商">
+                        <el-option v-for="(item, index) in fullName" :label="item" :value="item"
+                                   :key="index"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="总部地址" prop="address">
+                    <el-input v-model="formSubmit.headAddress" placeholder="请输入总部地址"></el-input>
+                </el-form-item>
+            </div>
+            <div class="row_4">
+                <el-form-item label="供应商简称" prop="supplier_niceName">
+                    <el-input v-model="formSubmit.shortName" placeholder="请输入供应商简称"></el-input>
+                </el-form-item>
+                <el-form-item label="供应商代码" prop="supplier_id">
+                    <el-input v-model="formSubmit.code" placeholder="请输入供应商代码"></el-input>
+                </el-form-item>
+                <el-form-item label="注册资本" prop="registered_capital">
+                    <el-input v-model="formSubmit.registerCapital" placeholder="请输入注册资本"></el-input>
+                </el-form-item>
+                <el-form-item label="设立时间">
+                    <el-col :span="11">
+                        <el-form-item prop="createData">
+                            <el-date-picker type="date" placeholder="选择日期"
+                                            v-model="formSubmit.createDate"></el-date-picker>
+                        </el-form-item>
+                    </el-col>
+                </el-form-item>
+            </div>
+            <div class="row_4">
+                <el-form-item label="合作类型">
+                    <el-select v-model="fontCooperationType" placeholder="战略合作">
+                        <el-option v-for="(item, index) in type_cooperation" :label="item.name" :value="item.name"
+                                   :key="index"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="合作状态" prop="name">
+                    <el-select v-model="fontCooperationStatus" placeholder="合作">
+                        <el-option v-for="(item, index) in state_cooperation" :label="item.name" :value="item.name"
+                                   :key="index"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="官网网址" prop="website_url">
+                    <el-input v-model="formSubmit.website" placeholder="请以http://或者https://开头"></el-input>
+                </el-form-item>
+                <el-form-item label="公司注册地" prop="place_incorporation">
+                    <el-input v-model="formSubmit.registerAddress" placeholder="请输入公司注册地"></el-input>
+                </el-form-item>
+            </div>
+            <div class="row_4">
+                <el-form-item label="开始时间" prop="name">
+                    <el-col :span="11">
+                        <el-form-item prop="startTime">
+                            <el-date-picker type="date" placeholder="选择日期" v-model="formSubmit.startDate"
+                                            style="width: 100%;"></el-date-picker>
+                        </el-form-item>
+                    </el-col>
+                </el-form-item>
+                <el-form-item label="结束时间" prop="name">
+                    <el-col :span="11">
+                        <el-form-item prop="endTime">
+                            <el-date-picker type="date" placeholder="选择日期" v-model="formSubmit.endDate"
+                                            style="width: 100%;"></el-date-picker>
+                        </el-form-item>
+                    </el-col>
+                </el-form-item>
+                <el-form-item label="服务热线" prop="serviceHotline">
+                    <el-input v-model="formSubmit.serviceHotline" placeholder="格式为400-123456-123或123456"
+                              autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="渠道服务电话" prop="serviceTelephone">
+                    <el-input v-model="formSubmit.serviceTelephone" placeholder="格式为400-123456-123或123456"
+                              autocomplete="off"></el-input>
+                </el-form-item>
+            </div>
+            <el-form-item label="其他信息" prop="delivery"></el-form-item>
+
+            <div class="row_3">
+                <el-form-item label="logo上传" prop="name">
+                    <el-upload class="avatar-uploader"
+                               action="https://jsonplaceholder.typicode.com/posts/"
+                               :show-file-list="false" :on-success="handleAvatarSuccess1"
+                               :before-upload="beforeAvatarUpload1">
+                        <img v-if="ruleForm.imageUrl1" :src="ruleForm.imageUrl1" class="avatar">
+                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>
+                </el-form-item>
+                <el-form-item label="APP二维码" prop="name">
+                    <el-upload class="avatar-uploader"
+                               action="https://jsonplaceholder.typicode.com/posts/"
+                               :show-file-list="false" :on-success="handleAvatarSuccess2"
+                               :before-upload="beforeAvatarUpload2">
+                        <img v-if="ruleForm.imageUrl2" :src="ruleForm.imageUrl2" class="avatar">
+                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>
+                </el-form-item>
+                <el-form-item label="公众号二维码" prop="name">
+                    <el-upload class="avatar-uploader"
+                               action="https://jsonplaceholder.typicode.com/posts/"
+                               :show-file-list="false" :on-success="handleAvatarSuccess3"
+                               :before-upload="beforeAvatarUpload3">
+                        <img v-if="ruleForm.imageUrl3" :src="ruleForm.imageUrl3" class="avatar">
+                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>
+                </el-form-item>
+            </div>
+            <div class="row_2">
+                <el-form-item label="APP名称" prop="app_name">
+                    <el-input v-model="formSubmit.appName" placeholder="请输入APP名称"></el-input>
+                </el-form-item>
+                <el-form-item label="微信公众号" prop="weixin">
+                    <el-input v-model="formSubmit.weChatAccount" placeholder="请输入微信公众号名称"></el-input>
+                </el-form-item>
+            </div>
+
+
+            <el-tabs v-model="activeName" type="card">
+                <el-tab-pane label="公司简介" name="first">
+                    <div class="fuwenbenkaung">
+                        <editor-item v-model="formSubmit.aboutUs"></editor-item>
+                    </div>
+                </el-tab-pane>
+                <el-tab-pane label="公司荣誉" name="second">
+                    <div class="fuwenbenkaung">
+                        <editor-item v-model="formSubmit.companyGlories"></editor-item>
+                    </div>
+                </el-tab-pane>
+                <el-tab-pane label="发展历程" name="third">
+                    <div class="fuwenbenkaung">
+                        <editor-item v-model="formSubmit.developmentHistory"></editor-item>
+                    </div>
+                </el-tab-pane>
+            </el-tabs>
+
+
+            <el-form-item>
+                <el-button type="primary" @click="submitForm('formSubmit')">立即创建</el-button>
+                <el-button @click="returnPrev">返回</el-button>
             </el-form-item>
-          </el-col>
-        </el-form-item>
-      </div>
-      <div class="row_4">
-        <el-form-item label="合作类型">
-          <el-select v-model="fontCooperationType" placeholder="战略合作">
-            <el-option v-for="(item, index) in type_cooperation" :label="item.name" :value="item.name"
-                       :key="index"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="合作状态" prop="name">
-          <el-select v-model="fontCooperationStatus" placeholder="合作">
-            <el-option v-for="(item, index) in state_cooperation" :label="item.name" :value="item.name"
-                       :key="index"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="官网网址" prop="website_url">
-          <el-input v-model="formSubmit.website" placeholder="请以http://或者https://开头"></el-input>
-        </el-form-item>
-        <el-form-item label="公司注册地" prop="place_incorporation">
-          <el-input v-model="formSubmit.registerAddress" placeholder="请输入公司注册地"></el-input>
-        </el-form-item>
-      </div>
-      <div class="row_4">
-        <el-form-item label="开始时间" prop="name">
-          <el-col :span="11">
-            <el-form-item prop="startTime">
-              <el-date-picker type="date" placeholder="选择日期" v-model="formSubmit.startDate"
-                              style="width: 100%;"></el-date-picker>
-            </el-form-item>
-          </el-col>
-        </el-form-item>
-        <el-form-item label="结束时间" prop="name">
-          <el-col :span="11">
-            <el-form-item prop="endTime">
-              <el-date-picker type="date" placeholder="选择日期" v-model="formSubmit.endDate"
-                              style="width: 100%;"></el-date-picker>
-            </el-form-item>
-          </el-col>
-        </el-form-item>
-        <el-form-item label="服务热线" prop="serviceHotline">
-          <el-input v-model="formSubmit.serviceHotline" placeholder="格式为400-123456-123或123456"
-                    autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="渠道服务电话" prop="serviceTelephone">
-          <el-input v-model="formSubmit.serviceTelephone" placeholder="格式为400-123456-123或123456"
-                    autocomplete="off"></el-input>
-        </el-form-item>
-      </div>
-      <el-form-item label="其他信息" prop="delivery"></el-form-item>
-
-      <div class="row_3">
-        <el-form-item label="logo上传" prop="name">
-          <el-upload class="avatar-uploader"
-                     action="https://jsonplaceholder.typicode.com/posts/"
-                     :show-file-list="false" :on-success="handleAvatarSuccess1" :before-upload="beforeAvatarUpload1">
-            <img v-if="ruleForm.imageUrl1" :src="ruleForm.imageUrl1" class="avatar">
-            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-          </el-upload>
-        </el-form-item>
-        <el-form-item label="APP二维码" prop="name">
-          <el-upload class="avatar-uploader"
-                     action="https://jsonplaceholder.typicode.com/posts/"
-                     :show-file-list="false" :on-success="handleAvatarSuccess2" :before-upload="beforeAvatarUpload2">
-            <img v-if="ruleForm.imageUrl2" :src="ruleForm.imageUrl2" class="avatar">
-            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-          </el-upload>
-        </el-form-item>
-        <el-form-item label="公众号二维码" prop="name">
-          <el-upload class="avatar-uploader"
-                     action="https://jsonplaceholder.typicode.com/posts/"
-                     :show-file-list="false" :on-success="handleAvatarSuccess3" :before-upload="beforeAvatarUpload3">
-            <img v-if="ruleForm.imageUrl3" :src="ruleForm.imageUrl3" class="avatar">
-            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-          </el-upload>
-        </el-form-item>
-      </div>
-      <div class="row_2">
-        <el-form-item label="APP名称" prop="app_name">
-          <el-input v-model="formSubmit.appName" placeholder="请输入APP名称"></el-input>
-        </el-form-item>
-        <el-form-item label="微信公众号" prop="weixin">
-          <el-input v-model="formSubmit.weChatAccount" placeholder="请输入微信公众号名称"></el-input>
-        </el-form-item>
-      </div>
-
-
-      <el-tabs v-model="activeName" type="card">
-        <el-tab-pane label="公司简介" name="first">
-          <div class="fuwenbenkaung">
-            <editor-item v-model="formSubmit.aboutUs"></editor-item>
-          </div>
-        </el-tab-pane>
-        <el-tab-pane label="公司荣誉" name="second">
-          <div class="fuwenbenkaung">
-            <editor-item v-model="formSubmit.companyGlories"></editor-item>
-          </div>
-        </el-tab-pane>
-        <el-tab-pane label="发展历程" name="third">
-          <div class="fuwenbenkaung">
-            <editor-item v-model="formSubmit.developmentHistory"></editor-item>
-          </div>
-        </el-tab-pane>
-      </el-tabs>
-
-
-      <el-form-item>
-        <el-button type="primary" @click="submitForm('formSubmit')">立即创建</el-button>
-        <el-button @click="returnPrev">返回</el-button>
-      </el-form-item>
-    </el-form>
-  </div>
+        </el-form>
+    </div>
 </template>
 
 <script>
     import PageHr from "@/common/PageHr";
     import EditorItem from "@/common/wangEnduit/EditorItem";
     import {apiSupplierAdd, apiSupplierListSearchPageInation} from "../../../request/api";
+    import FormItem from '@/common/FormItem';
 
     export default {
         name: "NewSupplier",
-        components: {EditorItem},
+        components: {EditorItem, PageHr, FormItem},
         data() {
             var validateHotline = (rule, value, callback) => {
                 let regExp1 = new RegExp('^400-\\d{6}-\\d{3}$');
                 let regExp2 = new RegExp('^\\d{6}$');
                 if (value === '') {
                     callback()
-                } else if (regExp1.test(value)||regExp2.test(value)) {
+                } else if (regExp1.test(value) || regExp2.test(value)) {
                     callback()
                 } else {
                     callback(new Error('格式为400-123456-123或123456'));
@@ -191,6 +211,128 @@
                     "companyGlories": '',
                     "developmentHistory": ''
                 },
+                forms: [
+                    {
+                        label: '供应商全称',
+                        type: 'select',
+                        value: '',
+                        required: true,
+                        placeholder: '请选择供应商',
+                        options: [
+                            {
+                                label: '1',
+                                value: 1
+                            }
+                        ]
+                    },
+                    {
+                        label: '总部地址',
+                        type: 'input',
+                        value: '',
+                        placeholder: '请输入总部地址'
+                    },
+                    {
+                        label: '供应商简称',
+                        type: 'input',
+                        value: '',
+                        required: true,
+                        placeholder: '请输入供应商简称',
+                        span: 6
+                    },
+                    {
+                        label: '供应商代码',
+                        type: 'input',
+                        value: '',
+                        placeholder: '请输入供应商代码',
+                        span: 6
+                    },
+                    {
+                        label: '注册资本',
+                        type: 'input',
+                        value: '',
+                        placeholder: '请输入注册资本',
+                        span: 6
+                    },
+                    {
+                        label: '设立时间',
+                        type: 'date',
+                        value: '',
+                        placeholder: '选择日期',
+                        span: 6
+                    },
+                    {
+                        label: '合作类型',
+                        type: 'select',
+                        value: '',
+                        required: true,
+                        placeholder: '请选择合作类型',
+                        span: 6,
+                        options: [
+                            {
+                                label: '1',
+                                value: 1
+                            }
+                        ]
+                    },
+                    {
+                        label: '合作状态',
+                        type: 'select',
+                        value: '',
+                        required: true,
+                        placeholder: '请选择合作状态',
+                        span: 6,
+                        options: [
+                            {
+                                label: '1',
+                                value: 1
+                            }
+                        ]
+                    },
+                    {
+                        label: '官方网址',
+                        type: 'input',
+                        value: '',
+                        placeholder: '请以http://或https://开头',
+                        span: 6
+                    },
+                    {
+                        label: '公司注册地',
+                        type: 'input',
+                        value: '',
+                        placeholder: '请输入公司注册地',
+                        span: 6
+                    },
+                    {
+                        label: '开始时间',
+                        type: 'date',
+                        value: '',
+                        placeholder: '选择日期',
+                        span: 6,
+                        required: true
+                    },
+                    {
+                        label: '结束时间',
+                        type: 'date',
+                        value: '',
+                        placeholder: '选择日期',
+                        span: 6,
+                        required: true
+                    },
+                    {
+                        label: '服务热线',
+                        type: 'input',
+                        value: '',
+                        placeholder: '请输入服务热线',
+                        span: 6
+                    },
+                    {
+                        label: '渠道服务电话',
+                        type: 'input',
+                        value: '',
+                        placeholder: '请输入渠道服务电话',
+                        span: 6
+                    },
+                ],
                 rules: {
                     serviceHotline: [
                         {validator: validateHotline, trigger: 'blur'}
@@ -316,7 +458,7 @@
                     if (valid) {
                         apiSupplierAdd(this.formSubmit).then(res => {
                             // console.log(res)
-                            if (res.status === 200){
+                            if (res.status === 200) {
                                 this.$message({
                                     message: '保存成功',
                                     type: 'success'
@@ -375,95 +517,99 @@
 </script>
 
 <style scoped>
-  .row_2 {
-    width: 100%;
-    display: flex;
-    justify-content: flex-start;
-    /*background-color: red;*/
-  }
+    .wrapper {
+        background-color: #fff;
+    }
 
-  .row_2 .el-form-item {
-    width: 50%;
-  }
+    .row_2 {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        /*background-color: red;*/
+    }
 
-  .row_3 {
-    width: 100%;
-    display: flex;
-    justify-content: flex-start;
-  }
+    .row_2 .el-form-item {
+        width: 50%;
+    }
 
-  .row_3 .el-form-item {
-    width: 33.33%;
-  }
+    .row_3 {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+    }
 
-  .row_4 {
-    width: 100%;
-    margin-top: 40px;
-    display: flex;
-    background-color: #fff;
-    justify-content: space-between;
-  }
+    .row_3 .el-form-item {
+        width: 33.33%;
+    }
 
-  .row_4 .el-form-item {
-    width: 25%;
-  }
+    .row_4 {
+        width: 100%;
+        margin-top: 40px;
+        display: flex;
+        background-color: #fff;
+        justify-content: space-between;
+    }
 
-  .el-form-item__content .el-select {
-    width: 100%;
-  }
+    .row_4 .el-form-item {
+        width: 25%;
+    }
 
-  .el-form-item__content .el-col {
-    width: 100%;
-  }
+    .el-form-item__content .el-select {
+        width: 100%;
+    }
 
-  .el-form-item__content .el-button {
-    width: 100%;
-    border: 1px solid #999;
-  }
+    .el-form-item__content .el-col {
+        width: 100%;
+    }
 
-  .el-form-item__content .el-col .el-form-item {
-    width: 100%;
-  }
+    .el-form-item__content .el-button {
+        width: 100%;
+        border: 1px solid #999;
+    }
 
-  .fuwenbenkaung {
-    width: 100%;
-    height: 458px;
-    font-size: 18px;
-    /*background-color: red;*/
-  }
+    .el-form-item__content .el-col .el-form-item {
+        width: 100%;
+    }
 
-  .fuwenbenkaung >>> .toolbar {
-    height: 30px;
-  }
+    .fuwenbenkaung {
+        width: 100%;
+        height: 458px;
+        font-size: 18px;
+        /*background-color: red;*/
+    }
 
-  .fuwenbenkaung >>> .text {
-    height: 428px;
-  }
+    .fuwenbenkaung >>> .toolbar {
+        height: 30px;
+    }
 
-  .avatar-uploader .el-upload {
-    border: 1px dashed #999;
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-  }
+    .fuwenbenkaung >>> .text {
+        height: 428px;
+    }
 
-  .avatar-uploader .el-upload:hover {
-    border-color: #409EFF;
-  }
+    .avatar-uploader .el-upload {
+        border: 1px dashed #999;
+        border-radius: 6px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
 
-  .avatar-uploader-icon {
-    font-size: 28px;
-    color: #8c939d;
-    width: 178px;
-    height: 178px;
-    line-height: 178px;
-    text-align: center;
-  }
+    .avatar-uploader .el-upload:hover {
+        border-color: #409EFF;
+    }
 
-  .avatar {
-    width: 178px;
-    height: 178px;
-    display: block;
-  }
+    .avatar-uploader-icon {
+        font-size: 28px;
+        color: #8c939d;
+        width: 178px;
+        height: 178px;
+        line-height: 178px;
+        text-align: center;
+    }
+
+    .avatar {
+        width: 178px;
+        height: 178px;
+        display: block;
+    }
 </style>
