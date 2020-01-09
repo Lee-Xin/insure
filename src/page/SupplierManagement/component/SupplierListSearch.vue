@@ -25,7 +25,7 @@
                             <el-option
                                     v-for="(item, index) in state_cooperation"
                                     :label="item.name"
-                                    :value="item.value"
+                                    :value="item.name"
                                     :key="index"
                             ></el-option>
                         </el-select>
@@ -78,81 +78,10 @@
                     <span>查询详情</span>
                     <i @click="hideDetailPopup()" class="el-icon-close"></i>
                 </div>
-                <div class="showD_popup_content_table">
-                    <div class="showD_popup_tr_one">
-                        <div class="showD_popup_tr_one_left">供应商全称</div>
-                        <div class="showD_popup_tr_one_right">{{formDetail.fullName}}</div>
-                    </div>
-                    <div class="showD_popup_tr_two">
-                        <div class="showD_popup_tr_one_left">供应商简称</div>
-                        <div class="showD_popup_tr_one_right">{{formDetail.shortName}}</div>
-                        <div class="showD_popup_tr_one_left">供应商代码</div>
-                        <div class="showD_popup_tr_one_right">{{formDetail.code}}</div>
-                    </div>
-                    <div class="showD_popup_tr_two">
-                        <div class="showD_popup_tr_one_left">合约开始时间</div>
-                        <div class="showD_popup_tr_one_right">{{formDetail.startDate}}</div>
-                        <div class="showD_popup_tr_one_left">合约结束时间</div>
-                        <div class="showD_popup_tr_one_right">{{formDetail.endDate}}</div>
-                    </div>
-                    <div class="showD_popup_tr_two">
-                        <div class="showD_popup_tr_one_left">合作类型</div>
-                        <div class="showD_popup_tr_one_right">{{formDetail.cooperationType}}</div>
-                        <div class="showD_popup_tr_one_left">合作状态</div>
-                        <div class="showD_popup_tr_one_right">{{formDetail.cooperationStatus}}</div>
-                    </div>
-                    <div class="showD_popup_tr_two">
-                        <div class="showD_popup_tr_one_left">官网网址</div>
-                        <div class="showD_popup_tr_one_right">{{formDetail.website}}</div>
-                        <div class="showD_popup_tr_one_left">服务热线</div>
-                        <div class="showD_popup_tr_one_right">{{formDetail.serviceHotline}}</div>
-                    </div>
-                    <div class="showD_popup_tr_two">
-                        <div class="showD_popup_tr_one_left">注册资本</div>
-                        <div class="showD_popup_tr_one_right">{{formDetail.registerCapital}}</div>
-                        <div class="showD_popup_tr_one_left">设立时间</div>
-                        <div class="showD_popup_tr_one_right">{{formDetail.createDate}}</div>
-                    </div>
-                    <div class="showD_popup_tr_two">
-                        <div class="showD_popup_tr_one_left">总部地址</div>
-                        <div class="showD_popup_tr_one_right">{{formDetail.headAddress}}</div>
-                        <div class="showD_popup_tr_one_left">渠道经理服务电话</div>
-                        <div class="showD_popup_tr_one_right">{{formDetail.serviceTelephone}}</div>
-                    </div>
-                    <div class="showD_popup_tr_two">
-                        <div class="showD_popup_tr_one_left">公司简称</div>
-                        <div class="showD_popup_tr_one_right">{{formDetail.shortName}}</div>
-                        <div class="showD_popup_tr_one_left">APP名称</div>
-                        <div class="showD_popup_tr_one_right">{{formDetail.appName}}</div>
-                        <div class="showD_popup_tr_one_left">微信公众号</div>
-                        <div class="showD_popup_tr_one_right">{{formDetail.weChatAccount}}</div>
-                    </div>
-                    <div class="showD_popup_tr_two_imgBox">
-                        <div class="showD_popup_tr_two_left">公司logo</div>
-                        <div class="showD_popup_tr_two_img">
-                            <!--              <img src="" alt="">-->
-                        </div>
-                        <div class="showD_popup_tr_two_left">APP二维码</div>
-                        <div class="showD_popup_tr_two_img">
-                            <!--              <img src="" alt="">-->
-                        </div>
-                        <div class="showD_popup_tr_two_left">公众号二维码</div>
-                        <div class="showD_popup_tr_two_img">
-                            <!--              <img src="" alt="">-->
-                        </div>
-
-                    </div>
-                    <div class="showD_popup_tr_big">
-                        <div class="showD_popup_tr_big_left">公司简介</div>
-                        <div class="showD_popup_tr_big_right">{{formDetail.aboutUs}}</div>
-                    </div>
-                    <div class="showD_popup_tr_big">
-                        <div class="showD_popup_tr_big_left">公司荣誉</div>
-                        <div class="showD_popup_tr_big_right">{{formDetail.companyGlories}}</div>
-                    </div>
-                    <div class="showD_popup_tr_big">
-                        <div class="showD_popup_tr_big_left">发展历程</div>
-                        <div class="showD_popup_tr_big_right">{{formDetail.developmentHistory}}</div>
+                <div class="body">
+                    <div class="each" v-for="(item, index) in formEnum" :class="`width-${item.span || 12}`" :key="index">
+                        <span class="label">{{item.label}}</span>
+                        <span class="value">{{formDetail[item.key]}}</span>
                     </div>
                 </div>
                 <div class="showD_popup_content_bottom">
@@ -165,8 +94,8 @@
 
 <script>
     import {
-        apiSupperlist,
         supplierGetAll,
+        supplierGetById,
         supplierGetCooperationStatus,
         supplierGetCooperationType
     } from "@/mock/api";
@@ -197,30 +126,32 @@
                 startEndTime: "",
                 totablNum: 0,
                 showDetailPopup: false,
-                formDetail: {
-                    aboutUs: "",
-                    appName: "",
-                    appQrCode: null,
-                    code: "",
-                    companyGlories: "",
-                    cooperationStatus: "",
-                    cooperationType: "",
-                    createDate: "",
-                    developmentHistory: "",
-                    endDate: "",
-                    fullName: "",
-                    headAddress: "",
-                    id: "",
-                    logo: null,
-                    qrCode: null,
-                    registerCapital: "",
-                    serviceHotline: "",
-                    serviceTelephone: "",
-                    shortName: "",
-                    startDate: "",
-                    weChatAccount: "",
-                    website: "",
-                }
+                formEnum: [
+                    {key: 'fullName', label:'供应商全称', span: 24},
+                    {key: 'shortName', label:'供应商简称'},
+                    {key: 'code', label:'供应商代码'},
+                    {key: 'startDate', label:'合约开始时间'},
+                    {key: 'endDate', label:'合约结束时间'},
+                    {key: 'cooperationType', label:'合作类型'},
+                    {key: 'cooperationStatus', label:'合作状态'},
+                    {key: 'website', label:'官方网址'},
+                    {key: 'serviceHotline', label:'服务热线'},
+                    {key: 'registerCapital', label:'注册资本'},
+                    {key: 'createDate', label:'设立时间'},
+                    {key: 'headAddress', label:'总部地址'},
+                    {key: 'serviceTelephone', label:'渠道经理服务电话'},
+                    {key: 'companyShortName', label:'公司简称', span: 8},
+                    {key: 'appName', label:'APP名称', span: 8},
+                    {key: 'weChatAccount', label:'微信公众号', span: 8},
+                    {key: 'logo', label:'公司logo', span: 8},
+                    {key: 'appQrCode', label:'APP二维码', span: 8},
+                    {key: 'qrCode', label:'公众号二维码', span: 8},
+                    {key: 'companyDescription', label:'公司简介', span: 24},
+                    {key: 'companyGlories', label:'公司荣誉', span: 24},
+                    {key: 'companyGlories', label:'公司荣誉', span: 24},
+                    {key: 'developmentHistory', label:'发展历程', span: 24}
+                ],
+                formDetail: {}
             };
         },
         created() {
@@ -242,7 +173,7 @@
             });
             //  获取合作类型
             supplierGetCooperationType().then(res => {
-                if(res.success) {
+                if (res.success) {
                     let result = res.result;
                     for (let i = 0; i < result.length; i++) {
                         this.type_cooperation.push(result[i]);
@@ -252,7 +183,7 @@
         },
         methods: {
             clickShortName(row) {
-                apiSupplierListGetById({
+                supplierGetById({
                     id: row.id
                 }).then(res => {
                     if (res.success) {
@@ -268,30 +199,29 @@
             changeSize(val) {
                 this.formInline.SkipCount = 0;
                 this.formInline.MaxResultCount = val;
-                apiSupplierListSearchPageInation(this.formInline).then(res => {
+                supplierGetAll(this.formInline).then(res => {
                     if (res.success) {
-                        this.totablNum = res.result["totalCount"];
-                        this.tableData = res.result["items"];
+                        this.totablNum = res.result.totalCount;
+                        this.tableData = res.result.items;
                     }
                 });
             },
             //  当前页发生改变时
             changeCurrentPage(val) {
                 this.formInline.SkipCount = (val - 1) * 50;
-                apiSupplierListSearchPageInation(this.formInline).then(res => {
-                    // console.log('asdas')
-                    // console.log(res);
+                supplierGetAll(this.formInline).then(res => {
                     if (res.success) {
-                        this.totablNum = res.result["totalCount"];
-                        this.tableData = res.result["items"];
+                        this.totablNum = res.result.totalCount;
+                        this.tableData = res.result.items;
                     }
                 });
             },
             //  搜索数据
             searchData() {
-                apiSupplierListSearchPageInation(this.formInline).then(res => {
+                supplierGetAll(this.formInline).then(res => {
                     if (res.success) {
                         this.tableData = res.result.items;
+                        this.totablNum = res.result.totalCount;
                     }
                 });
             },
@@ -306,7 +236,70 @@
         }
     };
 </script>
+<style scoped lang="scss">
+    .showD_popup_content {
+        width: 1000px;
+        height: 686px;
+        background-color: #fff;
+        .body{
+            padding: 15px;
+            height: calc(100% - 103px);
+            overflow-y: auto;
+            box-sizing: border-box;
+            .each {
+                height: 50px;
+                float: left;
+                .label {
+                    float: left;
+                    display: inline-block;
+                    width: 140px;
+                    padding-left: 20px;
+                    text-align: left;
+                    line-height: 50px;
+                    height: 100%;
+                    box-sizing: border-box;
+                    border: 1px solid #E6E6E6;
+                    border-right-width: 0;
+                    border-bottom-width: 0;
+                    font-size: 14px;
+                    background-color: #F4F4F4;
+                    font-weight: bold;
+                }
 
+                .value {
+                    display: block;
+                    padding: 0 20px;
+                    height: 100%;
+                    line-height: 50px;
+                    box-sizing: border-box;
+                    border: 1px solid #E6E6E6;
+                    border-bottom-width: 0;
+                    font-size: 14px;
+                    margin-left: 140px;
+                    text-align: left;
+                }
+
+                &:last-child {
+                    .label, .value {
+                        border-bottom-width: 1px;
+                    }
+                }
+
+                &.width-12 {
+                    width: 50%;
+                }
+
+                &.width-8 {
+                    width: 33.33%;
+                }
+
+                &.width-24 {
+                    width: 100%;
+                }
+            }
+        }
+    }
+</style>
 <style scoped>
     .showDetail_popup {
         position: fixed;
@@ -332,39 +325,6 @@
         box-sizing: border-box;
     }
 
-    .showD_popup_content {
-        width: 1000px;
-        height: 686px;
-        background-color: #fff;
-    }
-
-    .showD_popup_tr_big_right {
-        padding: 15px 15px 15px 15px;
-        line-height: 18px;
-        font-size: 14px;
-        color: #333;
-        text-align: justify;
-    }
-
-    .showD_popup_tr_big {
-        width: 100%;
-        height: auto;
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-    }
-
-    .showD_popup_tr_big_left {
-        padding: 0 15px;
-        height: auto;
-        display: block;
-        border-right: 1px solid #8e8e8e;
-        background-color: #F4F4F4;
-        font-size: 14px;
-        color: #333;
-        white-space: nowrap;
-    }
-
     .showD_popup_content_top {
         width: 100%;
         height: 43px;
@@ -378,88 +338,6 @@
         background-color: #4074e1;
     }
 
-    .showD_popup_content_top i {
-        font-size: 20px;
-    }
-
-    .showD_popup_content_table {
-        width: 950px;
-        height: 550px;
-        padding: 15px;
-        margin: 0 auto;
-        overflow-y: scroll;
-    }
-
-    .showD_popup_tr_two_img {
-        width: 100%;
-        height: 121px;
-        display: block;
-    }
-
-    .showD_popup_tr_two_left {
-        padding: 0 15px;
-        height: 121px;
-        line-height: 121px;
-        text-align: center;
-        border-right: 1px solid #8e8e8e;
-        background-color: #F4F4F4;
-        font-size: 14px;
-        font-weight: bold;
-        white-space: nowrap;
-    }
-
-    .showD_popup_tr_two_imgBox {
-        width: 100%;
-        height: 121px;
-        display: flex;
-        justify-content: flex-start;
-        border-top: 1px solid #8e8e8e;
-        border-left: 1px solid #8e8e8e;
-        border-right: 1px solid #8e8e8e;
-    }
-
-    .showD_popup_tr_two {
-        width: 100%;
-        height: 50px;
-        border-top: 1px solid #8e8e8e;
-        border-left: 1px solid #8e8e8e;
-        border-right: 1px solid #8e8e8e;
-        display: flex;
-        justify-content: flex-start;
-    }
-
-    .showD_popup_tr_one {
-        width: 100%;
-        height: 50px;
-        border-top: 1px solid #8e8e8e;
-        border-right: 1px solid #8e8e8e;
-        border-left: 1px solid #8e8e8e;
-        display: flex;
-    }
-
-    .showD_popup_tr_one_left {
-        padding: 0 15px;
-        height: 50px;
-        line-height: 50px;
-        text-align: center;
-        font-size: 14px;
-        font-weight: bold;
-        border-right: 1px solid #8e8e8e;
-        background-color: #F4F4F4;
-        white-space: nowrap;
-    }
-
-    .showD_popup_tr_one_right {
-        width: 100%;
-        height: 50px;
-        line-height: 50px;
-        padding-left: 15px;
-        box-sizing: border-box;
-        font-size: 12px;
-        color: #333;
-        text-align: left;
-        white-space: nowrap;
-    }
 
     .el-form {
         width: 100%;

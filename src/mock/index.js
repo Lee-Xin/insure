@@ -2,6 +2,7 @@ import Mock from 'mockjs'
 import qs from 'qs'
 // import md5 from 'js-md5'
 const url = 'http://localhost:8080';
+import util from '@/assets/js/util';
 
 import userData from './user';
 
@@ -57,13 +58,28 @@ Mock.mock(RegExp(url + '/home'), 'get', () => {
 })
 //---------------供应商管理--------------------------
 //------供应商列表
-Mock.mock(RegExp(url + '/SupplierService/GetAll'), 'get', () => {
+Mock.mock(RegExp(url + '/SupplierService/GetAll'), 'get', (p) => {
+    let param = util.getQueryValue(p.url);
+    let {shortName, cooperationType, cooperationStatus} = param;
     return {
         "success": true,
         "result": {
             "totalCount": SupplierList.supplierList.length,
-            "items": SupplierList.supplierList
+            "items": SupplierList.supplierList.filter((t, index) => {
+                return index >= param.SkipCount && index < (param.SkipCount / param.MaxResultCount + 1) * param.MaxResultCount
+                && (shortName ? shortName === t.shortName : true)
+                && (cooperationType !== '' ? cooperationType === t.cooperationType : true)
+                && (cooperationStatus !== '' ? cooperationStatus === t.cooperationStatus : true)
+            })
         }
+    }
+});
+Mock.mock(RegExp(url + '/SupplierService/GetById'), 'get', (p) => {
+    let { id } = util.getQueryValue(p.url);
+    let res = SupplierList.supplierList.filter(t => t.id == id);
+    return {
+        success: true,
+        result: res.length > 0 ? res[0] : {}
     }
 });
 Mock.mock(RegExp(url + '/supplier_list'), 'get', () => {
@@ -124,7 +140,6 @@ Mock.mock(RegExp(url + '/supplier_list_search_pageInation/*'), 'get', (options) 
     // window.console.log(options.url);
     let pageIndex = options.url.substring(options.url.indexOf('pageIndex=') + 10, options.url.indexOf(',')),
         pageSize = options.url.substring(options.url.indexOf('pageSize=') + 9);
-    window.console.log('当前页' + pageIndex + ',每页有' + pageSize + '条数据');
     returnArray = {
         "StatusCode": 200,
         "Msg": "quesr success",
@@ -183,7 +198,7 @@ Mock.mock(RegExp(url + '/product_list_pageInation/*'), 'get', (options) => {
     window.console.log('当前页' + pageIndex + ',每页有' + pageSize + '条数据');
     return pageInation(pageIndex, pageSize, ProductList.productList);
 })
-Mock.mock(url + '/product_list_add', 'post', (param)=>{
+Mock.mock(url + '/product_list_add', 'post', (param) => {
     param = qs.parse(param.body);
     window.console.log(param);
 })
@@ -305,7 +320,7 @@ Mock.mock(RegExp(url + '/continuation_rate_bouns_pageInation/*'), 'get', (option
 //---继续率奖金保存
 Mock.mock(url + '/continuation_rate_bouns_add', 'post', param => {
     param = qs.parse(param.body);
-    window.console.log('您的数据已保存',param);
+    window.console.log('您的数据已保存', param);
     returnArray = {
         "StatusCode": 200,
         "Msg": 'query success',
@@ -360,9 +375,9 @@ Mock.mock(RegExp(url + '/new_incentives_pageInation/*'), 'get', options => {
     return pageInation(pageIndex, pageSize, NewIncentivesSearch.newIncentives);
 })
 //---新增奖励add
-Mock.mock(url + '/new_incentives_add','post',param => {
+Mock.mock(url + '/new_incentives_add', 'post', param => {
     param = qs.parse(param.body);
-    window.console.log('您的数据已保存',param);
+    window.console.log('您的数据已保存', param);
     returnArray = {
         "StatusCode": 200,
         "Msg": 'query success',
@@ -372,12 +387,12 @@ Mock.mock(url + '/new_incentives_add','post',param => {
 });
 //---续期服务津贴参数
 Mock.mock(url + '/renewal_service_param', 'get', () => {
-   returnArray = {
-       "StatusCode": 200,
-       "Msg": 'query success',
-       "Data": upstreamFolding.upstream_floding_search
-   }
-   return returnArray;
+    returnArray = {
+        "StatusCode": 200,
+        "Msg": 'query success',
+        "Data": upstreamFolding.upstream_floding_search
+    }
+    return returnArray;
 });
 Mock.mock(url + '/renewal_service_search', 'post', param => {
     param = qs.parse(param.body);
@@ -413,7 +428,7 @@ Mock.mock(RegExp(url + '/renewal_service_pageInation/*'), 'get', options => {
 })
 Mock.mock(url + '/renewal_service_add', 'post', param => {
     param = qs.parse(param.body);
-    window.console.log('您的数据已保存',param);
+    window.console.log('您的数据已保存', param);
     returnArray = {
         "StatusCode": 200,
         "Msg": 'query success',
@@ -430,7 +445,7 @@ Mock.mock(url + '/quarterly_promotion_award_param', 'get', () => {
     }
     return returnArray;
 });
-Mock.mock(url + '/quarterly_promotion_award_search', 'post', param=> {
+Mock.mock(url + '/quarterly_promotion_award_search', 'post', param => {
     param = qs.parse(param.body);
     // window.console.log(param);
     let newParam = {};
@@ -456,18 +471,18 @@ Mock.mock(url + '/quarterly_promotion_award_search', 'post', param=> {
     })
     return returnArray;
 })
-Mock.mock(RegExp(url + '/quarterly_promotion_award_pagrInation/*'),'get',options => {
+Mock.mock(RegExp(url + '/quarterly_promotion_award_pagrInation/*'), 'get', options => {
     let pageIndex = options.url.substring(options.url.indexOf('pageIndex=') + 10, options.url.indexOf(',')),
         pageSize = options.url.substring(options.url.indexOf('pageSize=') + 9);
     window.console.log('当前页' + pageIndex + ',每页有' + pageSize + '条数据');
     return pageInation(pageIndex, pageSize, NewIncentivesSearch.newIncentives);
 })
 //------------------------下游政策-------------------
-Mock.mock(url + '/downstream_folding_param', 'get', ()=> {
+Mock.mock(url + '/downstream_folding_param', 'get', () => {
     returnArray = {
         "StatusCode": 200,
         "Msg": 'query success',
-        "Data":DownstreamFolding.downstreamFoldingSearch
+        "Data": DownstreamFolding.downstreamFoldingSearch
     }
     return returnArray;
 });
@@ -508,7 +523,7 @@ Mock.mock(url + '/institutional_expenses_param', 'get', () => {
     returnArray = {
         "StatusCode": 200,
         "Msg": 'query success',
-        "Data":DownstreamFolding.downstreamFoldingSearch
+        "Data": DownstreamFolding.downstreamFoldingSearch
     }
     return returnArray;
 });
@@ -538,7 +553,7 @@ Mock.mock(url + '/institutional_expenses_search', 'post', param => {
     })
     return returnArray;
 });
-Mock.mock(RegExp(url + '/institutional_expenses_pageIntaion/*'),'get', options => {
+Mock.mock(RegExp(url + '/institutional_expenses_pageIntaion/*'), 'get', options => {
     let pageIndex = options.url.substring(options.url.indexOf('pageIndex=') + 10, options.url.indexOf(',')),
         pageSize = options.url.substring(options.url.indexOf('pageSize=') + 9);
     window.console.log('当前页' + pageIndex + ',每页有' + pageSize + '条数据');
@@ -546,7 +561,7 @@ Mock.mock(RegExp(url + '/institutional_expenses_pageIntaion/*'),'get', options =
 });
 Mock.mock(url + '/institutional_expenses_save', 'post', param => {
     param = qs.parse(param.body);
-    window.console.log('您的数据已保存',param);
+    window.console.log('您的数据已保存', param);
     returnArray = {
         "StatusCode": 200,
         "Msg": 'query success',
@@ -595,20 +610,20 @@ Mock.mock(url + '/institutions_delete', 'post', param => {
         "Msg": 'delete success',
         "Data": newParam
     };
-    window.console.log('正在删除：',newParam);
+    window.console.log('正在删除：', newParam);
     return returnArray;
     // window.console.log(param);
 });
 //--销售费用
-Mock.mock(url + '/sales_expenses_param','get',() => {
+Mock.mock(url + '/sales_expenses_param', 'get', () => {
     returnArray = {
         "StatusCode": 200,
         "Msg": 'query success',
-        "Data":DownstreamFolding.downstreamFoldingSearch
+        "Data": DownstreamFolding.downstreamFoldingSearch
     }
     return returnArray;
 });
-Mock.mock(url + '/sales_expenses_search','post',param => {
+Mock.mock(url + '/sales_expenses_search', 'post', param => {
     param = qs.parse(param.body);
     // window.console.log(param);
     let newParam = {};
@@ -634,11 +649,6 @@ Mock.mock(url + '/sales_expenses_search','post',param => {
     });
     return returnArray;
 });
-
-
-
-
-
 
 
 Mock.mock(url + '/manpower_report_search', 'get', function () {
@@ -769,8 +779,6 @@ Mock.mock(url + '/new_incentives_search', 'get', function () {
 })
 
 
-
-
 // Mock.mock(url + '/userInfo', 'post' , (param) => {
 //     window.console.log('进入了userInfojs')
 //     window.console.log(param);
@@ -822,7 +830,7 @@ Mock.mock(url + '/passwordReset', 'post', function (param) {
     });
     return returnArray
 });
-Mock.mock(url+'/getaccountdetailss','get',function(){
+Mock.mock(url + '/getaccountdetailss', 'get', function () {
     returnArray = {
         "StatusCode": 200,
         "Msg": "query success",
@@ -1753,45 +1761,46 @@ Mock.mock(url + '/updjigoulist', 'post', function (param) {
     return returnArray
 })
 //员工管理--内勤管理
-    //列表
+//列表
 import desk_list from './desk_list/index'
-Mock.mock(url+'/yglist','post',function (param) {
+
+Mock.mock(url + '/yglist', 'post', function (param) {
     param = qs.parse(param.body);
     window.console.log(`当前页数${param.PageIndex},显示数据条数${param.PageSize}`)
     returnArray = {
         "StatusCode": 200,
         "Msg": "query success",
-        "Data": {TotalPage:20,Rows:desk_list,Records:100}
+        "Data": {TotalPage: 20, Rows: desk_list, Records: 100}
     }
     return returnArray
 })
-Mock.mock(url+'/addyg','post',function (param) {
+Mock.mock(url + '/addyg', 'post', function (param) {
     param = qs.parse(param.body);
     window.console.log(`当前页数${param.PageIndex},显示数据条数${param.PageSize}`)
     returnArray = {
         "StatusCode": 200,
         "Msg": "query success",
-        "Data": {TotalPage:20,Rows:desk_list,Records:100}
+        "Data": {TotalPage: 20, Rows: desk_list, Records: 100}
     }
     return returnArray
 })
-Mock.mock(url+'/updyg','post',function (param) {
+Mock.mock(url + '/updyg', 'post', function (param) {
     param = qs.parse(param.body);
     window.console.log(`当前页数${param.PageIndex},显示数据条数${param.PageSize}`)
     returnArray = {
         "StatusCode": 200,
         "Msg": "query success",
-        "Data": {TotalPage:20,Rows:desk_list,Records:100}
+        "Data": {TotalPage: 20, Rows: desk_list, Records: 100}
     }
     return returnArray
 })
-Mock.mock(url+'/delyg','post',function (param) {
+Mock.mock(url + '/delyg', 'post', function (param) {
     param = qs.parse(param.body);
     window.console.log(`当前页数${param.PageIndex},显示数据条数${param.PageSize}`)
     returnArray = {
         "StatusCode": 200,
         "Msg": "query success",
-        "Data": {TotalPage:20,Rows:desk_list,Records:100}
+        "Data": {TotalPage: 20, Rows: desk_list, Records: 100}
     }
     return returnArray
 })
@@ -1799,16 +1808,16 @@ Mock.mock(url+'/delyg','post',function (param) {
 // 
 // 我的消息
 // 
-Mock.mock(RegExp(url + "/MyMessage/*"), 'get' , function(par){
+Mock.mock(RegExp(url + "/MyMessage/*"), 'get', function (par) {
     // par = qs.parse(par.body);
     console.log(par)
-    if(MyMessage.length > 0){
+    if (MyMessage.length > 0) {
         returnArray = {
             "StatusCode": 200,
             "Msg": "query success",
             "Data": MyMessage
         }
-    }else{
+    } else {
         returnArray = {
             "StatusCode": 200,
             "Msg": "暂无数据",
@@ -1818,20 +1827,20 @@ Mock.mock(RegExp(url + "/MyMessage/*"), 'get' , function(par){
     return returnArray
 });
 // 我的消息-搜索
-Mock.mock(url + '/MyMessageSearch', 'post' , function(par){
+Mock.mock(url + '/MyMessageSearch', 'post', function (par) {
     console.log(par)
     let formatPar = JSON.parse(par.body)
     let tmp = MyMessage.filter(item => {
         return item.date == formatPar.searchDate
     })
     console.log(tmp)
-    if(tmp.length > 0){
+    if (tmp.length > 0) {
         returnArray = {
             "StatusCode": 200,
             "Msg": "query success",
             "Data": tmp
         }
-    }else{
+    } else {
         returnArray = {
             "StatusCode": 200,
             "Msg": "暂无数据",
@@ -1841,7 +1850,7 @@ Mock.mock(url + '/MyMessageSearch', 'post' , function(par){
     return returnArray
 });
 // 我的消息-添加
-Mock.mock(url + '/addMyMessage', 'post' , function(par){
+Mock.mock(url + '/addMyMessage', 'post', function (par) {
     let formatPar = JSON.parse(par.body)
     console.log(formatPar)
     MyMessage.push(formatPar)
@@ -1853,7 +1862,7 @@ Mock.mock(url + '/addMyMessage', 'post' , function(par){
     return returnArray
 });
 // 我的消息-添加
-Mock.mock(url + '/sendMyMessage', 'post' , function(par){
+Mock.mock(url + '/sendMyMessage', 'post', function (par) {
     let formatPar = JSON.parse(par.body)
     console.log(formatPar)
     MyMessage.push(formatPar)
@@ -1865,7 +1874,7 @@ Mock.mock(url + '/sendMyMessage', 'post' , function(par){
     return returnArray
 });
 // 我的消息-删除
-Mock.mock(url + '/addMyMessageDelete', 'post' , function(par){
+Mock.mock(url + '/addMyMessageDelete', 'post', function (par) {
     let formatPar = JSON.parse(par.body)
     console.log(formatPar)
     return {
@@ -1876,14 +1885,14 @@ Mock.mock(url + '/addMyMessageDelete', 'post' , function(par){
     }
 });
 // 展业工具
-Mock.mock(RegExp(url + '/ExhibitionTools/*'), 'get' , function(par){
-    if(ExhibitionTools.length > 0){
+Mock.mock(RegExp(url + '/ExhibitionTools/*'), 'get', function (par) {
+    if (ExhibitionTools.length > 0) {
         returnArray = {
             "StatusCode": 200,
             "Msg": "query success",
             "Data": ExhibitionTools
         }
-    }else{
+    } else {
         returnArray = {
             "StatusCode": 200,
             "Msg": "暂无数据",
@@ -1893,20 +1902,20 @@ Mock.mock(RegExp(url + '/ExhibitionTools/*'), 'get' , function(par){
     return returnArray
 });
 // 展业工具-搜索
-Mock.mock(RegExp(url + '/ExhibitionToolsSearch/*'), 'post' , function(par){
+Mock.mock(RegExp(url + '/ExhibitionToolsSearch/*'), 'post', function (par) {
     console.log(par)
     let formatPar = JSON.parse(par.body)
     let tmp = ExhibitionTools.filter(item => {
         return item.supplier == formatPar.supplier && item.type == formatPar.type
     })
     console.log(tmp)
-    if(tmp.length > 0){
+    if (tmp.length > 0) {
         returnArray = {
             "StatusCode": 200,
             "Msg": "query success",
             "Data": tmp
         }
-    }else{
+    } else {
         returnArray = {
             "StatusCode": 200,
             "Msg": "暂无数据",
@@ -1916,12 +1925,12 @@ Mock.mock(RegExp(url + '/ExhibitionToolsSearch/*'), 'post' , function(par){
     return returnArray
 });
 // 展业工具-删除
-Mock.mock(url + '/ExhibitionToolsDelete', 'post' , function(par){
+Mock.mock(url + '/ExhibitionToolsDelete', 'post', function (par) {
     console.log(par)
     let formatPar = JSON.parse(par.body)
-    if(ExhibitionTools.length > 0){
+    if (ExhibitionTools.length > 0) {
         ExhibitionTools.map((item, index) => {
-            if(item.id == formatPar.id){
+            if (item.id == formatPar.id) {
                 ExhibitionTools.splice(index, 1)
             }
         })
@@ -1930,7 +1939,7 @@ Mock.mock(url + '/ExhibitionToolsDelete', 'post' , function(par){
             "Msg": "删除成功",
             "Data": ExhibitionTools
         }
-    }else{
+    } else {
         returnArray = {
             "StatusCode": 200,
             "Msg": "暂无数据",
@@ -1952,12 +1961,12 @@ Mock.mock(url + '/ExhibitionToolsDelete', 'post' , function(par){
 // });
 // app首页管理-删除
 // 热销产品
-Mock.mock(RegExp(url + '/APPHomepageModuleDelete/*'), 'post' , function(par){
+Mock.mock(RegExp(url + '/APPHomepageModuleDelete/*'), 'post', function (par) {
     console.log(par)
     let formatPar = JSON.parse(par.body)
     let tmpArr = APPHomepageModule.hot[formatPar.type]
     tmpArr.find((item, index) => {
-        if(item.id == formatPar.id){
+        if (item.id == formatPar.id) {
             tmpArr.splice(index, 1)
             return true
         }
@@ -1970,7 +1979,7 @@ Mock.mock(RegExp(url + '/APPHomepageModuleDelete/*'), 'post' , function(par){
 });
 // app首页管理-轮播
 // 轮播
-Mock.mock(RegExp(url + '/APPHomepageModuleBanner/*'), 'get' ,  function(par){
+Mock.mock(RegExp(url + '/APPHomepageModuleBanner/*'), 'get', function (par) {
     console.log(par)
     return {
         "StatusCode": 200,
@@ -1980,7 +1989,7 @@ Mock.mock(RegExp(url + '/APPHomepageModuleBanner/*'), 'get' ,  function(par){
 });
 // app首页管理
 // 热销产品
-Mock.mock(/\/api\/test\/APPHomepageModule\/*/, 'get' , function(par){
+Mock.mock(/\/api\/test\/APPHomepageModule\/*/, 'get', function (par) {
     console.log(par)
     let returnArray = {
         "StatusCode": 200,
@@ -1991,17 +2000,17 @@ Mock.mock(/\/api\/test\/APPHomepageModule\/*/, 'get' , function(par){
 });
 
 
-
 //获取险种   机构   供应商  机构类型
 import gongyingshang from './gongyingshang'
 import xianzhong from './xianzhong'
 import jigou from './jigou'
 import jigoutype from './jigoutype'
-Mock.mock(RegExp(url + '/getallparameter'),'get',function () {
+
+Mock.mock(url + '/getallparameter', 'get', function () {
     returnArray = {
         "StatusCode": 200,
         "Msg": "query success",
-        "Data": {'gongyingshang':gongyingshang,'xianzhong':xianzhong,'jigou':jigou,'jigoutype':jigoutype}
+        "Data": {'gongyingshang': gongyingshang, 'xianzhong': xianzhong, 'jigou': jigou, 'jigoutype': jigoutype}
     }
     return returnArray
 })

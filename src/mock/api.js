@@ -24,6 +24,7 @@ export const apiSupplierListSearchPageInation = p =>
   getUrl("/supplier_list_search_pageInation", p);
 export const apiSupplierAdd = p => post("/supplier_add", p);
 export const supplierGetAll = p => get("/SupplierService/GetAll", p);
+export const supplierGetById = p => get("/SupplierService/GetById", p);
 export const supplierGetCooperationStatus = p =>
   get("/SupplierService/GetCooperationStatus");
 export const supplierGetCooperationType = p =>
