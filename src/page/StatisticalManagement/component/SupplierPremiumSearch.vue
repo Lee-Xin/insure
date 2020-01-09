@@ -49,7 +49,7 @@
 
           <el-select
             v-model="form.mechanism"
-            placeholder="请输入分支机构"
+            placeholder="请选择分支机构"
             clearable
             filterable
           >
@@ -67,7 +67,7 @@
 
           <el-select
             v-model="form.type"
-            placeholder="请输入险种"
+            placeholder="请选择险种"
             clearable
             filterable
           >
@@ -137,7 +137,7 @@
           <el-form-item>
             <el-select
               v-model="exportForm.mechanism"
-              placeholder="请输入分支机构"
+              placeholder="请选择分支机构"
               clearable
               filterable
             >
@@ -153,7 +153,7 @@
           <el-form-item>
             <el-select
               v-model="exportForm.type"
-              placeholder="请输入险种"
+              placeholder="请选择险种"
               clearable
               filterable
             >

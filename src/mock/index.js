@@ -2000,17 +2000,18 @@ Mock.mock(/\/api\/test\/APPHomepageModule\/*/, 'get', function (par) {
 });
 
 
-//获取险种   机构   供应商  机构类型
+//获取险种   机构   供应商  机构类型 保单状态
 import gongyingshang from './gongyingshang'
 import xianzhong from './xianzhong'
 import jigou from './jigou'
 import jigoutype from './jigoutype'
+import baodanstatus from './baodanstatus'
 
 Mock.mock(url + '/getallparameter', 'get', function () {
     returnArray = {
         "StatusCode": 200,
         "Msg": "query success",
-        "Data": {'gongyingshang': gongyingshang, 'xianzhong': xianzhong, 'jigou': jigou, 'jigoutype': jigoutype}
+        "Data": {'gongyingshang': gongyingshang, 'xianzhong': xianzhong, 'jigou': jigou, 'jigoutype': jigoutype,baodanstatus}
     }
     return returnArray
 })
@@ -2033,6 +2034,27 @@ Mock.mock(RegExp(url + '/exportSupplier_premium'), 'post', options => {
         "StatusCode": 200,
         "Msg": "query success",
         "Data": SupplierPremiumExportData
+    }
+    return returnArray
+})
+
+//机构保费
+import {AgencyPremiumExportData,AgencyPremiumSearchData} from './StatisticalManagement/AgencyPremium'
+//查询
+Mock.mock(RegExp(url + '/agency_premium'), 'get', options => {
+    returnArray = {
+        "StatusCode": 200,
+        "Msg": "query success",
+        "Data": AgencyPremiumSearchData
+    }
+    return returnArray
+})
+//导出
+Mock.mock(RegExp(url + '/exportAgency_premium'), 'post', options => {
+    returnArray = {
+        "StatusCode": 200,
+        "Msg": "query success",
+        "Data": AgencyPremiumExportData
     }
     return returnArray
 })

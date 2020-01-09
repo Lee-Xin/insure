@@ -218,6 +218,12 @@ export const getSupplierPermiunr = () => get("/supplier_premium");
 /*********导出接口 */
 export const exportSupplierPermiunr = () => post("/exportSupplier_premium");
 
+//统计管理-机构保费
+/********查询接口 */
+export const getAgencyPermiunr = () => get("/agency_premium");
+/*********导出接口 */
+export const exportAgencyPermiunr = () => post("/exportAgency_premium");
+
 // 我的消息
 export const MyMessage = obj => get("MyMessage", obj);
 // 我的消息搜索
