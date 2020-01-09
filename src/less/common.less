@@ -1,0 +1,66 @@
+//查询条件表单的样式
+.search_from {
+  .el-form-item {
+    width: 350px;
+    margin-right: 20px;
+    float: left;
+    .el-form-item__content {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      align-items: center;
+      .cell_before {
+        border: 1px solid #bebebe;
+        height: 36px;
+        line-height: 36px;
+        box-sizing: border-box;
+        border-right: none;
+        text-align: center;
+        background-color: #fafafa;
+        margin-right: -1px;
+        width: 96px;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+      & > div:last-child {
+        flex-grow: 1;
+      }
+    }
+  }
+  &:after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+}
+
+//弹框样式
+.el-dialog {
+  width: 600px;
+  .el-dialog__header {
+    text-align: left;
+    padding: 10px;
+    .el-dialog__headerbtn {
+      top: 13px;
+    }
+    background: #2e7ee1;
+    .el-dialog__close,
+    .el-dialog__title {
+      font-size: 18px;
+      color: #fff;
+    }
+  }
+  .el-dialog__footer {
+    border-top: 1px solid #e9eaec;
+    padding: 12px 18px 12px 18px;
+  }
+
+  .dialog_from_center {
+    width: 410px;
+    margin: 0 auto;
+    .el-date-editor,
+    .el-select {
+      width: 100%;
+    }
+  }
+}

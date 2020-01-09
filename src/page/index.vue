@@ -94,7 +94,7 @@ export default {
           {
             type: "category",
             boundaryGap: true,
-            dat: this.showData.monthList.map(item => item.time)
+            data: this.showData.monthList.map(item => item.time)
           }
         ],
         yAxis: [
@@ -155,7 +155,7 @@ export default {
           {
             type: "category",
             boundaryGap: true,
-            dat: this.showData.yearList.map(item => item.time)
+            data: this.showData.yearList.map(item => item.time)
           }
         ],
         yAxis: [

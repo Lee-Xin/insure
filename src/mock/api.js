@@ -210,8 +210,12 @@ export const updyg = p => post("updyg", p);
 export const delyg = p => post("delyg", p);
 
 //获取获取险种   机构   供应商  机构类型
-export const getallparameter = () => get("getallparameter");
+export const getallparameter = () => get("/getallparameter");
 //统计管理-供应商保费
+/********查询接口 */
+export const getSupplierPermiunr = () => get("/supplier_premium");
+/*********导出接口 */
+export const exportSupplierPermiunr = () => post("/exportSupplier_premium");
 
 // 我的消息
 export const MyMessage = obj => get("MyMessage", obj);

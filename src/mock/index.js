@@ -1997,7 +1997,7 @@ import gongyingshang from './gongyingshang'
 import xianzhong from './xianzhong'
 import jigou from './jigou'
 import jigoutype from './jigoutype'
-Mock.mock(url+'/getallparameter','get',function () {
+Mock.mock(RegExp(url + '/getallparameter'),'get',function () {
     returnArray = {
         "StatusCode": 200,
         "Msg": "query success",
@@ -2006,4 +2006,25 @@ Mock.mock(url+'/getallparameter','get',function () {
     return returnArray
 })
 //====================================================================================================
+
+//供应商保费
+import {SupplierPremiumExportData,SupplierPremiumSearchData} from './StatisticalManagement/SupplierPremium'
+//查询
+Mock.mock(RegExp(url + '/supplier_premium'), 'get', options => {
+    returnArray = {
+        "StatusCode": 200,
+        "Msg": "query success",
+        "Data": SupplierPremiumSearchData
+    }
+    return returnArray
+})
+//导出
+Mock.mock(RegExp(url + '/exportSupplier_premium'), 'post', options => {
+    returnArray = {
+        "StatusCode": 200,
+        "Msg": "query success",
+        "Data": SupplierPremiumExportData
+    }
+    return returnArray
+})
 export default Mock;
