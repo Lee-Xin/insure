@@ -53,6 +53,6 @@
         color: #ef8412;
         text-align: left;
         padding: 0 8px;
-        margin-bottom: 20px;
+        margin: 20px 0;
     }
 </style>

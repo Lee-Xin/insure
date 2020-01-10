@@ -6,12 +6,13 @@
             <el-row :gutter="20">
                 <el-col v-for="(item, index) in forms" :key="index" :span="item.span || 12">
                     <form-item
-                      :type="item.type"
-                      :label="item.label"
-                      :options="item.options"
-                      v-model="item.value"
-                      :required="item.required"
-                      :placeholder="item.placeholder"
+                        :type="item.type"
+                        :label="item.label"
+                        :options="item.options"
+                        v-model="item.value"
+                        :required="item.required"
+                        :placeholder="item.placeholder"
+                        :errorText="item.errorText || ''"
                     >
                     </form-item>
                 </el-col>
@@ -27,27 +28,36 @@
                     </div>
                 </el-col>
             </el-row>
-            <el-row :gutter="20" style="margin-top: 20px; padding-top: 20px; border-top: solid 1px #ccc; border-bottom: solid 1px #ccc;">
+            <el-row :gutter="20"
+                    style="margin-top: 20px; padding-top: 20px; border-top: solid 1px #ccc; border-bottom: solid 1px #ccc;">
                 <el-col v-for="(item, index) in otherForms" :key="index" :span="item.span || 12">
                     <form-item
-                      :type="item.type"
-                      :label="item.label"
-                      :options="item.options"
-                      v-model="item.value"
-                      :required="item.required"
-                      :placeholder="item.placeholder"
+                        :type="item.type"
+                        :label="item.label"
+                        :options="item.options"
+                        v-model="item.value"
+                        :required="item.required"
+                        :placeholder="item.placeholder"
                     >
                     </form-item>
                 </el-col>
             </el-row>
         </div>
         <img-upload :isShow.sync="showImgUpload"></img-upload>
+        <div class="bottom-toolbar">
+            <el-button @click="submitForm" type="primary" round icon="el-icon-success">
+                保存/提交
+            </el-button>
+            <el-button round @click="$router.push('/supplier_list')">
+                返回
+            </el-button>
+        </div>
     </div>
 </template>
 
 <script>
     import PageHr from "@/common/PageHr";
-    import {apiSupplierAdd, apiSupplierListSearchPageInation} from "../../../request/api";
+    import {apiSupplierAdd, apiSupperlist, supplierGetCooperationStatus, supplierGetCooperationType} from "@/mock/api";
     import FormItem from '@/common/FormItem';
     import ImgUpload from '@/common/ImgUpload';
 
@@ -55,156 +65,137 @@
         name: "NewSupplier",
         components: {PageHr, FormItem, ImgUpload},
         data() {
-            var validateHotline = (rule, value, callback) => {
-                let regExp1 = new RegExp('^400-\\d{6}-\\d{3}$');
-                let regExp2 = new RegExp('^\\d{6}$');
-                if (value === '') {
-                    callback()
-                } else if (regExp1.test(value) || regExp2.test(value)) {
-                    callback()
-                } else {
-                    callback(new Error('格式为400-123456-123或123456'));
-                }
-            }
             return {
-                forms: [
-                    {
+                forms: {
+                    fullName: {
                         label: '供应商全称',
                         type: 'select',
                         value: '',
                         required: true,
+                        errorText: '',
                         placeholder: '请选择供应商',
-                        options: [
-                            {
-                                label: '1',
-                                value: 1
-                            }
-                        ]
+                        options: []
                     },
-                    {
+                    headAddress: {
                         label: '总部地址',
                         type: 'input',
                         value: '',
                         placeholder: '请输入总部地址'
                     },
-                    {
+                    shortName: {
                         label: '供应商简称',
                         type: 'input',
                         value: '',
                         required: true,
+                        errorText: '',
                         placeholder: '请输入供应商简称',
                         span: 6
                     },
-                    {
+                    code: {
+                        key: 'code',
                         label: '供应商代码',
                         type: 'input',
                         value: '',
                         placeholder: '请输入供应商代码',
                         span: 6
                     },
-                    {
+                    registerCapital: {
                         label: '注册资本',
                         type: 'input',
                         value: '',
                         placeholder: '请输入注册资本',
                         span: 6
                     },
-                    {
+                    createDate: {
                         label: '设立时间',
                         type: 'date',
                         value: '',
                         placeholder: '选择日期',
                         span: 6
                     },
-                    {
+                    cooperationType: {
                         label: '合作类型',
                         type: 'select',
-                        value: 1,
+                        value: 0,
                         required: true,
+                        errorText: '',
                         placeholder: '请选择合作类型',
                         span: 6,
-                        options: [
-                            {
-                                label: '战略合作',
-                                value: 1
-                            }
-                        ]
+                        options: []
                     },
-                    {
+                    cooperationStatus: {
                         label: '合作状态',
                         type: 'select',
-                        value: 1,
+                        value: 0,
                         required: true,
+                        errorText: '',
                         placeholder: '请选择合作状态',
                         span: 6,
-                        options: [
-                            {
-                                label: '合作',
-                                value: 1
-                            }
-                        ]
+                        options: []
                     },
-                    {
+                    website: {
                         label: '官方网址',
                         type: 'input',
                         value: '',
                         placeholder: '请以http://或https://开头',
                         span: 6
                     },
-                    {
+                    registerAddress: {
                         label: '公司注册地',
                         type: 'input',
                         value: '',
                         placeholder: '请输入公司注册地',
                         span: 6
                     },
-                    {
+                    startDate: {
                         label: '开始时间',
                         type: 'date',
                         value: '',
+                        errorText: '',
                         placeholder: '选择日期',
                         span: 6,
                         required: true
                     },
-                    {
+                    endDate: {
                         label: '结束时间',
                         type: 'date',
                         value: '',
+                        errorText: '',
                         placeholder: '选择日期',
                         span: 6,
                         required: true
                     },
-                    {
+                    serviceHotline: {
                         label: '服务热线',
                         type: 'input',
                         value: '',
                         placeholder: '请输入服务热线',
                         span: 6
                     },
-                    {
+                    serviceTelephone: {
                         label: '渠道服务电话',
                         type: 'input',
                         value: '',
                         placeholder: '请输入渠道服务电话',
                         span: 6
                     },
-                ],
-                otherForms: [
-                    {
+                },
+                otherForms: {
+                    appName: {
                         label: 'APP名称',
                         type: 'input',
                         value: '',
                         placeholder: '请输入APP名称',
                         span: 12
                     },
-                    {
+                    weChatAccount: {
                         label: '微信公众号',
                         type: 'input',
                         value: '',
                         placeholder: '请输入微信公众号名称',
                         span: 12
                     }
-                ],
+                },
                 imgUploads: [
                     {
                         label: 'logo上传',
@@ -223,62 +214,98 @@
             };
         },
         created() {
+            //  获取合作状态
+            supplierGetCooperationStatus().then(res => {
+                if (res.success) {
+                    this.forms.cooperationStatus.options = res.result.map(t => {
+                        return {
+                            label: t.name,
+                            value: t.value
+                        };
+                    });
+                }
+            });
+            //  获取合作类型
+            supplierGetCooperationType().then(res => {
+                if (res.success) {
+                    this.forms.cooperationType.options = res.result.map(t => {
+                        return {
+                            label: t.name,
+                            value: t.value
+                        };
+                    });
+                }
+            });
             //  获取供应商全称数组
-            apiSupplierListSearchPageInation({
+            apiSupperlist({
                 SkipCount: 0,
                 MaxResultCount: 10
             }).then(res => {
-                this.extractAttr(res.result.items, 'fullName', this.fullName);
-                this.deleteAllTrim(this.fullName);
-                let fullName = this.unique(this.fullName);
-                this.fullName = fullName;
+                if (res.success) {
+                    this.forms.fullName.options = res.result.items.map(t => {
+                        return {
+                            label: t,
+                            value: t
+                        }
+                    });
+                }
             });
         },
-        methods: {
-            //  提取结果中的指定属性，并放入一个数组中
-            extractAttr(arrayJson = [], attrName = '', receiverArray = []) {
-                arrayJson.forEach(item => {
-                    if (item[attrName]) receiverArray.push(item[attrName]);
-                });
-            },
-            // 删除所有空格
-            deleteAllTrim(array = []) {
-                array.forEach((item, index) => {
-                    array[index] = item.replace(/\s*/g, "");
-                });
-            },
-            /**
-             * 删除数组内容重复的部分，并返回
-             * @param arr
-             * @returns {any[]}
-             */
-            unique(arr) {
-                return Array.from(new Set(arr));
-            },
-            submitForm(formName) {
-                this.$refs[formName].validate((valid) => {
-                    if (valid) {
-                        apiSupplierAdd(this.formSubmit).then(res => {
-                            // console.log(res)
-                            if (res.status === 200) {
-                                this.$message({
-                                    message: '保存成功',
-                                    type: 'success'
-                                })
-                            }
-                        }).catch(err => {
-                            // console.log(err.message)
-                            this.$message({
-                                message: err['message'],
-                                type: 'warning'
-                            })
-                        })
-                    } else {
-                        console.log('error submit!!');
-                        return false;
-                    }
-                });
+        watch: {
+            formData: {
+                deep: true,
+                handler() {
+                    // 表单值改变时，校验基本信息（this.forms）
+                    this.validate(this.forms);
+                }
             }
+        },
+        computed: {
+            formData() {
+                let data = {};
+                Object.keys(this.forms).forEach(t => {
+                    data[t] = this.forms[t].value;
+                });
+                Object.keys(this.otherForms).forEach(t => {
+                    data[t] = this.otherForms[t].value;
+                });
+                return data;
+            }
+        },
+        methods: {
+            validate(form) {
+                let success = true;
+                Object.keys(form).forEach(key => {
+                    let t = form[key];
+                    if (t.required) {
+                        if (t.value === '') {
+                            t.errorText = `${t.label}不能为空`;
+                            if (success) {
+                                success = false;
+                            }
+                            return;
+                        }
+                    }
+                    t.errorText = '';
+                });
+                return success;
+            },
+            submitForm() {
+                let res = this.validate(this.forms);
+                if (!res) {
+                    this.$message.error('请完善信息');
+                    return;
+                }
+                apiSupplierAdd(this.formData).then(res => {
+                    if (res.status === 200) {
+                        this.$message.success('保存成功');
+                        this.$router.push('/supplier_list');
+                    }
+                }).catch(e => {
+                    console.log(e);
+                    this.$message.error('保存失败');
+                });
+            },
         }
     }
 </script>
@@ -286,9 +313,11 @@
 <style scoped lang="scss">
     .wrapper {
         background-color: #fff;
-        .form-area{
+
+        .form-area {
             padding: 20px;
-            .section{
+
+            .section {
                 padding: 15px 20px;
                 margin-bottom: 10px;
                 font-size: 16px;
@@ -298,15 +327,18 @@
                 color: #495060;
             }
         }
-        .upload-img{
+
+        .upload-img {
             text-align: left;
             cursor: pointer;
-            >.label{
+
+            > .label {
                 color: #F29F43;
                 font-size: 14px;
                 font-weight: bold;
             }
-            >.camera{
+
+            > .camera {
                 display: inline-block;
                 margin: 0 20px;
                 width: 58px;
@@ -316,10 +348,31 @@
                 vertical-align: middle;
                 border: 1px dashed #757F98;
                 border-radius: 4px;
-                >img{
+
+                > img {
                     vertical-align: middle;
                     width: 18px;
                 }
+            }
+        }
+
+        .bottom-toolbar {
+            position: absolute;
+            width: calc(100% - 30px);
+            margin-left: 15px;
+            margin-right: 15px;
+            padding: 0 20px;
+            box-sizing: border-box;
+            height: 80px;
+            line-height: 80px;
+            z-index: 2;
+            right: 0;
+            bottom: 0;
+            background-color: #fff;
+            box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.28);
+
+            .el-button.is-round {
+                padding: 6px 15px 7px 15px;
             }
         }
     }

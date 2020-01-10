@@ -165,21 +165,15 @@
             //  获取合作状态
             supplierGetCooperationStatus().then(res => {
                 if (res.success) {
-                    let result = res.result;
-                    for (let i = 0; i < result.length; i++) {
-                        this.state_cooperation.push(result[i]);
-                    }
+                    this.state_cooperation = res.result;
                 }
             });
             //  获取合作类型
             supplierGetCooperationType().then(res => {
                 if (res.success) {
-                    let result = res.result;
-                    for (let i = 0; i < result.length; i++) {
-                        this.type_cooperation.push(result[i]);
-                    }
+                    this.type_cooperation = res.result;
                 }
-            })
+            });
         },
         methods: {
             clickShortName(row) {
@@ -189,7 +183,7 @@
                     if (res.success) {
                         this.formDetail = res.result;
                     }
-                })
+                });
                 this.showDetailPopup = true;
             },
             hideDetailPopup() {

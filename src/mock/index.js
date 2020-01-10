@@ -84,9 +84,11 @@ Mock.mock(RegExp(url + '/SupplierService/GetById'), 'get', (p) => {
 });
 Mock.mock(RegExp(url + '/supplier_list'), 'get', () => {
     returnArray = {
-        "StatusCode": 200,
-        "Msg": "供应商列表查询成功",
-        "Data": SupplierList
+        success: true,
+        result: {
+            totalCount: SupplierList.supplier_name.length,
+            items: SupplierList.supplier_name
+        }
     }
     return returnArray;
 });
@@ -112,46 +114,9 @@ Mock.mock(RegExp(url + '/SupplierService/GetCooperationType'), 'get', () => {
         })
     }
 });
-//供应商查询
-Mock.mock(url + '/supplier_list_search', 'post', (param) => {
-    param = qs.parse(param.body);
-    returnArray['Data'] = [];
-    SupplierList.supplierList.forEach((item) => {
-        if (item.supplier_niceName === param.supplier_niceName &&
-            item.type_cooperation === param.type_cooperation &&
-            item.state_cooperation === param.state_cooperation) {
-            returnArray['StatusCode'] = 200;
-            returnArray['Msg'] = '查询成功';
-            returnArray['Data'].push(item);
-        }
-    })
-    if (returnArray['Data'].length === 0) {
-        returnArray = {
-            "StatusCode": 404,
-            "Msg": '暂无数据',
-            "Data": []
-        }
-    }
-    return returnArray;
-})
-//供应商分页查询
-///api/test/supplier_list_search_pageInation/pageIndex=0,pageSize=0
-Mock.mock(RegExp(url + '/supplier_list_search_pageInation/*'), 'get', (options) => {
-    // window.console.log(options.url);
-    let pageIndex = options.url.substring(options.url.indexOf('pageIndex=') + 10, options.url.indexOf(',')),
-        pageSize = options.url.substring(options.url.indexOf('pageSize=') + 9);
-    returnArray = {
-        "StatusCode": 200,
-        "Msg": "quesr success",
-        "Data": {TotalPage: 20, pipeiData: SupplierList.supplierList, Records: 100}
-    }
-    return returnArray;
-});
 //新增供应商
 Mock.mock(url + '/supplier_add', 'post', param => {
-    param = qs.parse(param.body);
-    window.console.log(param);
-    return returnArray;
+    return qs.parse(param.body);
 });
 //-------------------------end------
 
@@ -1805,9 +1770,9 @@ Mock.mock(url + '/delyg', 'post', function (param) {
     return returnArray
 })
 
-// 
+//
 // 我的消息
-// 
+//
 Mock.mock(RegExp(url + "/MyMessage/*"), 'get', function (par) {
     // par = qs.parse(par.body);
     console.log(par)

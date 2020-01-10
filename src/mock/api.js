@@ -18,10 +18,6 @@ export const apiHome = p => get("/home", p);
 
 //-----------------供应商管理-------------
 //---供应商列表
-export const apiSupperlist = () => get("/supplier_list");
-export const apiSupplierListSearch = p => post("/supplier_list_search", p);
-export const apiSupplierListSearchPageInation = p =>
-  getUrl("/supplier_list_search_pageInation", p);
 export const apiSupplierAdd = p => post("/supplier_add", p);
 export const supplierGetAll = p => get("/SupplierService/GetAll", p);
 export const supplierGetById = p => get("/SupplierService/GetById", p);
@@ -29,6 +25,7 @@ export const supplierGetCooperationStatus = p =>
   get("/SupplierService/GetCooperationStatus");
 export const supplierGetCooperationType = p =>
   get("/SupplierService/GetCooperationType");
+export const apiSupperlist = () => get("/supplier_list");
 
 //---产品列表
 export const apiProductList = () => get("/product_list");

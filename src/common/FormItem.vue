@@ -6,7 +6,7 @@
         </div>
         <el-input
             class="form-item"
-            :class="{isError: showError}"
+            :class="{isError: errorText !== ''}"
             v-model="computedValue"
             v-if="type === 'input'"
             :placeholder="placeholder"
@@ -14,7 +14,7 @@
         </el-input>
         <el-select
             class="form-item"
-            :class="{isError: showError}"
+            :class="{isError: errorText !== ''}"
             v-else-if="type === 'select'"
             v-model="computedValue"
             :placeholder="placeholder"
@@ -28,13 +28,14 @@
         </el-select>
         <el-date-picker
             class="form-item"
+            :class="{isError: errorText !== ''}"
             v-else-if="type === 'date'"
             v-model="computedValue"
             :placeholder="placeholder"
         >
         </el-date-picker>
-        <p class="error" v-show="showError">
-            {{label}}不能为空
+        <p class="error" v-show="errorText !== ''">
+            {{errorText}}
         </p>
     </div>
 </template>
@@ -49,12 +50,15 @@
             label: String,
             value: [String, Number],
             required: [Boolean],
-            placeholder: String
+            placeholder: String,
+            errorText: {
+                type: String,
+                default: ''
+            }
         },
         data() {
             return {
-                computedValue: '',
-                showError: false
+                computedValue: ''
             }
         },
         mounted() {
@@ -63,16 +67,13 @@
         watch:{
             computedValue(val) {
                 if(this.type === 'date') {
-                    this.$emit('input', dayjs(val).format('YYYY-MM-DD'));
+                    if(val === '' || val === null) {
+                        this.$emit('input', '');
+                    } else {
+                        this.$emit('input', dayjs(val).format('YYYY-MM-DD'));
+                    }
                 } else {
                     this.$emit('input', val);
-                }
-                if(this.required) {
-                    if(val === '') {
-                        this.showError = true;
-                    } else {
-                        this.showError = false;
-                    }
                 }
             }
         }
@@ -126,6 +127,7 @@
             line-height: 20px;
             color: #ee3f14;
             font-size: 14px;
+            white-space: nowrap;
         }
     }
 </style>
