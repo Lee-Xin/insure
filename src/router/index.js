@@ -337,7 +337,11 @@ const router = new Router({
         {
             path: '/supplier_premium',
             name: 'supplier_premium',
-            component: SupplierPremium
+            component: SupplierPremium,
+            meta: {
+                title: '供应商保费',
+                subTitle: '这是供应商保费页面'
+            }
         },
         {
             path: '/target_configuration',
