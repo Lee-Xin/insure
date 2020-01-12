@@ -42,6 +42,23 @@
                     </form-item>
                 </el-col>
             </el-row>
+            <el-tabs style="margin-top: 20px; margin-bottom: 40px;" v-model="activeName" type="card">
+                <el-tab-pane label="公司简介" name="first">
+                    <div class="fuwenbenkaung">
+                        <editor-item v-model="editorContent.aboutUs"></editor-item>
+                    </div>
+                </el-tab-pane>
+                <el-tab-pane label="公司荣誉" name="second">
+                    <div class="fuwenbenkaung">
+                        <editor-item v-model="editorContent.companyGlories"></editor-item>
+                    </div>
+                </el-tab-pane>
+                <el-tab-pane label="发展历程" name="third">
+                    <div class="fuwenbenkaung">
+                        <editor-item v-model="editorContent.developmentHistory"></editor-item>
+                    </div>
+                </el-tab-pane>
+            </el-tabs>
         </div>
         <img-upload :isShow.sync="showImgUpload"></img-upload>
         <div class="bottom-toolbar">
@@ -60,10 +77,11 @@
     import {apiSupplierAdd, apiSupperlist, supplierGetCooperationStatus, supplierGetCooperationType} from "@/mock/api";
     import FormItem from '@/common/FormItem';
     import ImgUpload from '@/common/ImgUpload';
+    import EditorItem from "@/common/wangEnduit/EditorItem";
 
     export default {
         name: "NewSupplier",
-        components: {PageHr, FormItem, ImgUpload},
+        components: {PageHr, FormItem, ImgUpload, EditorItem},
         data() {
             return {
                 forms: {
@@ -210,7 +228,13 @@
                         url: ''
                     }
                 ],
+                editorContent: {
+                    aboutUs: '',
+                    companyGlories: '',
+                    developmentHistory: ''
+                },
                 showImgUpload: false,
+                activeName: 'first'
             };
         },
         created() {
@@ -269,7 +293,10 @@
                 Object.keys(this.otherForms).forEach(t => {
                     data[t] = this.otherForms[t].value;
                 });
-                return data;
+                return {
+                    ...data,
+                    ...this.editorContent
+                };
             }
         },
         methods: {
@@ -313,7 +340,8 @@
 <style scoped lang="scss">
     .wrapper {
         background-color: #fff;
-
+        height: 100%;
+        overflow-y: auto;
         .form-area {
             padding: 20px;
 
@@ -359,8 +387,7 @@
         .bottom-toolbar {
             position: absolute;
             width: calc(100% - 30px);
-            margin-left: 15px;
-            margin-right: 15px;
+            margin: 0 15px;
             padding: 0 20px;
             box-sizing: border-box;
             height: 80px;

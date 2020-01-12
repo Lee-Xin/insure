@@ -131,6 +131,8 @@
     margin: 0 auto;
     position: relative;
     z-index: 0;
+    font-size: 12px;
+    text-align: left;
   }
   .toolbar {
     border: 1px solid #ccc;
@@ -138,5 +140,6 @@
   .text {
     border: 1px solid #ccc;
     min-height: 500px;
+    height: 500px;
   }
 </style>

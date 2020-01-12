@@ -1,5 +1,5 @@
 <template>
-    <div class="wrapper">
+    <div class="form-wrapper">
         <div class="label" :class="{required: required}">
             <span v-if="required">*</span>
             {{label}}
@@ -84,7 +84,7 @@
     .el-input{
         width: initial!important;
     }
-    .wrapper {
+    .form-wrapper {
         position: relative;
         width: 100%;
         line-height: 36px;
@@ -96,8 +96,8 @@
         }
         .label {
             float: left;
-            height: 100%;
             width: 120px;
+            height: 36px;
             box-sizing: border-box;
             background-color: #fafafa;
             border: 1px solid #bebebe;
