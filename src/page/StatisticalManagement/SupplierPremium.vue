@@ -1,27 +1,21 @@
 <template>
   <div>
-    <main-title :title="title" :title_f="title_f" t></main-title>
     <page-hr></page-hr>
-    <div class="content_box" v-if="searchORnewsupplier">
+    <div class="content_box">
       <supplier-premium-search></supplier-premium-search>
     </div>
   </div>
 </template>
 
 <script>
-import MainTitle from "@/common/MainTitle";
 import PageHr from "@/common/PageHr";
 import SupplierPremiumSearch from "./component/SupplierPremiumSearch";
 export default {
   name: "SupplierPremium",
   data() {
-    return {
-      title: "供应商保费",
-      title_f: "这是供应商保费页面",
-      searchORnewsupplier: true
-    };
+    return {};
   },
-  components: { SupplierPremiumSearch, PageHr, MainTitle }
+  components: { SupplierPremiumSearch, PageHr }
 };
 </script>
 

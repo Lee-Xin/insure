@@ -1,21 +1,22 @@
 <template>
   <div>
     <div class="TargetConfigurationSearch">
-      <el-form ref="form" :model="form" label-width="80px">
-        <div class="TargetConfigurationSearch_row_3">
-          <el-form-item label="有效人力">
-            <el-input v-model="form.name" placeholder="标准保费大于此值"></el-input>
-          </el-form-item>
-          <el-form-item label="绩优人力">
-            <el-input v-model="form.name" placeholder="标准保费大于此值"></el-input>
-          </el-form-item>
-          <el-form-item label="季度有效人力">
-            <el-input v-model="form.name" placeholder="季度内标准保费大于此值"></el-input>
-          </el-form-item>
-        </div>
-        <div class="TargetConfigurationSearch_button">
-          <el-button type="primary">保存</el-button>
-        </div>
+      <el-form ref="form" :model="form" class="search_from">
+        <el-form-item>
+          <div class="cell_before">有效人力</div>
+          <el-input v-model="form.people" placeholder="标准保费大于此值"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <div class="cell_before">绩优人力</div>
+          <el-input v-model="form.goodPeople" placeholder="标准保费大于此值"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <div class="cell_before">季度有效人力</div>
+          <el-input v-model="form.quarterPeople" placeholder="季度内标准保费大于此值"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="saveData">保存</el-button>
+        </el-form-item>
       </el-form>
       <div class="TargetConfigurationSearch_table">
         <el-table :data="tableData" style="width: 100%">
@@ -31,49 +32,39 @@
 </template>
 
 <script>
-  import {apiTargetConfigurationSearch} from "../../../request/api";
-
-  export default {
-        name: "TargetConfigurationSearch",
-        data() {
-            return{
-                form: {
-                    name: '',
-                    region: '',
-
-                },
-                tableData: []
-            }
-        },
-      created() {
-            apiTargetConfigurationSearch().then(res => {
-                this.tableData = res.Data
-            })
-      }
+import {
+  apiTargetConfigurationSearch,
+  apiTargetConfigurationSave
+} from "@/mock/api";
+export default {
+  name: "TargetConfigurationSearch",
+  data() {
+    return {
+      form: { people: null, goodPeople: null, quarterPeople: null },
+      tableData: []
+    };
+  },
+  created() {
+    this.getList();
+  },
+  methods: {
+    getList() {
+      apiTargetConfigurationSearch().then(res => {
+        this.tableData = res.Data;
+      });
+    },
+    saveData() {
+      apiTargetConfigurationSearch(this.form).then(res => {
+        this.$message.info(res.Msg);
+      });
+    }
   }
+};
 </script>
 
 <style scoped>
-.TargetConfigurationSearch{
+.TargetConfigurationSearch {
   width: 100%;
   min-height: 300px;
-  /*background-color: red;*/
 }
-  .TargetConfigurationSearch_row_3{
-    width: 100%;
-    height: 40px;
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-  }
-.TargetConfigurationSearch_row_3 .el-form-item{
-  width: 26%;
-}
-  .TargetConfigurationSearch_button{
-    width: 100%;
-    height: 40px;
-    display: flex;
-    margin-top: 50px;
-    justify-content: center;
-  }
 </style>

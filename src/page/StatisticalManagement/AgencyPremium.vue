@@ -1,6 +1,5 @@
 <template>
   <div>
-    <main-title :title="title" :title_f="title_f" t></main-title>
     <page-hr></page-hr>
     <div class="content_box">
       <agency-premium-search></agency-premium-search>
@@ -9,18 +8,14 @@
 </template>
 
 <script>
-import MainTitle from "@/common/MainTitle";
 import PageHr from "@/common/PageHr";
 import AgencyPremiumSearch from "./component/AgencyPremiumSearch";
 export default {
   name: "AgencyPremium",
   data() {
-    return {
-      title: "机构保费",
-      title_f: "这是机构保费页面"
-    };
+    return {};
   },
-  components: { AgencyPremiumSearch, PageHr, MainTitle }
+  components: { AgencyPremiumSearch, PageHr }
 };
 </script>
 

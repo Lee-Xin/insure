@@ -9,21 +9,36 @@ import userData from './user';
 import upstreamFolding from './UpstreamPolicy/UpstreamFolding';
 import continuationRateBouns from './UpstreamPolicy/ContinuationRateBouns';
 import NewIncentivesSearch from './UpstreamPolicy/NewIncentivesSearch';
+import lipeigongsi from './lipeigongsi';
+import lipeilistdata from './lipeilistdata';
+import ketang from './ketang.js'
+import jigouclass from './jigouclass'
+import desk_list from './desk_list/index'
+import gongyingshang from './gongyingshang'
+import xianzhong from './xianzhong'
+import jigou from './jigou'
+import jigoutype from './jigoutype'
+import baodanstatus from './baodanstatus'
+import {AgencyPremiumExportData,AgencyPremiumSearchData} from './StatisticalManagement/AgencyPremium'
 
 import DownstreamFolding from "./DownstreamPolicy/DownstreamFolding";
+import lipei from './lipei';
 
 import InstitutionalExpensesSearch from "./DownstreamPolicy/InstitutionalExpensesSearch";
 import InstitutionalExpensesAdd from "./DownstreamPolicy/InstitutionalExpensesAdd";
-
+import toutiao from './toutiao'
+import {SupplierPremiumExportData,SupplierPremiumSearchData} from './StatisticalManagement/SupplierPremium'
 import WorkerManagementSearch from "./WorkerManagement/WorkerManagementSearch";
 import MarketingStaffRank from "./WorkerManagement/MarketingStaffRank";
 import InsuranceMarketer from "./WorkerManagement/InsuranceMarketer";
+import baoxiangongsi from './baoxiangongsidata';
 
 import BasicLawAdministration from "./BasicLawAdministration/BasicLawAdministration";
 import SalarySettlementSearch from "./BasicLawAdministration/SalarySettlementSearch"
 import SalarySettlement from "./BasicLawAdministration/SalarySettlement";
 import AttendanceManagementSearch from "./BasicLawAdministration/AttendanceManagementSearch";
 import DeductionSearch from "./BasicLawAdministration/DeductionSearch";
+import jigougunalidata from './jigougunalidata'
 
 import CompanyRetentionRateSearch from "./ContinuationRateReport/CompanyRetentionRateSearch";
 
@@ -41,6 +56,21 @@ import MyMessage from './MyMessage';
 import ExhibitionTools from './ExhibitionTools';
 import APPHomepageModule from './APPHomepageModule';
 import HomeData from './home'
+import lipeigongsibind from './lipeigongsibind';
+
+//获取所有的机构
+import mechanism from './mechanism';
+//获取所有的机构账号
+import MechanismAccount from './MechanismAccount';
+//员工账号
+import StaffAccount from './StaffAccount';
+//理赔知识
+import lipeidata from './lipeidata';
+//连续理赔
+import lianxulipei from './lianxulipei';
+
+
+
 
 let returnArray = {
     "StatusCode": 500,
@@ -625,7 +655,9 @@ Mock.mock(url + '/manpower_report_search', 'get', function () {
     return returnArray;
 })
 
-Mock.mock(url + '/target_configuration_search', 'get', function () {
+//目标配置
+//列表
+Mock.mock(RegExp(url + '/target_configuration_search'), 'get', function () {
     returnArray = {
         "StatusCode": 200,
         "Msg": "query success",
@@ -633,6 +665,15 @@ Mock.mock(url + '/target_configuration_search', 'get', function () {
     }
     return returnArray;
 })
+//保存
+Mock.mock(RegExp(url + '/target_configuration_save'), 'post', function () {
+    returnArray = {
+        "StatusCode": 200,
+        "Msg": "query success",
+        "Data": null
+    }
+    return returnArray;
+})   
 
 Mock.mock(url + '/company_retention_rate_search', 'get', function () {
     returnArray = {
@@ -933,8 +974,7 @@ Mock.mock(url + '/DelPolicyGroup', 'post', function (par) {
     })
     return returnArray
 });
-//获取所有的机构
-import mechanism from './mechanism';
+
 
 Mock.mock(url + '/GetAllmechanism', 'get', function () {
     returnArray = {
@@ -944,8 +984,7 @@ Mock.mock(url + '/GetAllmechanism', 'get', function () {
     }
     return returnArray
 });
-//获取所有的机构账号
-import MechanismAccount from './MechanismAccount';
+
 
 Mock.mock(url + '/GetAllmechanismAccount', 'post', function (param) {
 
@@ -1023,8 +1062,7 @@ Mock.mock(url + '/DelMechanismAccount', 'post', function (par) {
     })
     return returnArray
 });
-//员工账号
-import StaffAccount from './StaffAccount';
+
 
 Mock.mock(url + '/GetAllStaff', 'post', function (param) {
     param = qs.parse(param.body);
@@ -1103,7 +1141,6 @@ Mock.mock(url + '/DelStaff', 'post', function (par) {
 });
 
 //====================================================================================================
-import lipei from './lipei';
 
 Mock.mock(url + '/GetLpclass', 'get', function () {
 
@@ -1188,8 +1225,7 @@ Mock.mock(url + '/Dellipei', 'post', function (par) {
     return returnArray
 });
 
-//理赔知识
-import lipeidata from './lipeidata';
+
 
 Mock.mock(url + '/getlpdata', 'post', function (param) {
     param = qs.parse(param.body);
@@ -1264,8 +1300,7 @@ Mock.mock(url + '/dellpdata', 'post', function (par) {
     })
     return returnArray
 });
-//连续理赔
-import lianxulipei from './lianxulipei';
+
 
 Mock.mock(url + '/lxlipei', 'post', function (param) {
     param = qs.parse(param.body);
@@ -1342,7 +1377,6 @@ Mock.mock(url + '/dellxlipei', 'post', function (par) {
 });
 //理赔工具
 //理赔公司
-import lipeigongsi from './lipeigongsi';
 
 Mock.mock(url + '/lipeigongsi', 'post', function () {
     returnArray = {
@@ -1352,7 +1386,6 @@ Mock.mock(url + '/lipeigongsi', 'post', function () {
     }
     return returnArray
 });
-import lipeigongsibind from './lipeigongsibind';
 //理赔公司绑定  param传的是公司列表的id 数组
 Mock.mock(url + '/bindgongsi', 'post', function (param) {
     window.console.log(param)
@@ -1381,7 +1414,6 @@ Mock.mock(url + '/getlipeigongsidata', 'post', function (param) {
 
 
 //理赔列表
-import lipeilistdata from './lipeilistdata';
 
 Mock.mock(url + '/lipeilist', 'post', function (param) {
     param = qs.parse(param.body);
@@ -1458,7 +1490,6 @@ Mock.mock(url + '/dellipeidata', 'post', function (par) {
 });
 //保险公司获取
 
-import baoxiangongsi from './baoxiangongsidata';
 
 Mock.mock(url + '/baoxiangongsi', 'get', function () {
     returnArray = {
@@ -1470,7 +1501,6 @@ Mock.mock(url + '/baoxiangongsi', 'get', function () {
 });
 
 
-import ketang from './ketang.js'
 //课堂管理列表
 Mock.mock(url + '/zhishilist', 'post', function (param) {
     param = qs.parse(param.body);
@@ -1575,7 +1605,6 @@ Mock.mock(url + '/qxfabuzhishi', 'post', function (par) {
 //     // return userInfoMD5
 // }
 
-import toutiao from './toutiao'
 //头条列表
 Mock.mock(url + '/toutiaolist', 'post', function (param) {
     param = qs.parse(param.body);
@@ -1673,7 +1702,6 @@ Mock.mock(url + '/quxiaotoutiao', 'post', function (par) {
     return returnArray
 });
 //机构管理-机构分类获取
-import jigouclass from './jigouclass'
 
 Mock.mock(url + '/getjigouclass', 'post', function (param) {
     window.console.log(`当前页数${param},显示数据条数${param}`)
@@ -1695,7 +1723,6 @@ Mock.mock(url + '/setjigouclass', 'post', function (param) {
     return returnArray
 })
 //机构管理-机构列表
-import jigougunalidata from './jigougunalidata'
 
 Mock.mock(url + '/getjigoulist', 'post', function (param) {
     param = qs.parse(param.body);
@@ -1727,7 +1754,6 @@ Mock.mock(url + '/updjigoulist', 'post', function (param) {
 })
 //员工管理--内勤管理
 //列表
-import desk_list from './desk_list/index'
 
 Mock.mock(url + '/yglist', 'post', function (param) {
     param = qs.parse(param.body);
@@ -1966,11 +1992,6 @@ Mock.mock(/\/api\/test\/APPHomepageModule\/*/, 'get', function (par) {
 
 
 //获取险种   机构   供应商  机构类型 保单状态
-import gongyingshang from './gongyingshang'
-import xianzhong from './xianzhong'
-import jigou from './jigou'
-import jigoutype from './jigoutype'
-import baodanstatus from './baodanstatus'
 
 Mock.mock(url + '/getallparameter', 'get', function () {
     returnArray = {
@@ -1983,7 +2004,7 @@ Mock.mock(url + '/getallparameter', 'get', function () {
 //====================================================================================================
 
 //供应商保费
-import {SupplierPremiumExportData,SupplierPremiumSearchData} from './StatisticalManagement/SupplierPremium'
+
 //查询
 Mock.mock(RegExp(url + '/supplier_premium'), 'get', options => {
     returnArray = {
@@ -2004,7 +2025,6 @@ Mock.mock(RegExp(url + '/exportSupplier_premium'), 'post', options => {
 })
 
 //机构保费
-import {AgencyPremiumExportData,AgencyPremiumSearchData} from './StatisticalManagement/AgencyPremium'
 //查询
 Mock.mock(RegExp(url + '/agency_premium'), 'get', options => {
     returnArray = {

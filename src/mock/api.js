@@ -127,8 +127,14 @@ export const apiDeductionSearch = p => get("/deduction_search", p);
 export const apiCompanyRetentionRateSearch = p =>
   get("/company_retention_rate_search", p);
 
+//目标配置
+//列表
 export const apiTargetConfigurationSearch = p =>
   get("/target_configuration_search", p);
+//保存
+export const apiTargetConfigurationSave = p =>
+  post("/target_configuration_save", p);
+
 export const apiManpowerReportSearch = p => get("/manpower_report_search", p);
 
 //获取所有的员工账号
