@@ -8,7 +8,8 @@ import Index from "@/page/index";
 //  供应商管理   SupplierManagerment
 import ProductList from "@/page/SupplierManagement/ProductList";
 import SupplierList from "@/page/SupplierManagement/SupplierList";
-// import NewSupplier from "@/page/SupplierManagement/page/NewSupplier";
+import NewSupplier from "@/page/SupplierManagement/page/NewSupplier";
+import newProduct from "@/page/SupplierManagement/page/NewProduct";
 //  员工管理    WorkerManagement
 import DeskList from "@/page/WorkerManagement/DeskList";
 import InsuranceMarketer from "@/page/WorkerManagement/InsuranceMarketer";
@@ -85,7 +86,6 @@ import PermissionList from "@/page/AccountManagement/PermissionList";
 import AccountDetails from "@/page/AccountIDManagement/AccountDetails";
 import HeadSet from "@/page/AccountIDManagement/HeadSet";
 import PasswordReset from "@/page/AccountIDManagement/PasswordReset";
-import NewSupplier from "../page/SupplierManagement/page/NewSupplier";
 
 Vue.use(Router);
 
@@ -129,6 +129,15 @@ const router = new Router({
       meta: {
         title: "供应商管理",
         subTitle: "这是供应商管理页面"
+      }
+    },
+    {
+      path: "/new_product",
+      name: "new_product",
+      component: newProduct,
+      meta: {
+        title: "产品添加",
+        subTitle: "这是产品添加页面"
       }
     },
     //  员工管理

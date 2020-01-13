@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div class="wrapper">
+    <page-hr></page-hr>
     <el-form :model="ruleForm" ref="ruleForm" label-width="100px" class="demo-ruleForm">
       <el-form-item label="产品基本信息"></el-form-item>
       <div class="row_4">
@@ -79,13 +80,14 @@
 </template>
 
 <script>
+    import PageHr from "@/common/PageHr";
     import EditorItem from "@/common/wangEnduit/EditorItem";
     import {apiProductListAdd, apiProductList} from "../../../request/api";
     import ImportPopup from "../../../common/ImportPopup";
 
     export default {
         name: "NewProduct",
-        components: {ImportPopup, EditorItem},
+        components: {ImportPopup, EditorItem, PageHr},
         data() {
             return {
                 pay_way: '',
@@ -188,7 +190,12 @@
     }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+  .wrapper {
+    background-color: #fff;
+    height: 100%;
+    overflow-y: auto;
+  }
   #mybutton0,#mybutton1{
     width: 100px;
     height: 40px;
