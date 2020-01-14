@@ -325,7 +325,11 @@ const router = new Router({
     {
       path: "/manpower_report",
       name: "manpower_report",
-      component: ManpowerReport
+      component: ManpowerReport,
+      meta: {
+        title: "人力报表",
+        subTitle: "这是人力报表页面"
+      }
     },
     {
       path: "/number_report",

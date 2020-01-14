@@ -77,9 +77,40 @@
     width: 410px;
     margin: 0 auto;
 
+    .el-form-item__content {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      align-items: center;
+
+      .cell_before {
+        border: 1px solid #bebebe;
+        height: 36px;
+        line-height: 36px;
+        box-sizing: border-box;
+        border-right: none;
+        text-align: center;
+        background-color: #fafafa;
+        margin-right: -1px;
+        width: 110px !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+
+      &>div:last-child {
+        flex-grow: 1;
+      }
+    }
+
     .el-date-editor,
-    .el-select {
-      width: 100%;
+    .el-select,
+    .el-input {
+      width: 300px !important;
     }
   }
+}
+
+.content_box {
+  background: #fff;
+  padding-top: 10px;
 }

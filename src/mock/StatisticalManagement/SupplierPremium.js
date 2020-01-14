@@ -1,7 +1,8 @@
 //供应商保费查询数据
 
-//查询条件  insuranceBuyTime(投保时间):"2010-01-01,2020-12-12"
-//insuranceUseTime(承保时间):"2010-01-01,2020-12-12"
+//查询条件
+// insuranceBuyTime(投保时间):"2010-01-01,2020-12-12"
+// insuranceUseTime(承保时间):"2010-01-01,2020-12-12"
 // supplier(供应商)：1001，
 // mechanism(机构)：1001
 // type(保险类型)：1001
@@ -25,8 +26,9 @@ const SupplierPremiumSearchData = {
 };
 
 //导出
-//导出条件  insuranceBuyTime(投保时间):"2010-01-01,2020-12-12"
-//insuranceUseTime(承保时间):"2010-01-01,2020-12-12"
+//导出条件
+//  insuranceBuyTime(投保时间):"2010-01-01,2020-12-12"
+// insuranceUseTime(承保时间):"2010-01-01,2020-12-12"
 // supplier(供应商)：1001，
 // mechanism(机构)：1001
 // type(保险类型)：1001

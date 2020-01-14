@@ -202,6 +202,7 @@ export const quxiaotoutiao = p => post("quxiaotoutiao", p);
 //机构管理-机构分类
 export const getjigouclass = p => post("getjigouclass", p);
 export const setjigouclass = p => post("setjigouclass", p);
+export const getjigoujibie = p => get("jigoujibie", p);
 //机构管理-机构列表
 export const getjigoulist = p => post("getjigoulist", p);
 export const addjigoulist = p => post("addjigoulist", p);
@@ -217,15 +218,18 @@ export const delyg = p => post("delyg", p);
 export const getallparameter = () => get("/getallparameter");
 //统计管理-供应商保费
 /********查询接口 */
-export const getSupplierPermiunr = () => get("/supplier_premium");
+export const getSupplierPermiunr = p => get("/supplier_premium", p);
 /*********导出接口 */
-export const exportSupplierPermiunr = () => post("/exportSupplier_premium");
+export const exportSupplierPermiunr = p => post("/exportSupplier_premium", p);
 
 //统计管理-机构保费
 /********查询接口 */
-export const getAgencyPermiunr = () => get("/agency_premium");
+export const getAgencyPermiunr = p => get("/agency_premium", p);
 /*********导出接口 */
-export const exportAgencyPermiunr = () => post("/exportAgency_premium");
+export const exportAgencyPermiunr = p => post("/exportAgency_premium", p);
+//统计管理-人力报表
+/*********导出接口 */
+export const exportManpowerReport = p => post("/exportManpower_report", p);
 
 // 我的消息
 export const MyMessage = obj => get("MyMessage", obj);

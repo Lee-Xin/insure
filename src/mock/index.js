@@ -43,7 +43,7 @@ import jigougunalidata from './jigougunalidata'
 import CompanyRetentionRateSearch from "./ContinuationRateReport/CompanyRetentionRateSearch";
 
 import TargetConfigurationSearch from "./StatisticalManagement/TargetConfigurationSearch";
-import ManpowerReportSearch from "./StatisticalManagement/ManpowerReportSearch";
+import {ManpowerReportSearch,ManpowerReportExportData} from "./StatisticalManagement/ManpowerReportSearch";
 
 import accountdata from './Accountdetails';
 import Strategygroup from './Strategygroup';
@@ -646,7 +646,7 @@ Mock.mock(url + '/sales_expenses_search', 'post', param => {
 });
 
 
-Mock.mock(url + '/manpower_report_search', 'get', function () {
+Mock.mock(RegExp(url + '/manpower_report_search'), 'get', function () {
     returnArray = {
         "StatusCode": 200,
         "Msg": "query success",
@@ -1703,6 +1703,16 @@ Mock.mock(url + '/quxiaotoutiao', 'post', function (par) {
 });
 //机构管理-机构分类获取
 
+import  jigoujibie from "./jigoujibie"
+Mock.mock(RegExp(url + '/jigoujibie'), 'get', function (param) {
+    returnArray = {
+        "StatusCode": 200,
+        "Msg": "query success",
+        "Data": jigoujibie
+    }
+    return returnArray
+})
+
 Mock.mock(url + '/getjigouclass', 'post', function (param) {
     window.console.log(`当前页数${param},显示数据条数${param}`)
     returnArray = {
@@ -2040,6 +2050,16 @@ Mock.mock(RegExp(url + '/exportAgency_premium'), 'post', options => {
         "StatusCode": 200,
         "Msg": "query success",
         "Data": AgencyPremiumExportData
+    }
+    return returnArray
+})
+//人力报表
+//导出
+Mock.mock(RegExp(url + '/exportManpower_report'), 'post', options => {
+    returnArray = {
+        "StatusCode": 200,
+        "Msg": "query success",
+        "Data": ManpowerReportExportData
     }
     return returnArray
 })
