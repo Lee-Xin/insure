@@ -230,6 +230,13 @@ export const exportAgencyPermiunr = p => post("/exportAgency_premium", p);
 //统计管理-人力报表
 /*********导出接口 */
 export const exportManpowerReport = p => post("/exportManpower_report", p);
+//统计管理-产能报表
+/**********保单性质列表 */
+export const getCapacityTypeList = p => get("/capacity_type_list", p);
+//查询
+export const getCapacityList = p => get("/capacity_list", p);
+//导出
+export const exportCapacity = p => post("/capacity_export", p);
 
 // 我的消息
 export const MyMessage = obj => get("MyMessage", obj);

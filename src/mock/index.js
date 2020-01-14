@@ -2063,4 +2063,35 @@ Mock.mock(RegExp(url + '/exportManpower_report'), 'post', options => {
     }
     return returnArray
 })
+
+//产能报表
+import{baodanxingzi,capacityList,capacityExport} from'./StatisticalManagement/CapacityStatement';
+
+//保单性质列表
+Mock.mock(RegExp(url + '/capacity_type_list'), 'get', options => {
+    returnArray = {
+        "StatusCode": 200,
+        "Msg": "query success",
+        "Data": baodanxingzi
+    }
+    return returnArray
+})
+//查询
+Mock.mock(RegExp(url + '/capacity_list'), 'get', options => {
+    returnArray = {
+        "StatusCode": 200,
+        "Msg": "query success",
+        "Data": capacityList
+    }
+    return returnArray
+})
+//导出
+Mock.mock(RegExp(url + '/capacity_export'), 'post', options => {
+    returnArray = {
+        "StatusCode": 200,
+        "Msg": "query success",
+        "Data": capacityExport
+    }
+    return returnArray
+})
 export default Mock;

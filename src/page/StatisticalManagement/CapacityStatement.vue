@@ -1,113 +1,154 @@
 <template>
   <div>
-    <main-title :title="title" :title_f="title_f"></main-title>
     <page-hr></page-hr>
-    <div class="content_box" v-if="searchORnewsupplier">
-      <el-form ref="form" :model="form" label-width="80px">
-        <div class="CapacityStatementSearch">
-          <el-form-item label="分支机构">
-            <el-select v-model="form.region" placeholder="请输入分支机构">
-              <el-option label="全部机构" value="shanghai"></el-option>
-              <el-option label="重庆众鼎保险代理有限公司南岸区第三营业部" value="beijing"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="计绩年月">
-            <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
-          </el-form-item>
-          <el-form-item label="承保日期">
-            <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
-          </el-form-item>
-          <el-form-item label="保单性质">
-            <el-select v-model="form.region" placeholder="请选择保单性质">
-              <el-option label="全部" value="shanghai"></el-option>
-              <el-option label="参与方案" value="beijing"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-button type="primary">搜索</el-button>
-          <el-button type="primary">导出</el-button>
-        </div>
+    <div class="content_box">
+      <el-form ref="form" :model="form" class="search_from" style="padding-left:10px">
+        <el-form-item>
+          <div class="cell_before">选择机构</div>
+          <el-select v-model="form.mechanism" placeholder="请选择分支机构" clearable filterable>
+            <el-option
+              v-for="item in mechanismList"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label>
+          <div class="cell_before">计绩年月</div>
+          <el-date-picker type="month" v-model="form.month" value-format="yyyy-MM"></el-date-picker>
+        </el-form-item>
+        <el-form-item label>
+          <div class="cell_before">承保日期</div>
+          <el-date-picker
+            v-model="form.insuranceUseTime"
+            type="daterange"
+            value-format="yyyy-MM-dd"
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+          ></el-date-picker>
+        </el-form-item>
+        <el-form-item label>
+          <div class="cell_before">保单性质</div>
+
+          <el-select v-model="form.baodanType" multiple collapse-tags placeholder="请选择保单性质">
+            <el-option
+              v-for="item in baodanxingziList"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="getList">搜索</el-button>
+          <el-button type="primary" @click="exportFile">导出</el-button>
+        </el-form-item>
       </el-form>
       <div class="CapacityStatementSearch_button">
-        <el-button type="primary">按照标准保费计算</el-button>
-        <el-button type="primary">按照规模保费计算</el-button>
+        <el-button
+          :class="{'el-button--primary':form.jisuanType==1?true:false,'el-button--default':form.jisuanType==2?true:false}"
+          @click="checkTag(1)"
+        >按照标准保费计算</el-button>
+        <el-button
+          :class="{'el-button--primary':form.jisuanType==2?true:false,'el-button--default':form.jisuanType==1?true:false}"
+          @click="checkTag(2)"
+        >按照规模保费计算</el-button>
       </div>
-      <div class="CapacityStatementSearch_table">
-
-      </div>
-    </div>
-    <div v-if="searchORnewsupplier">
-      <page-ination></page-ination>
+      <el-table :data="tableList" style="width: 100%">
+        <el-table-column prop="name" label="机构简称"></el-table-column>
+        <el-table-column prop="startHuman" label="期初人力"></el-table-column>
+        <el-table-column prop="endHuman" label="期末人力"></el-table-column>
+        <el-table-column prop="money" label="标保保费"></el-table-column>
+        <el-table-column prop="num" label="承保件数"></el-table-column>
+        <el-table-column prop="buyNum" label="开单人数"></el-table-column>
+        <el-table-column prop="humanAvgMoney" label="人均保费"></el-table-column>
+        <el-table-column prop="humanAvgNum" label="人均件数"></el-table-column>
+        <el-table-column prop="numAvgMoney" label="件均保费"></el-table-column>
+        <el-table-column prop="humanAvgProduct" label="人均产能"></el-table-column>
+        <el-table-column prop="time" label="时间段"></el-table-column>
+      </el-table>
     </div>
   </div>
 </template>
 
 <script>
-    import MainTitle from "@/common/MainTitle";
-    import PageHr from "@/common/PageHr";
-    import PageInation from "../../common/PageInation";
+import PageHr from "@/common/PageHr";
+import {
+  getallparameter,
+  getCapacityTypeList,
+  getCapacityList,exportCapacity
+} from "@/mock/api";
+import formatDate from "@/common/formatDate.js";
 
-    export default {
-        name: "CapacityStatement",
-        data() {
-            return {
-                title: '产能报表',
-                title_f: '这是产能报表页面',
-                searchORnewsupplier: true,
-                form: {
-                    name: '',
-                    region: ''
-                }
-            }
-        },
-        components: {PageInation, PageHr, MainTitle}
+export default {
+  name: "CapacityStatement",
+  data() {
+    return {
+      form: {
+        mechanism: null,
+        month: null,
+        insuranceUseTime: null,
+        baodanType: null,
+        jisuanType: 1
+      },
+      mechanismList: [],
+      baodanxingziList: [],
+      tableList: []
+    };
+  },
+
+  created() {
+    this.form.month = formatDate.month(new Date());
+    this.getData();
+    this.getTypeList();
+    this.getList();
+  },
+  components: { PageHr },
+  methods: {
+    getData() {
+      getallparameter().then(res => {
+        this.mechanismList = res.Data.jigou;
+      });
+    },
+    getTypeList() {
+      getCapacityTypeList().then(res => {
+        this.baodanxingziList = res.Data;
+      });
+    },
+    checkTag(n) {
+      this.form.jisuanType = n;
+      this.getList();
+    },
+    getList() {
+      getCapacityList(this.form).then(res => {
+        this.tableList = res.Data;
+      });
+    },
+    exportFile() {
+      exportCapacity().then(res => {
+        console.log(res);
+        this.$message.success(res.data.Msg);
+        // window.open(res.data.Data.url);
+      });
     }
+  }
+};
 </script>
 
-<style scoped>
-  .content_box {
-    width: 100%;
-    height: auto;
-    box-sizing: border-box;
-    padding-left: 16px;
-  }
-
-  .content_title_1 {
-    width: 100%;
-    height: 18px;
-    display: block;
-    line-height: 18px;
-    font-size: 18px;
-    color: #ef8412;
-    text-align: left;
-    margin-bottom: 20px;
-  }
-
-  .CapacityStatementSearch {
-    width: 100%;
-    height: 40px;
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    /*background-color: red;*/
-  }
-
-  .CapacityStatementSearch button{
-    margin: 0 30px;
-  }
-  .CapacityStatementSearch_button{
-    margin-top: 40px;
-    width: 100%;
-    height: 40px;
-    display: flex;
-    justify-content: flex-start;
-  }
-  .CapacityStatementSearch_button button{
-    margin: 0 30px;
-  }
-  .CapacityStatementSearch_table{
-    width: 100%;
-    margin-top: 50px;
-    min-height: 300px;
-    background-color: red;
-  }
+<style scoped style="less">
+.content_box {
+  width: 100%;
+  height: auto;
+  min-height: 500px;
+  box-sizing: border-box;
+  padding-left: 16px;
+  background: #fff;
+  padding-top: 10px;
+}
+.CapacityStatementSearch_button {
+  text-align: left;
+  margin: 10px;
+}
 </style>

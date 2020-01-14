@@ -310,7 +310,11 @@ const router = new Router({
     {
       path: "/capacity_statement",
       name: "capacity_statement",
-      component: CapacityStatement
+      component: CapacityStatement,
+      meta: {
+        title: "产能报表",
+        subTitle: "这是产能报表页面"
+      }
     },
     {
       path: "/direct_team_report",
