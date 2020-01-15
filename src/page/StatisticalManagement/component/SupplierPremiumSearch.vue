@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="SupplierPremiumSearch">
-      <el-form ref="form" :model="form" class="search_from">
+      <el-form ref="form" :model="form" class="search_form">
         <el-form-item>
           <div class="cell_before">投保时间</div>
           <el-date-picker

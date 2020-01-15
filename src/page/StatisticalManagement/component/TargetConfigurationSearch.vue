@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="TargetConfigurationSearch">
-      <el-form ref="form" :model="form" class="search_from">
+      <el-form ref="form" :model="form" class="search_form">
         <el-form-item>
           <div class="cell_before">有效人力</div>
           <el-input v-model="form.people" placeholder="标准保费大于此值"></el-input>

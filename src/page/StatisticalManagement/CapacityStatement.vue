@@ -2,7 +2,7 @@
   <div>
     <page-hr></page-hr>
     <div class="content_box">
-      <el-form ref="form" :model="form" class="search_from" style="padding-left:10px">
+      <el-form ref="form" :model="form" class="search_form" style="padding-left:10px">
         <el-form-item>
           <div class="cell_before">选择机构</div>
           <el-select v-model="form.mechanism" placeholder="请选择分支机构" clearable filterable>

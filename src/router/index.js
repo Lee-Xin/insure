@@ -305,7 +305,11 @@ const router = new Router({
     {
       path: "/business_statement",
       name: "business_statement",
-      component: BusinessStatement
+      component: BusinessStatement,
+      meta: {
+        title: "业务报表",
+        subTitle: "这是业务报表页面"
+      }
     },
     {
       path: "/capacity_statement",

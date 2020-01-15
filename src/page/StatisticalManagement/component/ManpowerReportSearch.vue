@@ -4,7 +4,7 @@
       <el-tabs type="border-card">
         <el-tab-pane label="月度">
           <div class="ManpowerReportSearch_moth">
-            <el-form ref="monthForm" :model="monthForm" class="search_from">
+            <el-form ref="monthForm" :model="monthForm" class="search_form">
               <el-form-item>
                 <div class="cell_before">机构</div>
 
@@ -49,7 +49,7 @@
         </el-tab-pane>
         <el-tab-pane label="季度">
           <div class="ManpowerReportSearch_moth">
-            <el-form ref="monthForm" :model="monthForm" class="search_from">
+            <el-form ref="monthForm" :model="monthForm" class="search_form">
               <el-form-item>
                 <div class="cell_before">机构</div>
                 <el-select

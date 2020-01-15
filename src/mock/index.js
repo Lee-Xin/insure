@@ -2094,4 +2094,26 @@ Mock.mock(RegExp(url + '/capacity_export'), 'post', options => {
     }
     return returnArray
 })
+
+//业务报表
+import{businessList, businessExport} from'./StatisticalManagement/BusinessStatement';
+
+//查询
+Mock.mock(RegExp(url + '/business_list'), 'get', options => {
+    returnArray = {
+        "StatusCode": 200,
+        "Msg": "query success",
+        "Data": businessList
+    }
+    return returnArray
+})
+//导出
+Mock.mock(RegExp(url + '/business_export'), 'post', options => {
+    returnArray = {
+        "StatusCode": 200,
+        "Msg": "query success",
+        "Data": businessExport
+    }
+    return returnArray
+})
 export default Mock;
