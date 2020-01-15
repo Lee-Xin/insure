@@ -2116,4 +2116,26 @@ Mock.mock(RegExp(url + '/business_export'), 'post', options => {
     }
     return returnArray
 })
+
+//目标进度追踪
+import{targetProgressList, targetProgressExport} from'./StatisticalManagement/TargetProgressTracking';
+
+//查询
+Mock.mock(RegExp(url + '/targetProgress_list'), 'get', options => {
+    returnArray = {
+        "StatusCode": 200,
+        "Msg": "query success",
+        "Data": targetProgressList
+    }
+    return returnArray
+})
+//导出
+Mock.mock(RegExp(url + '/targetProgress_export'), 'post', options => {
+    returnArray = {
+        "StatusCode": 200,
+        "Msg": "query success",
+        "Data": targetProgressExport
+    }
+    return returnArray
+})
 export default Mock;

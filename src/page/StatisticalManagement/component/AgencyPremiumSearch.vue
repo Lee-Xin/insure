@@ -84,7 +84,7 @@
       </el-form>
       <div id="AgencyCharInit" style="height:400px;margin-bottom:20px"></div>
       <el-dialog title="导出报表" :visible.sync="dialogVisible">
-        <el-form ref="exportForm" :model="exportForm" class="dialog_from_center">
+        <el-form ref="exportForm" :model="exportForm" class="dialog_from_center100">
           <el-form-item>
             <el-date-picker
               v-model="exportForm.insuranceBuyTime"

@@ -242,6 +242,11 @@ export const exportCapacity = p => post("/capacity_export", p);
 export const getBusinessList = p => get("/business_list", p);
 //导出
 export const exportBusiness = p => post("/business_export", p);
+//统计管理-目标进度追踪
+//查询
+export const gettargetProgressList = p => get("/targetProgress_list", p);
+//导出
+export const exporttargetProgress = p => post("/targetProgress_export", p);
 
 // 我的消息
 export const MyMessage = obj => get("MyMessage", obj);

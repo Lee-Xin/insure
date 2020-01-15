@@ -380,7 +380,11 @@ const router = new Router({
     {
       path: "/target_progress_tracking",
       name: "target_progress_tracking",
-      component: TargetProgressTracking
+      component: TargetProgressTracking,
+      meta: {
+        title: "目标进度追踪",
+        subTitle: "这是目标进度追踪页面"
+      }
     },
     {
       path: "/team_growth_report",

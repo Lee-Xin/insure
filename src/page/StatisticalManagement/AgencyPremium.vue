@@ -5,21 +5,22 @@
       <agency-premium-search></agency-premium-search>
     </div>
   </div>
-</template>
-
-<script>
+</template><script>
 import PageHr from "@/common/PageHr";
 import AgencyPremiumSearch from "./component/AgencyPremiumSearch";
+
 export default {
   name: "AgencyPremium",
   data() {
     return {};
   },
-  components: { AgencyPremiumSearch, PageHr }
-};
-</script>
 
-<style scoped>
+  components: {
+    AgencyPremiumSearch,
+    PageHr
+  }
+};
+</script><style scoped>
 .content_box {
   width: 100%;
   height: auto;
