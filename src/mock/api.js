@@ -247,6 +247,15 @@ export const exportBusiness = p => post("/business_export", p);
 export const gettargetProgressList = p => get("/targetProgress_list", p);
 //导出
 export const exporttargetProgress = p => post("/targetProgress_export", p);
+//统计管理-产品结构报表
+//查询
+export const getproductStructureList = p => get("/productStructure_list", p);
+export const getproductStructureDetailList = p =>
+  get("/productStructureDetail_list", p);
+//导出
+export const exportproductStructure = p => post("/productStructure_export", p);
+export const exportproductStructureDetail = p =>
+  post("/productStructureDetail_export", p);
 
 // 我的消息
 export const MyMessage = obj => get("MyMessage", obj);

@@ -357,7 +357,11 @@ const router = new Router({
     {
       path: "/product_structure_report",
       name: "product_structure_report",
-      component: ProductStructureReport
+      component: ProductStructureReport,
+      meta: {
+        title: "产品结构报表",
+        subTitle: "这是产品结构报表页面"
+      }
     },
     {
       path: "/supplier_premium",

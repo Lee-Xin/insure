@@ -2138,4 +2138,48 @@ Mock.mock(RegExp(url + '/targetProgress_export'), 'post', options => {
     }
     return returnArray
 })
+
+//产品结构报表
+import{productStructureList,
+    productStructureExport,
+    productStructureExportDetail,
+    productStructureDetailList} from'./StatisticalManagement/ProductStructureReport';
+
+//查询
+Mock.mock(RegExp(url + '/productStructure_list'), 'get', options => {
+    returnArray = {
+        "StatusCode": 200,
+        "Msg": "query success",
+        "Data": productStructureList
+    }
+    return returnArray
+})
+//详情
+Mock.mock(RegExp(url + '/productStructureDetail_list'), 'get', options => {
+    returnArray = {
+        "StatusCode": 200,
+        "Msg": "query success",
+        "Data": productStructureDetailList
+    }
+    return returnArray
+})
+//导出
+Mock.mock(RegExp(url + '/productStructure_export'), 'post', options => {
+    returnArray = {
+        "StatusCode": 200,
+        "Msg": "query success",
+        "Data": productStructureExport
+    }
+    return returnArray
+})
+//导出详情
+Mock.mock(RegExp(url + '/productStructureDetail_export'), 'post', options => {
+    returnArray = {
+        "StatusCode": 200,
+        "Msg": "query success",
+        "Data": productStructureExportDetail
+    }
+    return returnArray
+})
+
 export default Mock;
