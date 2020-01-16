@@ -11,6 +11,9 @@
             v-if="type === 'input'"
             :placeholder="placeholder"
         >
+            <template v-if="definedSlot" :is="definedSlot.component" :slot="definedSlot.name">
+                1
+            </template>
         </el-input>
         <el-select
             class="form-item"
@@ -34,6 +37,14 @@
             :placeholder="placeholder"
         >
         </el-date-picker>
+        <el-cascader
+            v-else-if="type === 'region'"
+            class="form-item"
+            :class="{isError: errorText !== ''}"
+            :options="regionOptions"
+            v-model="computedValue"
+        >
+        </el-cascader>
         <p class="error" v-show="errorText !== ''">
             {{errorText}}
         </p>
@@ -41,6 +52,7 @@
 </template>
 
 <script>
+    import { regionData } from 'element-china-area-data'
     import dayjs from 'dayjs';
     export default {
         name: "FormItem",
@@ -54,11 +66,13 @@
             errorText: {
                 type: String,
                 default: ''
-            }
+            },
+            definedSlot: [Object]
         },
         data() {
             return {
-                computedValue: ''
+                computedValue: '',
+                regionOptions: regionData
             }
         },
         mounted() {
@@ -107,7 +121,9 @@
                 color: #ef8411;
             }
         }
-
+        .el-cascader{
+            line-height: 36px;
+        }
         /deep/.form-item {
             display: block;
             margin-left: 120px;

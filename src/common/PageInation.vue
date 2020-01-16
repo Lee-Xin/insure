@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="block">
-            <span class="demonstration">完整功能</span>
+            <slot></slot>
             <el-pagination
                 class="page-bar"
                 @size-change="handleSizeChange"

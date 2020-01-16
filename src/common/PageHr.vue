@@ -16,6 +16,5 @@ export default {
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
   background-color: #2c8cf0;
-  margin-top: 20px;
 }
 </style>

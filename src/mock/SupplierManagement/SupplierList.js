@@ -13,7 +13,7 @@ const supplierList=[
         "id": "-1"
     }
 ]
-for(let i = 0; i < 55; i++) {
+for(let i = 0; i < 52; i++) {
     supplierList.push({
         "code": "123456",
         "shortName": "泰康人寿" + i,

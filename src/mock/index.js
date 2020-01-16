@@ -673,7 +673,7 @@ Mock.mock(RegExp(url + '/target_configuration_save'), 'post', function () {
         "Data": null
     }
     return returnArray;
-})   
+})
 
 Mock.mock(url + '/company_retention_rate_search', 'get', function () {
     returnArray = {
@@ -1735,14 +1735,13 @@ Mock.mock(url + '/setjigouclass', 'post', function (param) {
 //机构管理-机构列表
 
 Mock.mock(url + '/getjigoulist', 'post', function (param) {
-    param = qs.parse(param.body);
-    window.console.log(`当前页数${param.PageIndex},显示数据条数${param.PageSize}`)
-    returnArray = {
-        "StatusCode": 200,
-        "Msg": "query success",
-        "Data": {TotalPage: 20, Rows: jigougunalidata, Records: 100}
+    return {
+        "success": true,
+        "result": {
+            "totalCount": jigougunalidata.length,
+            "items": jigougunalidata
+        }
     }
-    return returnArray
 })
 Mock.mock(url + '/addjigoulist', 'post', function (param) {
     window.console.log(`数据${param}`)
