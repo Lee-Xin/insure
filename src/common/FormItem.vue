@@ -11,9 +11,7 @@
             v-if="type === 'input'"
             :placeholder="placeholder"
         >
-            <template v-if="definedSlot" :is="definedSlot.component" :slot="definedSlot.name">
-                1
-            </template>
+            <component v-if="definedSlot" :is="definedSlot.component" :slot="definedSlot.name"></component>
         </el-input>
         <el-select
             class="form-item"
@@ -95,9 +93,6 @@
 </script>
 
 <style scoped lang="scss">
-    .el-input{
-        width: initial!important;
-    }
     .form-wrapper {
         position: relative;
         width: 100%;
@@ -126,6 +121,7 @@
         }
         /deep/.form-item {
             display: block;
+            width: calc(100% - 120px);
             margin-left: 120px;
             &.isError{
                 .el-input__inner{

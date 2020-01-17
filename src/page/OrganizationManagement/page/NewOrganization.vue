@@ -130,14 +130,12 @@
             <div class="row_2">
                 <el-form-item label="地址" prop="name">
                     <el-input v-model="ruleForm.naddress" placeholder="请输入地址"></el-input>
-                    <el-amap-search-box class="search-box" :search-option="searchOption"
-                                        :on-search-result="onSearchResult"></el-amap-search-box>
                 </el-form-item>
                 <el-form-item label="经纬度" prop="name">
                     <el-input v-model="ruleForm.lnglat" placeholder="经纬度自动展示"></el-input>
                 </el-form-item>
             </div>
-            <div class="row_2">
+            <div v-if="showMap" class="row_2">
                 <el-form-item>
                     <el-amap ref="map" vid="amapDemo" :center="center" :zoom="12" :plugin="plugin" :events="events"
                              class="amap-demo">
@@ -153,7 +151,6 @@
                     <el-input v-model="ruleForm.zuoxi" placeholder="请填写作息时间"></el-input>
                 </el-form-item>
             </div>
-
             <el-form-item>
                 <el-button type="primary" @click="submitForm()">保存/提交</el-button>
                 <el-button @click="returnPrev">返回</el-button>
@@ -168,7 +165,22 @@
     import {addjigoulist} from '@/request/api'
     import VueAMap from 'vue-amap';
     import Vue from 'vue';
-
+    let that = null;
+    const addressBtn = {
+        name: 'addressBtn',
+        render(h) {
+            return h('el-button', {
+                attrs: {
+                    icon: 'el-icon-search'
+                },
+                on: {
+                    click: () => {
+                        that.showMap = true;
+                    }
+                }
+            }, '在地图中定位')
+        }
+    }
     Vue.use(VueAMap);
     VueAMap.initAMapApiLoader({
         key: '5db10bb7ce525d18f79b2df704f885d8',
@@ -387,12 +399,12 @@
                         type: 'input',
                         definedSlot: {
                             name: 'append',
-                            component: function(h) {
-                                return h('p', 123)
-                            }
-                        }
+                            component: addressBtn
+                        },
+                        span: 12
                     }
                 },
+                showMap: false,
                 ruleForm: {
                     code: '机构代码1',
                     name: '名称1',
@@ -445,7 +457,7 @@
             }
         },
         mounted() {
-
+            that = this;
         }
     }
 </script>
