@@ -1714,11 +1714,12 @@ Mock.mock(RegExp(url + '/jigoujibie'), 'get', function (param) {
 })
 
 Mock.mock(url + '/getjigouclass', 'post', function (param) {
-    window.console.log(`当前页数${param},显示数据条数${param}`)
     returnArray = {
-        "StatusCode": 200,
-        "Msg": "query success",
-        "Data": jigouclass
+        "success": true,
+        "result": {
+            "totalCount": jigouclass.length,
+            "items": jigouclass
+        }
     }
     return returnArray
 })
