@@ -28,9 +28,11 @@ export const apiProductListPageInation = p => getUrl('/product_list_pageInation'
 export const apiProductListAdd = p => post('/product_list_add', p);
 //----------------上游折标-----------------
 //---上游折标search参数
-export const apiUpstreamFoldingSearch = () => get('/upstream_folding');
+export const apiUpstreamFoldingSearch = p => getUrl('/upstream_folding', p);
 //---上游折标分页
 export const apiUpstreamFoldingPageInation = p => getUrl('/upstream_folding_pageInation', p);
+// 上游折标产品列表
+export const apiUpstreamFoldingProductList = p => getUrl('/upstream_folding_productList', p);
 //---上游折标搜索
 export const apiUpstreamFolding = p => post('/upstream_folding_search', p);
 //---上游折标保存

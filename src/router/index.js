@@ -189,7 +189,11 @@ const router = new Router({
         {
             path: "/organization_classif",
             name: "organization_classif",
-            component: OrganizationClassif
+            component: OrganizationClassif,
+            meta: {
+                title: '机构分类',
+                subTitle: '欢迎您使用机构分类页面'
+            }
         },
         //  上游政策    UpstreamPolicy
         {
@@ -215,7 +219,11 @@ const router = new Router({
         {
             path: "/upstream_folding",
             name: "upstream_folding",
-            component: UpstreamFolding
+            component: UpstreamFolding,
+            meta: {
+                title: '上游折标',
+                subTitle: '这是上游折标页面'
+            }
         },
         //  下游政策    DownstreamPolicy
         {

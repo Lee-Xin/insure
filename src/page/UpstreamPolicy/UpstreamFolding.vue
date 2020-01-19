@@ -1,18 +1,15 @@
 <template>
-  <div>
-    <main-title :title="title" :title_f="title_f"></main-title>
-    <page-hr></page-hr>
-    <div class="content_box" v-if="searchORnewsupplier">
-      <span class="content_title_1">快速搜索</span>
-      <upstream-folding-serach @showAddUpstream="showAddUpstreamFolding"></upstream-folding-serach>
+    <div style="height: 100%; background-color: #fff;">
+        <page-hr></page-hr>
+        <div class="content_box" v-if="searchORnewsupplier">
+            <span class="content_title_1">快速搜索</span>
+            <upstream-folding-serach @showAddUpstream="showAddUpstreamFolding"></upstream-folding-serach>
+        </div>
+        <upstream-folding-add @showSearch="showSearch" v-if="!searchORnewsupplier"></upstream-folding-add>
     </div>
-    <upstream-folding-add @showSearch="showSearch" v-if="!searchORnewsupplier"></upstream-folding-add>
-
-  </div>
 </template>
 
 <script>
-    import MainTitle from "@/common/MainTitle";
     import PageHr from "@/common/PageHr";
     import UpstreamFoldingSerach from "./component/UpstreamFoldingSerach";
 
@@ -29,7 +26,7 @@
             }
         },
         methods: {
-            showAddUpstreamFolding () {
+            showAddUpstreamFolding() {
                 // window.console.log('asf')
                 this.searchORnewsupplier = false;
             },
@@ -37,35 +34,34 @@
                 this.searchORnewsupplier = true;
             }
         },
-        components: {UpstreamFoldingAdd, UpstreamFoldingSerach, PageHr, MainTitle}
+        components: {UpstreamFoldingAdd, UpstreamFoldingSerach, PageHr}
     }
 </script>
 
 <style scoped>
-  .upstreamFolding_table {
-    width: 100%;
-    height: 500px;
-  }
+    .upstreamFolding_table {
+        width: 100%;
+        height: 500px;
+    }
 
-  .content_box {
-    width: 100%;
-    height: auto;
-    box-sizing: border-box;
-    /*background-color: blue;*/
-    padding-left: 16px;
-    /*background-color: red;*/
-  }
+    .content_box {
+        width: 100%;
+        height: 100%;
+        padding: 0 16px;
+        box-sizing: border-box;
+    }
 
-  .content_title_1 {
-    width: 100%;
-    height: 18px;
-    display: block;
-    line-height: 18px;
-    font-size: 18px;
-    color: #ef8412;
-    text-align: left;
-    margin-bottom: 20px;
-  }
+    .content_title_1 {
+        width: 100%;
+        height: 18px;
+        display: block;
+        line-height: 18px;
+        font-size: 18px;
+        color: #ef8412;
+        text-align: left;
+        padding: 0 8px;
+        margin: 20px 0;
+    }
 
 
 </style>

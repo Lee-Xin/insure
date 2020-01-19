@@ -128,7 +128,7 @@ export function getUrl(url, param) {
         if(arrParams.length > 0){
             url = url + '?';
             for (let index in param){
-                if (param[index]){
+                if (param.hasOwnProperty(index)){
                     url += index + '=' + param[index] + '&';
                 }
             }

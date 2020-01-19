@@ -2,7 +2,7 @@
   <div>
     <div class="import_popup">
       <div class="form_box">
-        <div class="form_box_title">{{title}}</div>
+        <div class="form_box_title">产品列表</div>
         <el-form class="form_box_search" ref="form" v-model="coverage_referred">
           <el-form-item label="险种简称">
             <el-input v-model="coverage_referred"></el-input>
@@ -22,11 +22,9 @@
         </div>
         <el-pagination
           @current-change="handleCurrentChange"
-          @prev-click="modifyData"
-          @next-click="modifyData"
           @size-change="handleSizeChange"
           :page-size="pageSize"
-          :total="importLegth">
+          :total="totalNum">
         </el-pagination>
         <el-button @click="cancel_popup" type="primary" class="form_cancel">关闭</el-button>
       </div>
@@ -36,23 +34,20 @@
 </template>
 
 <script>
+    import {apiUpstreamFoldingProductList} from '@/request/api.js';
     export default {
         name: "ImportPopup",
         data() {
             return {
                 coverage_referred: '',
                 currentPage: 1,
-                pageSize: 5,
+                pageSize: 10,
                 tableData: [],
+                totalNum: 0
             }
         },
-        computed: {
-            importLegth: function () {
-              return this.importPopup.length
-            }
-        },
-        created(){
-            this.process_data();
+        mounted(){
+            this.getData();
         },
         methods: {
             handleSizeChange(val){
@@ -61,19 +56,14 @@
             handleCurrentChange(val) {
                 this.currentPage = val;
             },
-            process_data() {//整理初始时传入table的数据
-                // window.console.log('bg',this.importPopup)
-                for (let i=1; i<=this.pageSize; i++){
-                    this.tableData.push(this.importPopup[i-1]);
-                }
-            },
-            modifyData() {
-                this.tableData = [];
-                let currentIndex = this.currentPage * this.pageSize,
-                    curentEndIndex = (this.currentPage+1) * this.pageSize - 1;
-                for (let i=currentIndex; i<=curentEndIndex; i++){
-                    this.tableData.push(this.importPopup[i]);
-                }
+            getData() {
+                console.log(apiUpstreamFoldingProductList);
+                apiUpstreamFoldingProductList({
+                    skipCount: this.currentPage,
+                    MaxResultCount: this.currentPage * this.pageSize - 1
+                }).then(res => {
+                    console.log(res);
+                });
             },
             cancel_popup() {
                 // window.console.log('asf')
@@ -82,10 +72,6 @@
             confirmAdd(row){
                 this.$emit('importData',row);
             }
-        },
-        props: {
-            importPopup: Array,
-            title: String
         }
     }
 </script>

@@ -220,21 +220,44 @@ const pageInation = function (pageIndex, pageSize, data) {
 
 //---------------------上游折标-----------
 //-----上游折标search参数
-Mock.mock(url + '/upstream_folding', 'get', function () {
-    // window.console.log(param)
-    returnArray = {
-        "StatusCode": 200,
-        "Msg": "query success",
-        "Data": upstreamFolding.upstream_floding_search
+Mock.mock(RegExp(url + '/upstream_folding'), 'get', function (p) {
+    let param = util.getQueryValue(p.url);
+    return {
+        "success": true,
+        "result": {
+            "totalCount": upstreamFolding.upstreamFolding.length,
+            "items": upstreamFolding.upstreamFolding.filter((t, index) => {
+                return index >= param.SkipCount && index < (param.SkipCount / param.MaxResultCount + 1) * param.MaxResultCount
+            })
+        }
     }
-    return returnArray;
 });
 //----上游折标分页查询
-Mock.mock(RegExp(url + '/upstream_folding_pageInation/*'), 'get', (options) => {
-    let pageIndex = options.url.substring(options.url.indexOf('pageIndex=') + 10, options.url.indexOf(',')),
-        pageSize = options.url.substring(options.url.indexOf('pageSize=') + 9);
-    window.console.log('当前页' + pageIndex + ',每页有' + pageSize + '条数据');
-    return pageInation(pageIndex, pageSize, upstreamFolding.upstreamFolding);
+Mock.mock(RegExp(url + '/upstream_folding_pageInation/*'), 'get', (p) => {
+    let param = util.getQueryValue(p.url);
+    return {
+        "success": true,
+        "result": {
+            "totalCount": upstreamFolding.upstreamFolding.length,
+            "items": upstreamFolding.upstreamFolding.filter((t, index) => {
+                return index >= param.SkipCount && index < (param.SkipCount / param.MaxResultCount + 1) * param.MaxResultCount
+            })
+        }
+    }
+});
+//----上游折标产品列表
+Mock.mock(RegExp(url + '/upstream_folding_productList'), 'get', (p) => {
+    let param = util.getQueryValue(p.url);
+    console.log(upstreamFolding);
+    return {
+        "success": true,
+        "result": {
+            "totalCount": upstreamFolding.upstream_floding_search.product_name.length,
+            "items": upstreamFolding.upstream_floding_search.product_name.filter((t, index) => {
+                return index >= param.SkipCount && index < (param.SkipCount / param.MaxResultCount + 1) * param.MaxResultCount
+            })
+        }
+    }
 });
 //----上游折标查询
 Mock.mock(url + '/upstream_folding_search', 'post', param => {
