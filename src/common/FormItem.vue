@@ -10,6 +10,7 @@
             v-model="computedValue"
             v-if="type === 'input'"
             :placeholder="placeholder"
+            :disabled="disabled"
         >
             <component v-if="definedSlot" :is="definedSlot.component" :slot="definedSlot.name"></component>
         </el-input>
@@ -19,6 +20,7 @@
             v-else-if="type === 'select'"
             v-model="computedValue"
             :placeholder="placeholder"
+            :disabled="disabled"
         >
             <el-option
                 v-for="item in options"
@@ -33,6 +35,7 @@
             v-else-if="type === 'date'"
             v-model="computedValue"
             :placeholder="placeholder"
+            :disabled="disabled"
         >
         </el-date-picker>
         <el-cascader
@@ -41,6 +44,7 @@
             :class="{isError: errorText !== ''}"
             :options="regionOptions"
             v-model="computedValue"
+            :disabled="disabled"
         >
         </el-cascader>
         <p class="error" v-show="errorText !== ''">
@@ -65,7 +69,8 @@
                 type: String,
                 default: ''
             },
-            definedSlot: [Object]
+            definedSlot: [Object],
+            disabled: Boolean
         },
         data() {
             return {
@@ -77,6 +82,9 @@
             this.computedValue = this.value;
         },
         watch:{
+            value(val) {
+                this.computedValue = val;
+            },
             computedValue(val) {
                 if(this.type === 'date') {
                     if(val === '' || val === null) {
@@ -120,9 +128,11 @@
             line-height: 36px;
         }
         /deep/.form-item {
-            display: block;
             width: calc(100% - 120px);
-            margin-left: 120px;
+            &.el-input-group{
+                vertical-align: middle;
+                margin-top: -3px;
+            }
             &.isError{
                 .el-input__inner{
                     border-color: #ee3f14;
