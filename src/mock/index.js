@@ -246,9 +246,8 @@ Mock.mock(RegExp(url + '/upstream_folding_pageInation/*'), 'get', (p) => {
     }
 });
 //----上游折标产品列表
-Mock.mock(RegExp(url + '/upstream_folding_productList'), 'get', (p) => {
+Mock.mock(RegExp(url + '/upstream_productList/*'), 'get', (p) => {
     let param = util.getQueryValue(p.url);
-    console.log(upstreamFolding);
     return {
         "success": true,
         "result": {

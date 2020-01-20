@@ -32,7 +32,7 @@ export const apiUpstreamFoldingSearch = p => getUrl('/upstream_folding', p);
 //---上游折标分页
 export const apiUpstreamFoldingPageInation = p => getUrl('/upstream_folding_pageInation', p);
 // 上游折标产品列表
-export const apiUpstreamFoldingProductList = p => getUrl('/upstream_folding_productList', p);
+export const apiUpstreamFoldingProductList = p => getUrl('/upstream_productList', p);
 //---上游折标搜索
 export const apiUpstreamFolding = p => post('/upstream_folding_search', p);
 //---上游折标保存
