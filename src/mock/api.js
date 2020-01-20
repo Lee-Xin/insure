@@ -22,9 +22,9 @@ export const apiSupplierAdd = p => post("/supplier_add", p);
 export const supplierGetAll = p => get("/SupplierService/GetAll", p);
 export const supplierGetById = p => get("/SupplierService/GetById", p);
 export const supplierGetCooperationStatus = p =>
-  get("/SupplierService/GetCooperationStatus");
+    get("/SupplierService/GetCooperationStatus");
 export const supplierGetCooperationType = p =>
-  get("/SupplierService/GetCooperationType");
+    get("/SupplierService/GetCooperationType");
 export const apiSupperlist = () => get("/supplier_list");
 
 //---产品列表
@@ -37,37 +37,37 @@ export const apiProductListAdd = p => post("/product_list_add", p);
 export const apiUpstreamFoldingSearch = () => get("/upstream_folding");
 //---上游折标分页
 export const apiUpstreamFoldingPageInation = p =>
-  getUrl("/upstream_folding_pageInation", p);
+    getUrl("/upstream_folding_pageInation", p);
 //---上游折标搜索
 export const apiUpstreamFolding = p => post("/upstream_folding_search", p);
 //---上游折标保存
 export const apiUpstreamFoldingAdd = p => post("/upstream_folding_add", p);
 //---继续率搜索参数
 export const apiContinuationRateBounsParam = () =>
-  get("/continuation_rate_bouns_param");
+    get("/continuation_rate_bouns_param");
 //---继续率查询
 export const apiContinuationRateBounsSearch = p =>
-  post("/continuation_rate_bouns_search", p);
+    post("/continuation_rate_bouns_search", p);
 //---继续率分页
 export const apiContinuationRateBounsPageInation = p =>
-  getUrl("/continuation_rate_bouns_pageInation", p);
+    getUrl("/continuation_rate_bouns_pageInation", p);
 //---继续率保存/提交
 export const apiContinuationRateBounsAdd = p =>
-  post("/continuation_rate_bouns_add", p);
+    post("/continuation_rate_bouns_add", p);
 //---新增奖励search选项
 export const apiNewIncentivesParam = () => get("/new_incentives_param");
 //---新增奖励搜索
 export const apiNewIncentivesSearch = p => post("/new_incentives_search", p);
 //---新增分页
 export const apiNewIncentivesPageInation = p =>
-  getUrl("/new_incentives_pageInation", p);
+    getUrl("/new_incentives_pageInation", p);
 //---新增奖励提交保存
 export const apiNewIncentivesAdd = p => post("/new_incentives_add", p);
 //---续期服务参数
 export const apiRenewalServiceParam = p => get("/renewal_service_param", p);
 export const apiRenewalServiceSearch = p => post("/renewal_service_search", p);
 export const apiRenewalServicePageInation = p =>
-  getUrl("/renewal_service_pageInation", p);
+    getUrl("/renewal_service_pageInation", p);
 
 //--------------------------
 //重置密码
@@ -100,41 +100,40 @@ export const UpdMechanismAccount = p => post("UpdMechanismAccount", p);
 export const DelMechanismAccount = p => post("DelMechanismAccount", p);
 
 export const apiQuarterlyPromotionSearch = p =>
-  get("/quarterly_promotion_search", p);
+    get("/quarterly_promotion_search", p);
 
 export const apiDownstreamFoldingSearch = p =>
-  get("/downstream_folding_search", p);
+    get("/downstream_folding_search", p);
 export const apiDownstreamFoldingAdd = p => get("/downstream_folding_add", p);
 export const apiInstitutionalExpensesSearch = p =>
-  get("/institutional_expenses_search", p);
+    get("/institutional_expenses_search", p);
 export const apiInstitutionalExpensesAdd = p =>
-  get("/institutional_expensesAdd", p);
+    get("/institutional_expensesAdd", p);
 
 export const apiWorkerManagementSearch = p =>
-  get("/worker_management_search", p);
+    get("/worker_management_search", p);
 export const apiMarketingStaffRank = p => get("/marketing_staff_rank", p);
 export const apiInsuranceMarketer = p => get("/insurance_marketer", p);
 
 export const apiBasicLawAdministration = p =>
-  get("/basicLaw_administration", p);
+    get("/basicLaw_administration", p);
 export const apiSalarySettlementSearch = p =>
-  get("/salary_settlement_search", p);
+    get("/salary_settlement_search", p);
 export const apiSalarySettlement = p => get("/salary_settlement", p);
 export const apiAttendanceManagementSearch = p =>
-  get("/attendance_management_search", p);
+    get("/attendance_management_search", p);
 export const apiDeductionSearch = p => get("/deduction_search", p);
 
 export const apiCompanyRetentionRateSearch = p =>
-  get("/company_retention_rate_search", p);
+    get("/company_retention_rate_search", p);
 
 //目标配置
 //列表
 export const apiTargetConfigurationSearch = p =>
-  get("/target_configuration_search", p);
+    get("/target_configuration_search", p);
 //保存
 export const apiTargetConfigurationSave = p =>
-  post("/target_configuration_save", p);
-  
+    post("/target_configuration_save", p);
 
 export const apiManpowerReportSearch = p => get("/manpower_report_search", p);
 
@@ -252,17 +251,20 @@ export const exporttargetProgress = p => post("/targetProgress_export", p);
 //查询
 export const getproductStructureList = p => get("/productStructure_list", p);
 export const getproductStructureDetailList = p =>
-  get("/productStructureDetail_list", p);
+    get("/productStructureDetail_list", p);
 //导出
 export const exportproductStructure = p => post("/productStructure_export", p);
 export const exportproductStructureDetail = p =>
-  post("/productStructureDetail_export", p);
+    post("/productStructureDetail_export", p);
 
 //统计管理-生命线报表
 //查询
 export const getlifelinereport = p => get("/lifelinereport_list", p);
 //导出
 export const exportlifelinereport = p => post("/lifelinereport_export", p);
+//统计管理-件数报表
+//查询
+export const getNumberReportList = p => get("/numberReport_list", p);
 
 // 我的消息
 export const MyMessage = obj => get("MyMessage", obj);
@@ -284,9 +286,9 @@ export const ExhibitionToolsDelete = obj => posts("ExhibitionToolsDelete", obj);
 export const APPHomepageModule = obj => get("APPHomepageModule", obj);
 // app 首页管理-热销产品-删除
 export const APPHomepageModuleDelete = obj =>
-  posts("APPHomepageModuleDelete", obj);
+    posts("APPHomepageModuleDelete", obj);
 // app 首页管理-轮播
 export const APPHomepageModuleBanner = obj =>
-  get("APPHomepageModuleBanner", obj);
+    get("APPHomepageModuleBanner", obj);
 
 //===============================================

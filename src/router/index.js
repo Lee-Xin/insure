@@ -368,7 +368,11 @@ const router = new Router({
         {
             path: "/number_report",
             name: "number_report",
-            component: NumberReport
+            component: NumberReport,
+            meta: {
+                title: "件数报表",
+                subTitle: "这是件数报表页面"
+            }
         },
         {
             path: "/personal_addition_statement",

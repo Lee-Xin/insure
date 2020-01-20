@@ -2225,5 +2225,18 @@ Mock.mock(RegExp(url + '/lifelinereport_export'), 'post', options => {
     }
     return returnArray
 })
-
+//件数报表
+import {numberReportList} from './StatisticalManagement/NumberReport'
+Mock.mock(RegExp(url + '/numberReport_list'), 'get', (p) => {
+    let param = util.getQueryValue(p.url);
+    return {
+        "success": true,
+        "result": {
+            "totalCount": numberReportList.length,
+            "items": numberReportList.filter((t, index) => {
+                return index >= param.SkipCount && index < (+param.SkipCount+(+param.MaxResultCount))
+            })
+        }
+    }
+});
 export default Mock;
