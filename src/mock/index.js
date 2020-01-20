@@ -2204,4 +2204,26 @@ Mock.mock(RegExp(url + '/productStructureDetail_export'), 'post', options => {
     return returnArray
 })
 
+//目标进度追踪
+import{lifelinereportList, lifelinereportExport} from'./StatisticalManagement/LifelineReport';
+
+//查询
+Mock.mock(RegExp(url + '/lifelinereport_list'), 'get', options => {
+    returnArray = {
+        "StatusCode": 200,
+        "Msg": "query success",
+        "Data": lifelinereportList
+    }
+    return returnArray
+})
+//导出
+Mock.mock(RegExp(url + '/lifelinereport_export'), 'post', options => {
+    returnArray = {
+        "StatusCode": 200,
+        "Msg": "query success",
+        "Data": lifelinereportExport
+    }
+    return returnArray
+})
+
 export default Mock;

@@ -134,6 +134,7 @@ export const apiTargetConfigurationSearch = p =>
 //保存
 export const apiTargetConfigurationSave = p =>
   post("/target_configuration_save", p);
+  
 
 export const apiManpowerReportSearch = p => get("/manpower_report_search", p);
 
@@ -256,6 +257,12 @@ export const getproductStructureDetailList = p =>
 export const exportproductStructure = p => post("/productStructure_export", p);
 export const exportproductStructureDetail = p =>
   post("/productStructureDetail_export", p);
+
+//统计管理-生命线报表
+//查询
+export const getlifelinereport = p => get("/lifelinereport_list", p);
+//导出
+export const exportlifelinereport = p => post("/lifelinereport_export", p);
 
 // 我的消息
 export const MyMessage = obj => get("MyMessage", obj);

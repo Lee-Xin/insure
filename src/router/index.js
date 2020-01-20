@@ -173,17 +173,17 @@ const router = new Router({
             name: "organization_list",
             component: OrganizationList,
             meta: {
-                title: '机构管理',
+                title: "机构管理",
                 subTitle: "欢迎您使用机构管理页面"
             }
         },
         {
             path: "/organization_list/new",
-            name: 'oranization_new',
+            name: "oranization_new",
             component: OrganizatonNew,
             meta: {
-                title: '机构管理',
-                subTitle: '欢迎您使用新增机构页面'
+                title: "机构管理",
+                subTitle: "欢迎您使用新增机构页面"
             }
         },
         {
@@ -191,8 +191,8 @@ const router = new Router({
             name: "organization_classif",
             component: OrganizationClassif,
             meta: {
-                title: '机构分类',
-                subTitle: '欢迎您使用机构分类页面'
+                title: "机构分类",
+                subTitle: "欢迎您使用机构分类页面"
             }
         },
         //  上游政策    UpstreamPolicy
@@ -221,8 +221,8 @@ const router = new Router({
             name: "upstream_folding",
             component: UpstreamFolding,
             meta: {
-                title: '上游折标',
-                subTitle: '这是上游折标页面'
+                title: "上游折标",
+                subTitle: "这是上游折标页面"
             }
         },
         //  下游政策    DownstreamPolicy
@@ -350,7 +350,11 @@ const router = new Router({
         {
             path: "/lifeline_report",
             name: "lifeline_report",
-            component: LifelineReport
+            component: LifelineReport,
+            meta: {
+                title: "生命线报表",
+                subTitle: "这是生命线报表页面"
+            }
         },
         {
             path: "/manpower_report",
