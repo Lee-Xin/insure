@@ -345,7 +345,11 @@ const router = new Router({
         {
             path: "/direct_team_report",
             name: "direct_team_report",
-            component: DirectTeamReport
+            component: DirectTeamReport,
+            meta: {
+                title: "直辖团队报表",
+                subTitle: "这是直辖团队报表页面"
+            }
         },
         {
             path: "/lifeline_report",

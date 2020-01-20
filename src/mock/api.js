@@ -203,6 +203,7 @@ export const quxiaotoutiao = p => post("quxiaotoutiao", p);
 export const getjigouclass = p => post("getjigouclass", p);
 export const setjigouclass = p => post("setjigouclass", p);
 export const getjigoujibie = p => get("jigoujibie", p);
+export const getTeamTypeList = p => get("teamTypeList", p);
 //机构管理-机构列表
 export const getjigoulist = p => post("getjigoulist", p);
 export const addjigoulist = p => post("addjigoulist", p);
@@ -268,6 +269,10 @@ export const getNumberReportList = p => get("/numberReport_list", p);
 //统计管理-保费报表
 //查询
 export const getPremiumStatement = p => get("/premiumStatement_list", p);
+//统计管理-直辖团队报表
+//查询
+export const getDirectTeamReport = p => get("/directTeamReport_list", p);
+
 // 我的消息
 export const MyMessage = obj => get("MyMessage", obj);
 // 我的消息搜索

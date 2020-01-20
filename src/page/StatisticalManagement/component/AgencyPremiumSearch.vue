@@ -246,15 +246,7 @@ export default {
 
       let option = {
         title: {
-          text: `总标准保费:$ {
-            this.totalMoney
-          }
-
-          万元($ {
-              this.totalNum
-            }
-
-            件)`,
+          text: `总标准保费:${this.totalMoney}万元(${this.totalNum}件)`,
           textStyle: {
             color: "#ec1c1c",
             fontSize: 20

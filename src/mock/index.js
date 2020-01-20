@@ -2253,4 +2253,29 @@ Mock.mock(RegExp(url + '/premiumStatement_list'), 'get', (p) => {
         }
     }
 });
+//直辖团队报表
+//团队类型查询
+import teamTypeList from './teamTypeList'
+Mock.mock(RegExp(url + '/teamTypeList'), 'get', options => {
+    returnArray = {
+        "StatusCode": 200,
+        "Msg": "query success",
+        "Data": teamTypeList
+    }
+    return returnArray
+})
+//查询
+import {directTeamReport} from './StatisticalManagement/DirectTeamReport'
+Mock.mock(RegExp(url + '/directTeamReport_list'), 'get', (p) => {
+    let param = util.getQueryValue(p.url);
+    return {
+        "success": true,
+        "result": {
+            "totalCount": directTeamReport.length,
+            "items": directTeamReport.filter((t, index) => {
+                return index >= param.SkipCount && index < (+param.SkipCount+(+param.MaxResultCount))
+            })
+        }
+    }
+});
 export default Mock;

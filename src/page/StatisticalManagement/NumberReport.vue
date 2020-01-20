@@ -79,10 +79,10 @@ export default {
         this.mechanismList = res.Data.jigou;
       });
     },
-handleQuery(){
-  this.form.SkipCount=0;
-  this.getList()
-},
+    handleQuery() {
+      this.form.SkipCount = 0;
+      this.getList();
+    },
     //  当页每页显示的条数发生改变
     changeSize(val) {
       this.form.SkipCount = 0;
