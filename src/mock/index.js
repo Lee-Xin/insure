@@ -2239,4 +2239,18 @@ Mock.mock(RegExp(url + '/numberReport_list'), 'get', (p) => {
         }
     }
 });
+//保费报表
+import {premiumStatement} from './StatisticalManagement/PremiumStatement'
+Mock.mock(RegExp(url + '/premiumStatement_list'), 'get', (p) => {
+    let param = util.getQueryValue(p.url);
+    return {
+        "success": true,
+        "result": {
+            "totalCount": premiumStatement.length,
+            "items": premiumStatement.filter((t, index) => {
+                return index >= param.SkipCount && index < (+param.SkipCount+(+param.MaxResultCount))
+            })
+        }
+    }
+});
 export default Mock;

@@ -382,7 +382,11 @@ const router = new Router({
         {
             path: "/premium_statement",
             name: "premium_statement",
-            component: PremiumStatement
+            component: PremiumStatement,
+            meta: {
+                title: "保费报表",
+                subTitle: "这是保费报表页面"
+            }
         },
         {
             path: "/product_structure_report",

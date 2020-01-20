@@ -265,7 +265,9 @@ export const exportlifelinereport = p => post("/lifelinereport_export", p);
 //统计管理-件数报表
 //查询
 export const getNumberReportList = p => get("/numberReport_list", p);
-
+//统计管理-保费报表
+//查询
+export const getPremiumStatement = p => get("/premiumStatement_list", p);
 // 我的消息
 export const MyMessage = obj => get("MyMessage", obj);
 // 我的消息搜索
