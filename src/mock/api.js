@@ -272,6 +272,10 @@ export const getPremiumStatement = p => get("/premiumStatement_list", p);
 //统计管理-直辖团队报表
 //查询
 export const getDirectTeamReport = p => get("/directTeamReport_list", p);
+//统计管理-增员人数报表
+//查询
+export const getPersonalAdditionStatementList = p =>
+    get("/personalAdditionStatement_list", p);
 
 // 我的消息
 export const MyMessage = obj => get("MyMessage", obj);

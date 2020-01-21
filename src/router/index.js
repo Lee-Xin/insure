@@ -381,7 +381,11 @@ const router = new Router({
         {
             path: "/personal_addition_statement",
             name: "personal_addition_statement",
-            component: PersonalAdditionStatement
+            component: PersonalAdditionStatement,
+            meta: {
+                title: "个人增员报表",
+                subTitle: "这是个人增员报表页面"
+            }
         },
         {
             path: "/premium_statement",
