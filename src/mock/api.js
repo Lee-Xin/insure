@@ -276,6 +276,9 @@ export const getDirectTeamReport = p => get("/directTeamReport_list", p);
 //查询
 export const getPersonalAdditionStatementList = p =>
     get("/personalAdditionStatement_list", p);
+//统计管理-团队增员报表
+//查询
+export const getTeamGrowthReportList = p => get("/teamGrowthReport_list", p);
 
 // 我的消息
 export const MyMessage = obj => get("MyMessage", obj);

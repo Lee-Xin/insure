@@ -435,7 +435,11 @@ const router = new Router({
         {
             path: "/team_growth_report",
             name: "team_growth_report",
-            component: TeamGrowthReport
+            component: TeamGrowthReport,
+            meta: {
+                title: "团队增员报表",
+                subTitle: "这是团队增员报表页面"
+            }
         },
         //   课堂管理   ClassManagement
         {

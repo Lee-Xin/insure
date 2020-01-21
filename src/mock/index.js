@@ -2419,7 +2419,7 @@ Mock.mock(RegExp(url + "/directTeamReport_list"), "get", p => {
     };
 });
 //增员人数报表
-//查寻
+//查询
 import { personalAdditionStatement } from "./StatisticalManagement/PersonalAdditionStatement";
 Mock.mock(RegExp(url + "/personalAdditionStatement_list"), "get", p => {
     let param = util.getQueryValue(p.url);
@@ -2428,6 +2428,24 @@ Mock.mock(RegExp(url + "/personalAdditionStatement_list"), "get", p => {
         result: {
             totalCount: personalAdditionStatement.length,
             items: personalAdditionStatement.filter((t, index) => {
+                return (
+                    index >= param.SkipCount &&
+                    index < +param.SkipCount + +param.MaxResultCount
+                );
+            })
+        }
+    };
+});
+//团队增员报表
+//查询
+import { teamGrowthReport } from "./StatisticalManagement/TeamGrowthReport";
+Mock.mock(RegExp(url + "/teamGrowthReport_list"), "get", p => {
+    let param = util.getQueryValue(p.url);
+    return {
+        success: true,
+        result: {
+            totalCount: teamGrowthReport.length,
+            items: teamGrowthReport.filter((t, index) => {
                 return (
                     index >= param.SkipCount &&
                     index < +param.SkipCount + +param.MaxResultCount
