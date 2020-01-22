@@ -1,7 +1,9 @@
 <template>
   <div class="p_fixed">
     <div class="block">
-      <slot></slot>
+      <slot>
+        <div style="min-width:10px"></div>
+      </slot>
       <el-pagination
         class="page-bar"
         @size-change="handleSizeChange"
@@ -52,16 +54,15 @@ export default {
   padding-left: 210px;
   box-sizing: border-box;
   .block {
-  box-sizing: border-box;
+    box-sizing: border-box;
     width: 100%;
-    padding: 1px 20px 11px;
-   
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     text-align: right;
     background-color: #fff;
     box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.28);
-    .page-bar {
-      margin: 25px 0 10px;
-    }
   }
 }
 </style>

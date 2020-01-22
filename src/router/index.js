@@ -445,7 +445,11 @@ const router = new Router({
         {
             path: "/headline_news",
             name: "headline_news",
-            component: HeadlineNews
+            component: HeadlineNews,
+            meta: {
+                title: "头条管理",
+                subTitle: "这是头条管理页面"
+            }
         },
         {
             path: "/my_college",

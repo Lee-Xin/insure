@@ -2454,4 +2454,34 @@ Mock.mock(RegExp(url + "/teamGrowthReport_list"), "get", p => {
         }
     };
 });
+
+//课堂管理
+//头条资讯
+//作者列表
+import { authorList } from "./author";
+Mock.mock(RegExp(url + "/author_list"), "get", p => {
+    returnArray = {
+        StatusCode: 200,
+        Msg: "query success",
+        Data: authorList
+    };
+    return returnArray;
+});
+//查询
+import {headlineNewsList} from "./ClassManagement/HeadlineNews"
+Mock.mock(RegExp(url + "/headlineNews_list"), "get", p => {
+    let param = util.getQueryValue(p.url);
+    return {
+        success: true,
+        result: {
+            totalCount: headlineNewsList.length,
+            items: headlineNewsList.filter((t, index) => {
+                return (
+                    index >= param.SkipCount &&
+                    index < +param.SkipCount + +param.MaxResultCount
+                );
+            })
+        }
+    };
+});
 export default Mock;

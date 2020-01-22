@@ -256,7 +256,6 @@ export default {
         this.mechanismList = res.Data.jigou;
       });
     },
-
     handleQuery1() {
       this.monthForm.SkipCount = 0;
       this.getList(this.monthForm);

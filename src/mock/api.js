@@ -280,6 +280,12 @@ export const getPersonalAdditionStatementList = p =>
 //查询
 export const getTeamGrowthReportList = p => get("/teamGrowthReport_list", p);
 
+//课堂管理-头条咨讯
+//作者列表
+export const getAuthorList = p => get("/author_list", p);
+//查询
+export const getHeadlineNewsList = p => get("/headlineNews_list", p);
+
 // 我的消息
 export const MyMessage = obj => get("MyMessage", obj);
 // 我的消息搜索
