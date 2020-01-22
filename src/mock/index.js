@@ -2445,7 +2445,10 @@ Mock.mock(RegExp(url + "/author_list"), "get", p => {
     return returnArray;
 });
 //查询
-import { headlineNewsList } from "./ClassManagement/HeadlineNews";
+import {
+    headlineNewsList,
+    headlineNewsDetail
+} from "./ClassManagement/HeadlineNews";
 Mock.mock(RegExp(url + "/headlineNews_list"), "get", p => {
     let param = util.getQueryValue(p.url);
     return {
@@ -2464,10 +2467,30 @@ Mock.mock(RegExp(url + "/headlineNews_list"), "get", p => {
 //删除头条
 Mock.mock(RegExp(url + "/deltoutiao"), "post", function(par) {
     par = par.body;
-    let returnArray = (returnArray = {
+    let returnArray = {
         StatusCode: 200,
         Msg: "success"
-    });
+    };
     return returnArray;
 });
+//图片上传
+Mock.mock(RegExp(url + "/upload_img"), "post", function(par) {
+    par = par.body;
+    let returnArray = {
+        StatusCode: 200,
+        Msg: "success",
+        Data: { url: "https://g.csdnimg.cn/static/user-medal/github.svg" }
+    };
+    return returnArray;
+});
+//根据id查询详情
+Mock.mock(RegExp(url + "/headlineNews_detail"), "get", p => {
+    let returnArray = {
+        StatusCode: 200,
+        Msg: "success",
+        Data: headlineNewsDetail
+    };
+    return returnArray;
+});
+
 export default Mock;

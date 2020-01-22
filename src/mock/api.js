@@ -285,6 +285,10 @@ export const getTeamGrowthReportList = p => get("/teamGrowthReport_list", p);
 export const getAuthorList = p => get("/author_list", p);
 //查询
 export const getHeadlineNewsList = p => get("/headlineNews_list", p);
+//图片上传
+export const uploadImg = p => post("/upload_img", p);
+//根据id查询详情
+export const getHeadlineNewsDetail = p => get("/headlineNews_detail", p);
 
 // 我的消息
 export const MyMessage = obj => get("MyMessage", obj);

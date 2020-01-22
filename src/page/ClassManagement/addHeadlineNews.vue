@@ -23,6 +23,13 @@
     <el-form style="padding:10px">
       <el-form-item class="photos">
         <h3 class="title">封面</h3>
+        <div class="upload-img">
+          <span class="camera" @click="showImgUpload = true;">
+            <img :src="require('@/assets/img/camera.png')" />
+          </span>
+        </div>
+        <div>注释:大小600*365</div>
+        <img :src="form.imgUrl" class="img_box" />
       </el-form-item>
       <h3 class="title w100">详细信息</h3>
       <el-form-item class="w100">
@@ -35,6 +42,7 @@
         <el-button type="default" @click="callback">返回</el-button>
       </div>
     </div>
+    <img-upload-big :isShow.sync="showImgUpload" @uploadSuccess="uploadSuccess"></img-upload-big>
   </div>
 </template>
 
@@ -42,7 +50,9 @@
 import PageHr from "@/common/PageHr";
 
 import EditorItem from "@/common/wangEnduit/EditorItem";
-import { addtoutiao } from "@/mock/api";
+import { addtoutiao, uploadImg } from "@/mock/api";
+import ImgUploadBig from "@/common/ImgUploadBig";
+
 export default {
   name: "addHeadlineNews",
   data() {
@@ -51,13 +61,15 @@ export default {
         title: null,
         author: null,
         status: null,
-        content: null
+        content: null,
+        imgUrl: null
       },
       statusList: [
         { id: 1, name: "发布" },
         { id: 2, name: "未发布" }
       ],
-      isClear: false
+      isClear: false,
+      showImgUpload: false
     };
   },
 
@@ -76,22 +88,56 @@ export default {
         this.$message(res.data.Msg);
         this.$router.go(-1);
       });
+    },
+    uploadSuccess(res) {
+      this.$message(res.Msg);
+      this.form.imgUrl = res.Data.url;
+      this.showImgUpload = false;
     }
   },
 
-  components: { PageHr, EditorItem }
+  components: { PageHr, EditorItem, ImgUploadBig }
 };
 </script>
 
-<style scoped lang="less">
+<style  lang="less">
 .box {
   height: 1070px;
   background: #fff;
 }
 .photos {
-  width: 100% !important;
-  padding: 20px 0;
-  border-top: 1px solid #e0e0e0;
-  border-bottom: 1px solid #e0e0e0;
+  width: 100%;
+  .el-form-item__content {
+    width: 100% !important;
+    padding: 20px 0;
+    border-top: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-wrap: nowrap;
+    .upload-img {
+      .camera {
+        margin: 0 30px;
+        display: flex;
+        width: 70px;
+        height: 70px;
+        border: 1px dashed #666;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        img {
+          width: 30px;
+          height: 30px;
+        }
+      }
+    }
+    .img_box {
+      width: 200px;
+      height: 67px;
+      border: 1px solid #ececec;
+      margin-left: 30px;
+    }
+  }
 }
 </style>
