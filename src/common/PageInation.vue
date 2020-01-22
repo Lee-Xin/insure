@@ -43,26 +43,4 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.p_fixed {
-  width: 100%;
-  text-align: right;
-  position: fixed;
-  z-index: 2;
-  right: 0;
-  left: 0;
-  bottom: 0;
-  padding-left: 210px;
-  box-sizing: border-box;
-  .block {
-    box-sizing: border-box;
-    width: 100%;
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    text-align: right;
-    background-color: #fff;
-    box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.28);
-  }
-}
 </style>

@@ -87,6 +87,8 @@ import PermissionList from "@/page/AccountManagement/PermissionList";
 import AccountDetails from "@/page/AccountIDManagement/AccountDetails";
 import HeadSet from "@/page/AccountIDManagement/HeadSet";
 import PasswordReset from "@/page/AccountIDManagement/PasswordReset";
+import addHeadlineNews from "@/page/ClassManagement/addHeadlineNews.vue";
+import editHeadlineNews from "@/page/ClassManagement/editHeadlineNews.vue";
 
 Vue.use(Router);
 
@@ -449,6 +451,24 @@ const router = new Router({
             meta: {
                 title: "头条管理",
                 subTitle: "这是头条管理页面"
+            }
+        },
+        {
+            path: "/add_headline_news",
+            name: "add_headline_news",
+            component: addHeadlineNews,
+            meta: {
+                title: "新增头条",
+                subTitle: "这是新增头条页面"
+            }
+        },
+        {
+            path: "/edit_headline_news",
+            name: "edit_headline_news",
+            component: editHeadlineNews,
+            meta: {
+                title: "编辑头条",
+                subTitle: "这是编辑头条页面"
             }
         },
         {

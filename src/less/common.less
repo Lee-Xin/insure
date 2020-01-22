@@ -1,3 +1,47 @@
+.w100 {
+  width: 100% !important;
+}
+
+.yellow {
+  color: #ef8412
+}
+
+.p_fixed {
+  width: 100%;
+  text-align: right;
+  position: fixed;
+  z-index: 2;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  padding-left: 210px;
+  box-sizing: border-box;
+
+  .block {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: right;
+    background-color: #fff;
+    box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.28);
+  }
+
+  .center {
+    justify-content: center !important;
+  }
+}
+
+h3.title {
+  font-size: 18px;
+  color: #ef8412;
+  font-weight: 400;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
 //查询条件表单的样式
 .search_form {
   border-bottom: 1px solid #e9eaec;
@@ -158,4 +202,51 @@
   width: 100%;
   height: auto;
   box-sizing: border-box;
+}
+
+//table
+/* 用来设置当前页面element全局table 选中某行时的背景色*/
+.el-table__body tr.current-row>td {
+  background-color: #2e7ee1 !important;
+  color: #fff;
+}
+
+//form item样式
+.cell {
+  .el-form-item {
+    width: 350px;
+    margin-right: 20px;
+    float: left;
+
+    .el-date-editor,
+    .el-select,
+    .el-input {
+      width: 240px !important;
+    }
+
+    .el-form-item__content {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      align-items: center;
+
+      .cell_before {
+        border: 1px solid #bebebe;
+        height: 36px;
+        line-height: 36px;
+        box-sizing: border-box;
+        border-right: none;
+        text-align: center;
+        background-color: #fafafa;
+        margin-right: -1px;
+        width: 110px !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+
+      &>div:last-child {
+        flex-grow: 1;
+      }
+    }
+  }
 }

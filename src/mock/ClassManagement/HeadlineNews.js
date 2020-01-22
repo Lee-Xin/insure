@@ -5,7 +5,7 @@ const headlineNewsList = [
         author: "作者",
         readNum: "阅读数量",
         time: "日期",
-        status: "状态"
+        status: 1
     }
 ];
 for (let i = 0; i < 52; i++) {
@@ -15,7 +15,7 @@ for (let i = 0; i < 52; i++) {
         author: "作者",
         readNum: "阅读数量",
         time: "日期",
-        status: "状态"
+        status: 2
     });
 }
 

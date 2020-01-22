@@ -1740,7 +1740,7 @@ Mock.mock(url + "/toutiaolist", "post", function(param) {
     return returnArray;
 });
 //添加头条
-Mock.mock(url + "/addtoutiao", "post", function(param) {
+Mock.mock(RegExp(url + "/addtoutiao"), "post", function(param) {
     window.console.log(param);
     param = qs.parse(param.body);
     var length = Math.ceil(Math.random() * 1000);
@@ -1779,36 +1779,13 @@ Mock.mock(url + "/updtoutiao", "post", function(par) {
     });
     return returnArray;
 });
-//删除头条
-Mock.mock(url + "/deltoutiao", "post", function(par) {
-    par = qs.parse(par.body);
-    window.console.log(par);
-    toutiao.forEach((item, index) => {
-        if (parseInt(item.id) === parseInt(par.id)) {
-            //删除数组
-            toutiao.splice(index, 1);
-            returnArray = {
-                StatusCode: 200,
-                Msg: "query success",
-                Data: toutiao
-            };
-        } else {
-            returnArray = {
-                StatusCode: 200,
-                Msg: "暂无数据",
-                Data: toutiao
-            };
-        }
-    });
-    return returnArray;
-});
+
 //课堂发布
-Mock.mock(url + "/fabutoutiao", "post", function(par) {
+Mock.mock(RegExp(url + "/fabutoutiao"), "post", function(par) {
     par = qs.parse(par.body);
-    window.console.log(par.id);
     returnArray = {
         StatusCode: 200,
-        Msg: "query success",
+        Msg: "success",
         Data: lipeidata
     };
     return returnArray;
@@ -2468,7 +2445,7 @@ Mock.mock(RegExp(url + "/author_list"), "get", p => {
     return returnArray;
 });
 //查询
-import {headlineNewsList} from "./ClassManagement/HeadlineNews"
+import { headlineNewsList } from "./ClassManagement/HeadlineNews";
 Mock.mock(RegExp(url + "/headlineNews_list"), "get", p => {
     let param = util.getQueryValue(p.url);
     return {
@@ -2483,5 +2460,14 @@ Mock.mock(RegExp(url + "/headlineNews_list"), "get", p => {
             })
         }
     };
+});
+//删除头条
+Mock.mock(RegExp(url + "/deltoutiao"), "post", function(par) {
+    par = par.body;
+    let returnArray = (returnArray = {
+        StatusCode: 200,
+        Msg: "success"
+    });
+    return returnArray;
 });
 export default Mock;
