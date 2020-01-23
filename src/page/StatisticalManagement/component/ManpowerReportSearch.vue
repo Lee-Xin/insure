@@ -7,7 +7,6 @@
             <el-form ref="monthForm" :model="monthForm" class="search_form">
               <el-form-item>
                 <div class="cell_before">机构</div>
-
                 <el-select v-model="monthForm.mechanism" placeholder="请选择分支机构" clearable filterable>
                   <el-option
                     v-for="item in mechanismList"
@@ -109,12 +108,10 @@
         </el-tab-pane>
       </el-tabs>
     </div>
-
     <el-dialog title="导出报表" :visible.sync="dialogVisibleMonth">
       <el-form ref="exportMonthForm" :model="exportMonthForm" class="dialog_from_center">
         <el-form-item>
           <div class="cell_before">机构</div>
-
           <el-select v-model="exportMonthForm.mechanism" placeholder="请选择分支机构" clearable filterable>
             <el-option
               v-for="item in mechanismList"
@@ -134,12 +131,10 @@
         <el-button type="primary" @click="exportFileMonth">确定</el-button>
       </span>
     </el-dialog>
-
     <el-dialog title="导出报表" :visible.sync="dialogVisibleQuarter">
       <el-form ref="exportMonthForm" :model="exportMonthForm" class="dialog_from_center">
         <el-form-item>
           <div class="cell_before">机构</div>
-
           <el-select
             v-model="exportQuarterForm.mechanism"
             placeholder="请选择分支机构"
@@ -171,16 +166,16 @@
       </span>
     </el-dialog>
   </div>
-</template>
-
-<script>
+</template><script>
 // import { apiManpowerReportSearch } from "../../../request/api";
+
 import {
   getallparameter,
   apiManpowerReportSearch,
   exportManpowerReport
 } from "@/mock/api";
 import formatDate from "@/common/formatDate.js";
+
 export default {
   name: "ManpowerReportSearch",
   data() {
@@ -189,25 +184,53 @@ export default {
         mechanism: null,
         month: null
       },
+
       exportMonthForm: {
         mechanism: null,
         month: null
       },
-      quarterForm: { mechanism: null, jidu: null, year: null },
-      exportQuarterForm: { mechanism: null, jidu: null, year: null },
+
+      quarterForm: {
+        mechanism: null,
+        jidu: null,
+        year: null
+      },
+
+      exportQuarterForm: {
+        mechanism: null,
+        jidu: null,
+        year: null
+      },
+
       mechanismList: [],
       monthList: [],
       quarterList: [],
       jiduList: [
-        { id: 1, name: "第一季度" },
-        { id: 2, name: "第二季度" },
-        { id: 3, name: "第三季度" },
-        { id: 4, name: "第四季度" }
+        {
+          id: 1,
+          name: "第一季度"
+        },
+
+        {
+          id: 2,
+          name: "第二季度"
+        },
+
+        {
+          id: 3,
+          name: "第三季度"
+        },
+
+        {
+          id: 4,
+          name: "第四季度"
+        }
       ],
       dialogVisibleMonth: false,
       dialogVisibleQuarter: false
     };
   },
+
   created() {
     this.monthForm.month = formatDate.month(new Date());
     const year = new Date().getFullYear();
@@ -216,22 +239,26 @@ export default {
     this.getMonthList();
     this.getQuarterList();
   },
+
   methods: {
     getData() {
       getallparameter().then(res => {
         this.mechanismList = res.Data.jigou;
       });
     },
+
     getMonthList() {
       apiManpowerReportSearch(this.monthForm).then(res => {
         this.monthList = res.Data;
       });
     },
+
     getQuarterList() {
       apiManpowerReportSearch(this.quarterForm).then(res => {
         this.quarterList = res.Data;
       });
     },
+
     exportFileMonth() {
       exportManpowerReport(this.exportMonthForm).then(res => {
         this.dialogVisibleMonth = false;
@@ -240,6 +267,7 @@ export default {
         // window.open(res.data.Data.url);
       });
     },
+
     exportFileQuarter() {
       exportManpowerReport(this.exportQuarterForm).then(res => {
         this.dialogVisibleQuarter = false;
@@ -250,7 +278,4 @@ export default {
     }
   }
 };
-</script>
-
-<style scoped>
-</style>
+</script><style scoped></style>

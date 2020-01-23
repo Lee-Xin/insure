@@ -2527,4 +2527,20 @@ Mock.mock(RegExp(url + "/addCollegeType"), "post", p => {
     };
     return returnArray;
 });
+//编辑分类
+Mock.mock(RegExp(url + "/editCollegeType"), "post", p => {
+    let returnArray = {
+        StatusCode: 200,
+        Msg: "success",
+    };
+    return returnArray;
+});
+//删除分类
+Mock.mock(RegExp(url + "/delCollegeType"), "post", p => {
+    let returnArray = {
+        StatusCode: 200,
+        Msg: "success",
+    };
+    return returnArray;
+});
 export default Mock;

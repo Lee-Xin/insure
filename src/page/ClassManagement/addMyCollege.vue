@@ -59,29 +59,63 @@
       @uploadSuccess="uploadSuccess"
       @closeDialog="closeDialog"
     ></img-upload-big>
-    <el-dialog title="分类管理" :visible.sync="dialogVisible">
-      <h3 class="title">添加分类</h3>
-      <el-form ref="typeForm" :model="typeForm" class="dialog_from_center">
-        <el-form-item>
-          <div class="cell_before">上级分类</div>
-          <el-select v-model="typeForm.collegeType" placeholder="请选择上级分类" clearable filterable>
-            <el-option
-              v-for="item in typeList"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item>
-          <div class="cell_before">分类名称</div>
-          <el-input v-model="typeForm.type" placeholder="请输入分类名称"></el-input>
-        </el-form-item>
-      </el-form>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取消</el-button>
-        <el-button type="primary" @click="addType()">确定</el-button>
-      </span>
+    <el-dialog title="分类管理" :visible.sync="dialogVisible" width="1000px">
+      <div class="typeBox">
+        <div>
+          <el-collapse v-model="activeNames" :accordion="true">
+            <el-collapse-item :name="item.value" v-for="item in typeList" :key="item.value">
+              <template slot="title">
+                <div class="flex">
+                  <span v-if="item.isEdit">{{item.label}}</span>
+                  <el-input @click.native.stop v-else v-model="item.label"></el-input>
+                  <span class="right">
+                    <i class="el-icon-delete" @click.stop="delType(item)"></i>
+                    <i class="el-icon-edit" v-if="item.isEdit" @click.stop="editType(item)"></i>
+                    <i class="el-icon-success" v-else @click.stop="confirmEditType(item)"></i>
+                  </span>
+                </div>
+              </template>
+              <ul v-if="item.children">
+                <li v-for="item2 in item.children" :key="item2.value">
+                  <span class="left" v-if="item2.isEdit">------ {{item2.label}}</span>
+                  <div v-else>
+                    ------
+                    <el-input v-model="item2.label"></el-input>
+                  </div>
+                  <div class="right">
+                    <i class="el-icon-delete" @click="delType(item2)"></i>
+                    <i class="el-icon-edit" v-if="item2.isEdit" @click="editType(item2)"></i>
+                    <i class="el-icon-success" v-else @click="confirmEditType(item2)"></i>
+                  </div>
+                </li>
+              </ul>
+            </el-collapse-item>
+          </el-collapse>
+        </div>
+        <div>
+          <h3 class="title">添加分类</h3>
+          <el-form ref="typeForm" :model="typeForm" class="dialog_from_center200">
+            <el-form-item>
+              <div class="cell_before">上级分类</div>
+              <el-select v-model="typeForm.id" placeholder="请选择上级分类" clearable filterable>
+                <el-option
+                  v-for="item in typeList"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item>
+              <div class="cell_before">分类名称</div>
+              <el-input v-model="typeForm.name" placeholder="请输入分类名称"></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="addType()">新增分类</el-button>
+            </el-form-item>
+          </el-form>
+        </div>
+      </div>
     </el-dialog>
   </div>
 </template>
@@ -90,7 +124,14 @@
 import PageHr from "@/common/PageHr";
 
 import EditorItem from "@/common/wangEnduit/EditorItem";
-import { addzhishi, uploadImg, GetLpclass, addCollegeType } from "@/mock/api";
+import {
+  addzhishi,
+  uploadImg,
+  GetLpclass,
+  addCollegeType,
+  editCollegeType,
+  delCollegeType
+} from "@/mock/api";
 import ImgUploadBig from "@/common/ImgUploadBig";
 
 export default {
@@ -113,10 +154,11 @@ export default {
       showImgUpload: false,
       typeList: [],
       typeForm: {
-        collegeType: null,
-        type: null
+        id: null,
+        type: namae
       },
-      dialogVisible: false
+      dialogVisible: false,
+      activeNames: null
     };
   },
 
@@ -127,16 +169,39 @@ export default {
     closeDialog() {
       this.showImgUpload = false;
     },
+    delType(item) {
+      delCollegeType({ id: item.value, name: item.label }).then(res => {
+        this.$message(res.data.Msg);
+        this.getType();
+      });
+    },
     getType() {
       GetLpclass().then(res => {
-        this.typeList = res.Data;
+        this.typeList = res.Data.map(item => {
+          item.isEdit = true;
+          item.children &&
+            item.children.map(item2 => {
+              item2.isEdit = true;
+            });
+          return item;
+        });
       });
     },
     addType() {
       addCollegeType(this.typeForm).then(res => {
-        this.dialogVisible = false;
         this.getType();
         this.$message(res.data.Msg);
+      });
+    },
+
+    editType(item) {
+      item.isEdit = false;
+    },
+    confirmEditType(item) {
+      editCollegeType({ id: item.value, name: item.label }).then(res => {
+        item.isEdit = true;
+        this.$message(res.data.Msg);
+        this.getType();
       });
     },
     change(v) {
@@ -164,7 +229,49 @@ export default {
 };
 </script>
 
-<style  lang="less">
+<style  lang="less" scoped>
+.el-dialog__body {
+  padding: 0 !important;
+  .typeBox {
+    display: flex;
+    & > div:first-child {
+      width: 60%;
+      padding: 16px;
+      height: 400px;
+      overflow-y: auto;
+      .el-input {
+        width: 300px;
+      }
+      i {
+        color: #f00;
+        padding: 5px;
+        cursor: pointer;
+        font-size: 18px;
+      }
+      .flex {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+      }
+      ul {
+        li {
+          text-align: left;
+          border: 1px solid #eeee;
+          padding: 10px 34px 10px 10px;
+          margin-bottom: 10px;
+          display: flex;
+          justify-content: space-between;
+        }
+      }
+    }
+    & > div:last-child {
+      width: 40%;
+      padding: 15px;
+      background-color: rgb(206, 234, 247);
+      height: 400px;
+    }
+  }
+}
 .box {
   height: 1070px;
   background: #fff;

@@ -296,6 +296,10 @@ export const getMyCollegeList = p => get("/myCollege_list", p);
 export const getMyCollegeDetail = p => get("/myCollege_detail", p);
 //添加分类
 export const addCollegeType = p => post("/addCollegeType", p);
+//编辑分类
+export const editCollegeType = p => post("/editCollegeType", p);
+//删除分类
+export const delCollegeType = p => post("/delCollegeType", p);
 
 // 我的消息
 export const MyMessage = obj => get("MyMessage", obj);

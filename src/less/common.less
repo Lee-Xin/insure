@@ -194,6 +194,42 @@ h3.title {
     }
 
   }
+
+  .dialog_from_center200 {
+    width: 400px;
+
+    .el-form-item__content {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      align-items: center;
+
+      .cell_before {
+        border: 1px solid #bebebe;
+        height: 36px;
+        line-height: 36px;
+        box-sizing: border-box;
+        border-right: none;
+        text-align: center;
+        background-color: #fafafa;
+        margin-right: -1px;
+        width: 110px !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+
+      &>div:last-child {
+        flex-grow: 1;
+      }
+    }
+
+    .el-date-editor,
+    .el-select,
+    .el-input {
+      width: 100%;
+    }
+
+  }
 }
 
 .content_box {
@@ -247,6 +283,96 @@ h3.title {
       &>div:last-child {
         flex-grow: 1;
       }
+    }
+  }
+}
+
+.photos {
+  width: 100%;
+
+  .el-form-item__content {
+    width: 100% !important;
+    padding: 20px 0;
+    border-top: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-wrap: nowrap;
+
+    .upload-img {
+      .camera {
+        margin: 0 30px;
+        display: flex;
+        width: 70px;
+        height: 70px;
+        border: 1px dashed #666;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+
+        img {
+          width: 30px;
+          height: 30px;
+        }
+      }
+    }
+
+    .img_box {
+      width: 200px;
+      height: 67px;
+      border: 1px solid #ececec;
+      margin-left: 30px;
+    }
+  }
+}
+
+.el-dialog__body {
+  padding: 0 !important;
+
+  .typeBox {
+    display: flex;
+
+    &>div:first-child {
+      width: 60%;
+      padding: 16px;
+      height: 400px;
+      overflow-y: auto;
+
+      .el-input {
+        width: 300px;
+      }
+
+      i {
+        color: #f00;
+        padding: 5px;
+        cursor: pointer;
+        font-size: 18px;
+      }
+
+      .flex {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+      }
+
+      ul {
+        li {
+          text-align: left;
+          border: 1px solid #eeee;
+          padding: 10px 34px 10px 10px;
+          margin-bottom: 10px;
+          display: flex;
+          justify-content: space-between;
+        }
+      }
+    }
+
+    &>div:last-child {
+      width: 40%;
+      padding: 15px;
+      background-color: rgb(206, 234, 247);
+      height: 400px;
     }
   }
 }

@@ -107,44 +107,9 @@ export default {
 };
 </script>
 
-<style  lang="less">
+<style  lang="less" scoped>
 .box {
   height: 1070px;
   background: #fff;
-}
-.photos {
-  width: 100%;
-  .el-form-item__content {
-    width: 100% !important;
-    padding: 20px 0;
-    border-top: 1px solid #e0e0e0;
-    border-bottom: 1px solid #e0e0e0;
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    flex-wrap: nowrap;
-    .upload-img {
-      .camera {
-        margin: 0 30px;
-        display: flex;
-        width: 70px;
-        height: 70px;
-        border: 1px dashed #666;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-        img {
-          width: 30px;
-          height: 30px;
-        }
-      }
-    }
-    .img_box {
-      width: 200px;
-      height: 67px;
-      border: 1px solid #ececec;
-      margin-left: 30px;
-    }
-  }
 }
 </style>
