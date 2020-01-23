@@ -289,6 +289,13 @@ export const getHeadlineNewsList = p => get("/headlineNews_list", p);
 export const uploadImg = p => post("/upload_img", p);
 //根据id查询详情
 export const getHeadlineNewsDetail = p => get("/headlineNews_detail", p);
+//课堂管理-我的学院
+//查询
+export const getMyCollegeList = p => get("/myCollege_list", p);
+//根据id查询详情
+export const getMyCollegeDetail = p => get("/myCollege_detail", p);
+//添加分类
+export const addCollegeType = p => post("/addCollegeType", p);
 
 // 我的消息
 export const MyMessage = obj => get("MyMessage", obj);

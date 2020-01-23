@@ -89,7 +89,8 @@ import HeadSet from "@/page/AccountIDManagement/HeadSet";
 import PasswordReset from "@/page/AccountIDManagement/PasswordReset";
 import addHeadlineNews from "@/page/ClassManagement/addHeadlineNews.vue";
 import editHeadlineNews from "@/page/ClassManagement/editHeadlineNews.vue";
-
+import addMyCollege from "@/page/ClassManagement/addMyCollege.vue";
+import editMyCollege from "@/page/ClassManagement/editMyCollege.vue";
 Vue.use(Router);
 
 const router = new Router({
@@ -474,7 +475,29 @@ const router = new Router({
         {
             path: "/my_college",
             name: "my_college",
-            component: MyCollege
+            component: MyCollege,
+            meta: {
+                title: "课堂管理",
+                subTitle: "这是课堂管理页面"
+            }
+        },
+        {
+            path: "/add_my_college",
+            name: "add_my_college",
+            component: addMyCollege,
+            meta: {
+                title: "新增课堂",
+                subTitle: "这是新增课堂页面"
+            }
+        },
+        {
+            path: "/edit_my_college",
+            name: "edit_my_college",
+            component: editMyCollege,
+            meta: {
+                title: "编辑课堂",
+                subTitle: "这是编辑课堂页面"
+            }
         },
         //   理赔管理   ClaimsManagement
         {

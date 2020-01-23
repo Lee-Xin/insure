@@ -18,6 +18,18 @@
           <el-option v-for="item in statusList" :key="item.id" :label="item.name" :value="item.id"></el-option>
         </el-select>
       </el-form-item>
+      <el-form-item label>
+        <div class="cell_before">栏目分类</div>
+        <el-cascader
+          v-model="form.type"
+          clearable
+          :options="typeList"
+          :props="{ expandTrigger: 'hover' }"
+        ></el-cascader>
+      </el-form-item>
+      <el-form-item style="width:auto">
+        <el-button type="primary" @click="dialogVisible=true">管理</el-button>
+      </el-form-item>
       <div style="clear:both"></div>
     </el-form>
     <el-form style="padding:10px">
@@ -43,6 +55,30 @@
       </div>
     </div>
     <img-upload-big :isShow.sync="showImgUpload" @uploadSuccess="uploadSuccess"></img-upload-big>
+    <el-dialog title="分类管理" :visible.sync="dialogVisible">
+      <h3 class="title">添加分类</h3>
+      <el-form ref="typeForm" :model="typeForm" class="dialog_from_center">
+        <el-form-item>
+          <div class="cell_before">上级分类</div>
+          <el-select v-model="typeForm.collegeType" placeholder="请选择上级分类" clearable filterable>
+            <el-option
+              v-for="item in typeList"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <div class="cell_before">分类名称</div>
+          <el-input v-model="typeForm.type" placeholder="请输入分类名称"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="addType()">确定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -50,11 +86,11 @@
 import PageHr from "@/common/PageHr";
 
 import EditorItem from "@/common/wangEnduit/EditorItem";
-import { addtoutiao, uploadImg, getHeadlineNewsDetail } from "@/mock/api";
+import { addzhishi, uploadImg, GetLpclass, addCollegeType } from "@/mock/api";
 import ImgUploadBig from "@/common/ImgUploadBig";
 
 export default {
-  name: "editHeadlineNews",
+  name: "addMyCollege",
   data() {
     return {
       form: {
@@ -63,26 +99,37 @@ export default {
         status: null,
         content: null,
         imgUrl: null,
-        id: null
+        type: null
       },
       statusList: [
         { id: 1, name: "发布" },
         { id: 2, name: "未发布" }
       ],
       isClear: false,
-      showImgUpload: false
+      showImgUpload: false,
+      typeList: [],
+      typeForm: {
+        collegeType: null,
+        type: null
+      },
+      dialogVisible: false
     };
   },
 
   created() {
-    this.form.id = this.$route.params.id;
-    this.getDetail();
+    this.getType();
   },
   methods: {
-    getDetail() {
-      getHeadlineNewsDetail({ id: this.form.id }).then(res => {
-        const { title, author, status, content, imgUrl, id } = res.Data;
-        this.form = { title, author, status, content, imgUrl, id };
+    getType() {
+      GetLpclass().then(res => {
+        this.typeList = res.Data;
+      });
+    },
+    addType() {
+      addCollegeType(this.typeForm).then(res => {
+        this.dialogVisible = false;
+        this.getType();
+        this.$message(res.data.Msg);
       });
     },
     change(v) {
@@ -94,7 +141,7 @@ export default {
     save() {
       if (!this.form.title) return this.$message("请输入标题");
       if (!this.form.author) return this.$message("请输入作者名字");
-      addtoutiao(this.form).then(res => {
+      addzhishi(this.form).then(res => {
         this.$message(res.data.Msg);
         this.$router.go(-1);
       });

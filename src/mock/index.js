@@ -1259,7 +1259,7 @@ Mock.mock(url + "/DelStaff", "post", function(par) {
 
 //====================================================================================================
 
-Mock.mock(url + "/GetLpclass", "get", function() {
+Mock.mock(RegExp(url + "/GetLpclass"), "get", function() {
     returnArray = {
         StatusCode: 200,
         Msg: "query success",
@@ -1635,7 +1635,7 @@ Mock.mock(url + "/zhishilist", "post", function(param) {
     return returnArray;
 });
 //添加课堂管理
-Mock.mock(url + "/addzhishi", "post", function(param) {
+Mock.mock(RegExp(url + "/addzhishi"), "post", function(param) {
     window.console.log(param);
     param = qs.parse(param.body);
     var length = Math.ceil(Math.random() * 1000);
@@ -1675,7 +1675,7 @@ Mock.mock(url + "/updzhishi", "post", function(par) {
     return returnArray;
 });
 //删除课堂管理
-Mock.mock(url + "/delzhishi", "post", function(par) {
+Mock.mock(RegExp(url + "/delzhishi"), "post", function(par) {
     par = qs.parse(par.body);
     window.console.log(par);
     ketang.forEach((item, index) => {
@@ -1690,7 +1690,7 @@ Mock.mock(url + "/delzhishi", "post", function(par) {
         } else {
             returnArray = {
                 StatusCode: 200,
-                Msg: "暂无数据",
+                Msg: "success",
                 Data: ketang
             };
         }
@@ -1698,7 +1698,7 @@ Mock.mock(url + "/delzhishi", "post", function(par) {
     return returnArray;
 });
 //课堂发布
-Mock.mock(url + "/fabuzhishi", "post", function(par) {
+Mock.mock(RegExp(url + "/fabuzhishi"), "post", function(par) {
     par = qs.parse(par.body);
     window.console.log(par.id);
     returnArray = {
@@ -1709,7 +1709,7 @@ Mock.mock(url + "/fabuzhishi", "post", function(par) {
     return returnArray;
 });
 //课堂取消发布
-Mock.mock(url + "/qxfabuzhishi", "post", function(par) {
+Mock.mock(RegExp(url + "/qxfabuzhishi"), "post", function(par) {
     par = qs.parse(par.body);
     window.console.log(par.id);
     returnArray = {
@@ -2492,5 +2492,39 @@ Mock.mock(RegExp(url + "/headlineNews_detail"), "get", p => {
     };
     return returnArray;
 });
-
+//我的学院
+//查询
+import { myCollegeList, myCollegeDetail } from "./ClassManagement/MyCollege";
+Mock.mock(RegExp(url + "/myCollege_list"), "get", p => {
+    let param = util.getQueryValue(p.url);
+    return {
+        success: true,
+        result: {
+            totalCount: myCollegeList.length,
+            items: myCollegeList.filter((t, index) => {
+                return (
+                    index >= param.SkipCount &&
+                    index < +param.SkipCount + +param.MaxResultCount
+                );
+            })
+        }
+    };
+});
+//根据id查询详情
+Mock.mock(RegExp(url + "/myCollege_detail"), "get", p => {
+    let returnArray = {
+        StatusCode: 200,
+        Msg: "success",
+        Data: myCollegeDetail
+    };
+    return returnArray;
+});
+//添加分类
+Mock.mock(RegExp(url + "/addCollegeType"), "post", p => {
+    let returnArray = {
+        StatusCode: 200,
+        Msg: "success",
+    };
+    return returnArray;
+});
 export default Mock;
