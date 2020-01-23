@@ -42,7 +42,11 @@
         <el-button type="default" @click="callback">返回</el-button>
       </div>
     </div>
-    <img-upload-big :isShow.sync="showImgUpload" @uploadSuccess="uploadSuccess"></img-upload-big>
+    <img-upload-big
+      :isShow.sync="showImgUpload"
+      @uploadSuccess="uploadSuccess"
+      @closeDialog="closeDialog"
+    ></img-upload-big>
   </div>
 </template>
 
@@ -75,6 +79,9 @@ export default {
 
   created() {},
   methods: {
+    closeDialog() {
+      this.showImgUpload = false;
+    },
     change(v) {
       this.form.content = v;
     },

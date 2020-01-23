@@ -54,7 +54,11 @@
         <el-button type="default" @click="callback">返回</el-button>
       </div>
     </div>
-    <img-upload-big :isShow.sync="showImgUpload" @uploadSuccess="uploadSuccess"></img-upload-big>
+    <img-upload-big
+      :isShow.sync="showImgUpload"
+      @uploadSuccess="uploadSuccess"
+      @closeDialog="closeDialog"
+    ></img-upload-big>
     <el-dialog title="分类管理" :visible.sync="dialogVisible">
       <h3 class="title">添加分类</h3>
       <el-form ref="typeForm" :model="typeForm" class="dialog_from_center">
@@ -128,6 +132,9 @@ export default {
     this.getType();
   },
   methods: {
+    closeDialog() {
+      this.showImgUpload = false;
+    },
     getType() {
       GetLpclass().then(res => {
         this.typeList = res.Data;

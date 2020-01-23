@@ -42,7 +42,11 @@
         <el-button type="default" @click="callback">返回</el-button>
       </div>
     </div>
-    <img-upload-big :isShow.sync="showImgUpload" @uploadSuccess="uploadSuccess"></img-upload-big>
+    <img-upload-big
+      :isShow.sync="showImgUpload"
+      @uploadSuccess="uploadSuccess"
+      @closeDialog="closeDialog"
+    ></img-upload-big>
   </div>
 </template>
 
@@ -79,6 +83,9 @@ export default {
     this.getDetail();
   },
   methods: {
+    closeDialog() {
+      this.showImgUpload = false;
+    },
     getDetail() {
       getHeadlineNewsDetail({ id: this.form.id }).then(res => {
         const { title, author, status, content, imgUrl, id } = res.Data;

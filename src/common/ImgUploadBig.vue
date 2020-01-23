@@ -3,7 +3,7 @@
     title="上传图片"
     :close-on-click-modal="false"
     width="1000px"
-    :visible.sync="isShow"
+    :visible.sync="visible"
     @close="close"
   >
     <div class="upload">
@@ -259,7 +259,7 @@ export default {
     close() {
       this.$refs.file.value = "";
       this.visible = false;
-      this.$emit("update:isShow", false);
+      this.$emit("closeDialog");
     },
     getOrigin(dom) {
       let offset = { x: 0, y: 0 };
@@ -561,6 +561,7 @@ export default {
       }
       uploadImg(fmData).then(res => {
         this.$emit("uploadSuccess", res.data);
+        this.visible = false;
         this.loading = false;
       });
     },
