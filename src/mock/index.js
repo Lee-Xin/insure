@@ -2523,7 +2523,7 @@ Mock.mock(RegExp(url + "/myCollege_detail"), "get", p => {
 Mock.mock(RegExp(url + "/addCollegeType"), "post", p => {
     let returnArray = {
         StatusCode: 200,
-        Msg: "success",
+        Msg: "success"
     };
     return returnArray;
 });
@@ -2531,7 +2531,7 @@ Mock.mock(RegExp(url + "/addCollegeType"), "post", p => {
 Mock.mock(RegExp(url + "/editCollegeType"), "post", p => {
     let returnArray = {
         StatusCode: 200,
-        Msg: "success",
+        Msg: "success"
     };
     return returnArray;
 });
@@ -2539,7 +2539,98 @@ Mock.mock(RegExp(url + "/editCollegeType"), "post", p => {
 Mock.mock(RegExp(url + "/delCollegeType"), "post", p => {
     let returnArray = {
         StatusCode: 200,
+        Msg: "success"
+    };
+    return returnArray;
+});
+//理赔知识
+import {
+    ClaimsKnowledgeList,
+    ClaimsKnowledgeDetail
+} from "./ClaimsManagement/ClaimsKnowledge";
+//查询
+Mock.mock(RegExp(url + "/claimsKnowledge_list"), "get", p => {
+    let param = util.getQueryValue(p.url);
+    return {
+        success: true,
+        result: {
+            totalCount: ClaimsKnowledgeList.length,
+            items: ClaimsKnowledgeList.filter((t, index) => {
+                return (
+                    index >= param.SkipCount &&
+                    index < +param.SkipCount + +param.MaxResultCount
+                );
+            })
+        }
+    };
+});
+//删除
+Mock.mock(RegExp(url + "/delClaimsKnowledge"), "post", function(par) {
+    par = par.body;
+    let returnArray = {
+        StatusCode: 200,
+        Msg: "success"
+    };
+    return returnArray;
+});
+//发布
+Mock.mock(RegExp(url + "/sendClaimsKnowledge"), "post", function(par) {
+    par = par.body;
+    let returnArray = {
+        StatusCode: 200,
+        Msg: "success"
+    };
+    return returnArray;
+});
+//添加
+Mock.mock(RegExp(url + "/addClaimsKnowledge"), "post", function(par) {
+    par = par.body;
+    let returnArray = {
+        StatusCode: 200,
+        Msg: "success"
+    };
+    return returnArray;
+});
+//根据id查询详情
+Mock.mock(RegExp(url + "/claimsKnowledge_detail"), "get", p => {
+    let returnArray = {
+        StatusCode: 200,
         Msg: "success",
+        Data: ClaimsKnowledgeDetail
+    };
+    return returnArray;
+});
+//知识分类
+//查询
+Mock.mock(RegExp(url + "/ClassificationOfKnowledge_list"), "get", p => {
+    returnArray = {
+        StatusCode: 200,
+        Msg: "query success",
+        Data: lipei
+    };
+    return returnArray;
+});
+//添加分类
+Mock.mock(RegExp(url + "/addClassificationOfKnowledge"), "post", p => {
+    let returnArray = {
+        StatusCode: 200,
+        Msg: "success"
+    };
+    return returnArray;
+});
+//编辑分类
+Mock.mock(RegExp(url + "/editClassificationOfKnowledge"), "post", p => {
+    let returnArray = {
+        StatusCode: 200,
+        Msg: "success"
+    };
+    return returnArray;
+});
+//删除分类
+Mock.mock(RegExp(url + "/delClassificationOfKnowledge"), "post", p => {
+    let returnArray = {
+        StatusCode: 200,
+        Msg: "success"
     };
     return returnArray;
 });

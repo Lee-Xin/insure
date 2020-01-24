@@ -327,52 +327,54 @@ h3.title {
   }
 }
 
-.el-dialog__body {
-  padding: 0 !important;
+.addTypeBox {
+  .el-dialog__body {
+    padding: 0 !important;
 
-  .typeBox {
-    display: flex;
+    .typeBox {
+      display: flex;
 
-    &>div:first-child {
-      width: 60%;
-      padding: 16px;
-      height: 400px;
-      overflow-y: auto;
+      &>div:first-child {
+        width: 60%;
+        padding: 16px;
+        height: 400px;
+        overflow-y: auto;
 
-      .el-input {
-        width: 300px;
-      }
+        .el-input {
+          width: 300px;
+        }
 
-      i {
-        color: #f00;
-        padding: 5px;
-        cursor: pointer;
-        font-size: 18px;
-      }
+        i {
+          color: #f00;
+          padding: 5px;
+          cursor: pointer;
+          font-size: 18px;
+        }
 
-      .flex {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-      }
-
-      ul {
-        li {
-          text-align: left;
-          border: 1px solid #eeee;
-          padding: 10px 34px 10px 10px;
-          margin-bottom: 10px;
+        .flex {
           display: flex;
           justify-content: space-between;
+          width: 100%;
+        }
+
+        ul {
+          li {
+            text-align: left;
+            border: 1px solid #eeee;
+            padding: 10px 34px 10px 10px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+          }
         }
       }
-    }
 
-    &>div:last-child {
-      width: 40%;
-      padding: 15px;
-      background-color: rgb(206, 234, 247);
-      height: 400px;
+      &>div:last-child {
+        width: 40%;
+        padding: 15px;
+        background-color: rgb(206, 234, 247);
+        height: 400px;
+      }
     }
   }
 }

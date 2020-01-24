@@ -300,7 +300,30 @@ export const addCollegeType = p => post("/addCollegeType", p);
 export const editCollegeType = p => post("/editCollegeType", p);
 //删除分类
 export const delCollegeType = p => post("/delCollegeType", p);
-
+//理赔管理-理赔知识
+//查询
+export const getClaimsKnowledgeList = p => get("/claimsKnowledge_list", p);
+//删除
+export const delClaimsKnowledge = p => post("delClaimsKnowledge", p);
+//发布
+export const sendClaimsKnowledge = p => post("sendClaimsKnowledge", p);
+//添加编辑
+export const addClaimsKnowledge = p => post("addClaimsKnowledge", p);
+//根据id查询详情
+export const getClaimsKnowledgeDetail = p => get("/claimsKnowledge_detail", p);
+//知识分类
+//查询
+export const getClassificationOfKnowledgeList = p =>
+    get("/ClassificationOfKnowledge_list", p);
+//添加分类
+export const addClassificationOfKnowledge = p =>
+    post("/addClassificationOfKnowledge", p);
+//编辑分类
+export const editClassificationOfKnowledge = p =>
+    post("/editClassificationOfKnowledge", p);
+//删除分类
+export const delClassificationOfKnowledge = p =>
+    post("/delClassificationOfKnowledge", p);
 // 我的消息
 export const MyMessage = obj => get("MyMessage", obj);
 // 我的消息搜索

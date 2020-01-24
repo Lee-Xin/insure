@@ -1,5 +1,5 @@
 <template>
-  <div class="box">
+  <div class="box addTypeBox">
     <page-hr></page-hr>
     <!--添加-->
     <el-form class="content_box cell">
@@ -155,7 +155,7 @@ export default {
       typeList: [],
       typeForm: {
         id: null,
-        type: namae
+        name: null
       },
       dialogVisible: false,
       activeNames: null

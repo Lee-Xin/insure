@@ -19,7 +19,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label>
-        <div class="cell_before">栏目分类</div>
+        <div class="cell_before">课件分类</div>
         <el-cascader
           v-model="form.type"
           clearable
@@ -30,7 +30,27 @@
       <el-form-item style="width:auto">
         <el-button type="primary" @click="dialogVisible=true">管理</el-button>
       </el-form-item>
-      <div style="clear:both"></div>
+      <div style="clear:both;border-bottom:1px solid #eee;"></div>
+    </el-form>
+    <el-form class="content_box cell">
+      <h3 class="title">关键字</h3>
+      <el-form-item label>
+        <div class="cell_before yellow">*标题</div>
+        <el-input v-model="tag" placeholder="请输入标签">
+          <template slot="append">
+            <el-button type="primary" @click="addTag">添加</el-button>
+          </template>
+        </el-input>
+      </el-form-item>
+      <el-form-item style="width:auto">
+        <el-tag
+          style="margin-left:10px"
+          @close="form.keywords.splice(i,1)"
+          v-for="(tag,i) in form.keywords"
+          :key="i"
+          closable
+        >{{tag}}</el-tag>
+      </el-form-item>
     </el-form>
     <el-form style="padding:10px">
       <el-form-item class="photos">
@@ -125,18 +145,18 @@ import PageHr from "@/common/PageHr";
 
 import EditorItem from "@/common/wangEnduit/EditorItem";
 import {
-  addzhishi,
+  addClaimsKnowledge,
   uploadImg,
-  GetLpclass,
-  addCollegeType,
-  getMyCollegeDetail,
-  editCollegeType,
-  delCollegeType
+  getClassificationOfKnowledgeList,
+  addClassificationOfKnowledge,
+  getClaimsKnowledgeDetail,
+  editClassificationOfKnowledge,
+  delClassificationOfKnowledge
 } from "@/mock/api";
 import ImgUploadBig from "@/common/ImgUploadBig";
 
 export default {
-  name: "addMyCollege",
+  name: "editClaimsKnowledge",
   data() {
     return {
       form: {
@@ -144,6 +164,7 @@ export default {
         author: null,
         status: null,
         content: null,
+        keywords: [],
         imgUrl: null,
         type: null
       },
@@ -159,7 +180,8 @@ export default {
         name: null
       },
       dialogVisible: false,
-      activeNames: null
+      activeNames: null,
+      tag: null
     };
   },
 
@@ -169,17 +191,24 @@ export default {
     this.getType();
   },
   methods: {
+    addTag() {
+      if (!this.tag) return this.$message("请输入关键字");
+      this.form.keywords.push(this.tag);
+      this.tag = null;
+    },
     closeDialog() {
       this.showImgUpload = false;
     },
     delType(item) {
-      delCollegeType({ id: item.value, name: item.label }).then(res => {
-        this.$message(res.data.Msg);
-        this.getType();
-      });
+      delClassificationOfKnowledge({ id: item.value, name: item.label }).then(
+        res => {
+          this.$message(res.data.Msg);
+          this.getType();
+        }
+      );
     },
     getType() {
-      GetLpclass().then(res => {
+      getClassificationOfKnowledgeList().then(res => {
         this.typeList = res.Data.map(item => {
           item.isEdit = true;
           item.children &&
@@ -191,7 +220,7 @@ export default {
       });
     },
     addType() {
-      addCollegeType(this.typeForm).then(res => {
+      addClassificationOfKnowledge(this.typeForm).then(res => {
         this.getType();
         this.$message(res.data.Msg);
       });
@@ -201,16 +230,36 @@ export default {
       item.isEdit = false;
     },
     confirmEditType(item) {
-      editCollegeType({ id: item.value, name: item.label }).then(res => {
-        item.isEdit = true;
-        this.$message(res.data.Msg);
-        this.getType();
-      });
+      editClassificationOfKnowledge({ id: item.value, name: item.label }).then(
+        res => {
+          item.isEdit = true;
+          this.$message(res.data.Msg);
+          this.getType();
+        }
+      );
     },
     getDetail() {
-      getMyCollegeDetail({ id: this.form.id }).then(res => {
-        const { title, author, status, content, imgUrl, id, type } = res.Data;
-        this.form = { title, author, status, content, imgUrl, id, type };
+      getClaimsKnowledgeDetail({ id: this.form.id }).then(res => {
+        const {
+          title,
+          author,
+          status,
+          content,
+          imgUrl,
+          id,
+          type,
+          keywords
+        } = res.Data;
+        this.form = {
+          title,
+          author,
+          status,
+          content,
+          imgUrl,
+          id,
+          type,
+          keywords
+        };
       });
     },
     change(v) {
@@ -222,7 +271,9 @@ export default {
     save() {
       if (!this.form.title) return this.$message("请输入标题");
       if (!this.form.author) return this.$message("请输入作者名字");
-      addzhishi(this.form).then(res => {
+      if (!this.form.keywords.length) return this.$message("请输入关键字");
+
+      addClaimsKnowledge(this.form).then(res => {
         this.$message(res.data.Msg);
         this.$router.go(-1);
       });

@@ -1,406 +1,258 @@
 <template>
   <div>
-    <main-title :title="title" :title_f="title_f"></main-title>
     <page-hr></page-hr>
-    <div class="content_box" v-show="mainshow">
+    <div class="content_box">
+      <span class="content_title_1">快速搜索</span>
       <el-row :gutter="20">
-        <el-col :span="6">
-          <span class="content_title_1">快速搜索</span>
-          <el-select v-model="zhuangtaikey" placeholder="请选择">
-          <el-option
-                  v-for="(item,index) in zhuangtai"
-                  :key="index"
-                  :label="item"
-                  :value="item">
-          </el-option>
-        </el-select>
-        </el-col>
-        <el-col :span="6"><el-input  v-model="searcktitle" placeholder="请输入标题"></el-input></el-col>
-        <el-col :span="6"><el-input v-model="searckauth" placeholder="请输入作者"></el-input></el-col>
-        <el-col :span="6"><el-date-picker
-                v-model="searchdate"
-                type="date"
-                placeholder="选择日期">
-        </el-date-picker>
+        <div class="row">
+          <el-col :span="6">
+            <el-input v-model="form.title" placeholder="请输入您要收索的标题名称"></el-input>
+          </el-col>
+          <el-col :span="6">
+            <el-select v-model="form.author" placeholder="请选择作者" filterable>
+              <el-option
+                v-for="item in authorList"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+              ></el-option>
+            </el-select>
+          </el-col>
 
-        </el-col>
-        <el-col :span="6"><el-button @click="search()">搜索</el-button></el-col>
+          <el-col :span="6">
+            <el-select v-model="form.status" placeholder="请选择发布状态">
+              <el-option
+                v-for="item in statusList"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+              ></el-option>
+            </el-select>
+          </el-col>
+          <el-col :span="6">
+            <el-date-picker v-model="form.date" type="date" placeholder="请选择日期"></el-date-picker>
+          </el-col>
+          <el-col :span="6" style="text-align:left">
+            <el-button @click="handleQuery()" type="primary">搜索</el-button>
+          </el-col>
+        </div>
       </el-row>
-
+      <div style="text-align:right;padding:10px 0;margin:10px 0;border-top:1px solid #e9eaec">
+        <router-link to="/add_claims_knowledge">
+          <el-button type="warning">新增</el-button>
+        </router-link>
+      </div>
       <!--列表-->
       <el-table
-              ref="singleTable"
-              :data="accountdata"
-              highlight-current-row
-              @current-change="handleCurrentChange"
-              style="width: 100%" >
-        <el-table-column
-                type="index"
-                width="50">
+        ref="singleTable"
+        :data="tableList"
+        highlight-current-row
+        @row-click="handleClick"
+        style="width: 100%;"
+      >
+        <el-table-column prop="id" label="序号"></el-table-column>
+        <el-table-column prop="title" label="标题"></el-table-column>
+        <el-table-column prop="author" label="作者"></el-table-column>
+        <el-table-column prop="keywords" label="关键字">
+          <template slot-scope="scope">
+            <span v-for="(item,i) in scope.row.keywords" :key="i">
+              {{item}}
+              <span v-if="i<scope.row.keywords.length-1">,</span>
+            </span>
+          </template>
         </el-table-column>
-        <el-table-column
-                property="title"
-                label="标题"
-                width="120">
-        </el-table-column>
-        <el-table-column
-                property="author"
-                label="作者"
-                width="120">
-        </el-table-column>
-        <el-table-column
-                property="keylist"
-                label="关键词"
-                width="120">
-        </el-table-column>
-        <el-table-column
-                property="class_one_name"
-                label="大分类"
-                width="120">
-        </el-table-column>
-        <el-table-column
-                property="class_two_name"
-                label="小分类"
-                width="120">
-        </el-table-column>
-        <el-table-column
-                property="seenum"
-                label="阅读量"
-                width="120">
-        </el-table-column>
-        <el-table-column
-                property="create_at"
-                label="时间"
-                width="120">
-        </el-table-column>
-        <el-table-column
-                property="status"
-                label="状态">
+        <el-table-column prop="collegeType" label="课件分类"></el-table-column>
+        <el-table-column prop="type" label="小分类"></el-table-column>
+        <el-table-column prop="readNum" label="阅读量"></el-table-column>
+        <el-table-column prop="time" label="时间"></el-table-column>
+        <el-table-column prop="status" label="状态">
+          <template slot-scope="scope">{{scope.row.status==1?"发布":"未发布"}}</template>
         </el-table-column>
       </el-table>
-      <div style="margin-top: 20px">
-        <el-button @click="upd()">修改</el-button>
-        <el-button @click="del()">删除</el-button>
-        <el-button @click="add()">添加</el-button>
-      </div>
-      <el-pagination
-              @size-change="handleSizeChange"
-              @current-change="handleCurrentChange2"
-              :current-page.sync="PageIndex"
-              :page-sizes="[50,100, 200, 300, 400]"
-              :page-size="PageSize"
-              layout="sizes, prev, pager, next"
-              :total="total">
-      </el-pagination>
+      <page-ination
+        @changeSize="changeSize"
+        @changeCurrentPage="changeCurrentPage"
+        :total="totalNum"
+      >
+        <div>
+          <el-button @click="dialogVisible=true" type="danger" :disabled="isDisabledForm.del">删除</el-button>
+          <el-button type="primary" @click="edit" :disabled="isDisabledForm.edit">编辑</el-button>
+          <el-button
+            @click="changeStatus(1)"
+            type="primary"
+            v-if="isShowForm.send"
+            :disabled="isDisabledForm.send"
+          >发布</el-button>
+          <el-button
+            @click="changeStatus(2)"
+            type="primary"
+            v-else
+            :disabled="isDisabledForm.notSend"
+          >取消发布</el-button>
+        </div>
+      </page-ination>
     </div>
-    <!--添加-->
-    <el-form v-show="addshow" label-width="100px" class="demo-dynamic">
-     <el-form-item label="课件分类" >
-
-       <el-cascader
-               :options="jigoudata"
-               v-model="classtype"
-               :props="props"
-               @change="handleChange">
-       </el-cascader>
-      </el-form-item>
-      <el-form-item label="标题" >
-        <el-input v-model="titles" placeholder="请输入标题"></el-input>
-      </el-form-item>
-      <el-form-item label="作者" >
-        <el-input v-model="author" placeholder="请输入作者"></el-input>
-      </el-form-item>
-      <el-form-item label="状态" >
-        <el-select v-model="status" placeholder="请选择">
-          <el-option
-                  v-for="(item,index) in zhuangtai"
-                  :key="index"
-                  :label="item"
-                  :value="item">
-          </el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="封面" >
-        <el-upload
-                class="avatar-uploader"
-                action="https://jsonplaceholder.typicode.com/posts/"
-                :show-file-list="false"
-                :on-success="handleAvatarSuccess7"
-                :before-upload="beforeAvatarUpload">
-          <img v-if="wxsubqrcode" :src="wxsubqrcode" class="avatar">
-          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload>
-      </el-form-item>
-      <el-form-item label="关键词" >
-          <el-input v-model="key"></el-input>
-          <el-button v-on:click="addkey">添加</el-button>
-          <el-tag
-                  v-for="tag in keydata"
-                  :key="tag"
-                  :disable-transitions="false"
-                  @close="handleClose1(tag)"
-                  closable
-                  :type="tag">
-            {{tag}}
-          </el-tag>
-      </el-form-item>
-      <el-form-item label="详细信息" >
-        <editor-item v-model="comdetail" :isClear="isClear" @change="change1"></editor-item>
-      </el-form-item>
-      <el-form-item  >
-        <el-button @click="oks">确认</el-button>
-        <el-button @click="back1">返回</el-button>
-      </el-form-item>
-    </el-form>
-    <!--修改-->
-    <el-form v-if="updshow" label-width="100px" class="demo-dynamic">
-      <el-form-item label="课件分类" >
-        <el-cascader
-                :options="jigoudata"
-                v-model="updata.classtype"
-                :props="props"
-                @change="handleChange2">
-        </el-cascader>
-      </el-form-item>
-      <el-form-item label="标题" >
-        <el-input  v-model="updata.title"></el-input>
-      </el-form-item>
-      <el-form-item label="作者" >
-        <el-input  v-model="updata.author"></el-input>
-      </el-form-item>
-      <el-form-item label="状态" >
-        <el-select v-model="updata.status" placeholder="请选择">
-          <el-option
-                  v-for="(item) in ['未发布','已发布']"
-                  :key="item"
-                  :label="item"
-                  :value="item">
-          </el-option>
-        </el-select>
-
-      </el-form-item>
-      <el-form-item label="关键词" >
-        <el-input v-model="keys"></el-input>
-        <el-button v-on:click="addkeys">添加</el-button>
-        <el-tag
-                v-for="tag in updata.key"
-                :key="tag"
-                closable
-                :disable-transitions="false"
-                @close="handleClose(tag)"
-                :type="tag">
-          {{tag}}
-        </el-tag>
-      </el-form-item>
-      <el-form-item  >
-        <el-button @click="oks1">确认</el-button>
-        <el-button @click="back2">返回</el-button>
-      </el-form-item>
-    </el-form>
+    <el-dialog title="删除" :visible.sync="dialogVisible" width="400px">
+      <div style="text-align:left">
+        <span>请确认删除此项数据。</span>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="del()">确定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-    import MainTitle from "@/common/MainTitle";
-    import PageHr from "@/common/PageHr";
+import PageHr from "@/common/PageHr";
+import PageInation from "../../common/PageInation";
 
-    import EditorItem from "@/common/wangEnduit/EditorItem";
-    import {GetLpclass,getlpsdata,addlpdata,dellpdata,updlpdata}  from "@/request/api"
-    export default {
-        name: "ClaimsKnowledge",
-        data () {
-            return {
-              props:{value:'id',label:'name',children:'chil'},
-              isClear: false,
-              //当前页数
-              PageIndex:1,
-              //每页条数
-              PageSize:50,
-              //总共条数
-              total:1000,
-              mainshow:true,
-              addshow:false,
-              updshow:false,
-              zhuangtai:['未发布','已发布'],
-              zhuangtaikey:'',
-              searcktitle:'',
-              searckauth:'',
-              searchdate:'',
-                title: '理赔管理',
-                title_f: '理赔管理',
-              //列佩列表
-              accountdata:[],
-              //分类列表
-              jigoudata:[],
-              //封面
-              wxsubqrcode:'',
-              //课件分类
-              classtype:[],
-              //标题
-              titles:'',
-              //作者
-              author:'',
-              //状态
-              status:'未发布',
-              //关键词
-              key:'',
-              keydata:[],//关键词数据
-              comdetail:'',//基本数据
-              //======修改数据
-              keys:'',
-
-
-
-            }
-        },
-      methods:{
-        handleClose(tag) {
-          this.updata.key.splice(this.updata.key.indexOf(tag), 1);
-        },
-        //添加的
-        handleClose1(tag) {
-          this.keydata.splice(this.keydata.indexOf(tag), 1);
-
-        },
-        handleChange(value) {
-          this.classtype=value
-          window.console.log(value);
-        },
-        handleChange2(val){
-          this.updata.classtype=val
-        },
-        change1(v){
-          this.comdetail=v
-        },
-        addkey(){
-          if(this.key.length<=0){
-            this.$message('请输入标签');
-          }
-          this.keydata.push(this.key)
-          this.key=''
-        },
-        addkeys(){
-          if(this.keys.length<=0){
-            this.$message('请输入标签');
-          }
-          this.updata.key.push(this.key)
-          this.key=''
-        },
-        handleAvatarSuccess7(res, file) {
-          this.wxsubqrcode = URL.createObjectURL(file.raw);
-        },
-        beforeAvatarUpload(file) {
-          const isJPG = file.type === 'image/jpeg';
-          const isLt2M = file.size / 1024 / 1024 < 2;
-
-          if (!isJPG) {
-            this.$message.error('上传头像图片只能是 JPG 格式!');
-          }
-          if (!isLt2M) {
-            this.$message.error('上传头像图片大小不能超过 2MB!');
-          }
-          return isJPG && isLt2M;
-        },
-        //分页
-        handleSizeChange(val) {
-          this.PageSize=val
-          window.console.log(`每页 ${val} 条`);
-          this.getstaff();
-        },
-        handleCurrentChange2(val) {
-          this.PageIndex=val
-          window.console.log(`当前页: ${val}`);
-          this.getstaff();
-        },
-        search:function(){
-          this.$message('搜索中');
-          this.getstaff()
-        },
-        back1:function(){
-          this.addshow=false
-          this.mainshow=true
-        },
-        back2:function(){
-          this.updshow=false
-          this.mainshow=true
-        },
-        handleCurrentChange(val) {
-          this.currentRow = val.id;
-          this.updata=val
-        },
-        add:function(){
-          this.addshow=true
-          this.mainshow=false
-        },
-        oks1:function(){
-          var that=this
-          window.console.log(that.updata)
-          updlpdata(that.updata).then(res=>{
-            window.console.log(res)
-            that.currentRow=''
-            this.$message(res.Msg);
-            that.accountdata=res.Data
-            that.updshow=false
-            that.mainshow=true
-          })
-        },
-        oks:function () {
-          var that=this;
-
-          addlpdata({wxsubqrcode:that.wxsubqrcode,classtype:that.classtype,titles:that.titles,author:that.author,status:that.status,keydata:that.keydata}).then(res=>{
-            this.$message(res.Msg);
-            that.accountdata=res.Data
-            that.addshow=false
-            that.mainshow=true
-          })
-        },
-        upd:function () {
-          if(this.currentRow == -1){
-            this.$message('请选择一行');
-            return false
-          }
-          var that=this
-          that.updshow=true
-          that.mainshow=false
-        },
-        del:function () {
-          var that=this
-          if(this.currentRow == -1){
-            this.$message('请选择一行');
-            return false
-          }
-          dellpdata({id:this.currentRow}).then(res=>{
-            that.$message(res.Msg);
-            that.accountdata=res.Data
-          })
-        },
-        getstaff(){
-          var that=this
-          getlpsdata({PageIndex:that.PageIndex,PageSize:that.PageSize,zhuangtaikey:that.zhuangtaikey,date:that.searchdate,author:that.searckauth,title:that.searcktitle}).then(res=>{
-            var data=res.Data
-            that.accountdata = data.Rows
-            that.total = data.Records
-          })
-        }
-        },
-      mounted(){
-        var that=this
-        GetLpclass().then(res=>{
-          var data=res.Data
-          window.console.log(data)
-          that.jigoudata = data
-        })
-        that.getstaff()
+import {
+  getAuthorList,
+  getClaimsKnowledgeList,
+  delClaimsKnowledge,
+  sendClaimsKnowledge
+} from "@/mock/api";
+export default {
+  name: "ClaimsKnowledge",
+  data() {
+    return {
+      form: {
+        title: null,
+        author: null,
+        status: null,
+        date: null,
+        MaxResultCount: 50, //页码数
+        Sorting: 1, //排序
+        SkipCount: 0 //开始的索引
       },
-        components: {PageHr, MainTitle,EditorItem}
+      authorList: [],
+      statusList: [
+        { id: 1, name: "发布" },
+        { id: 2, name: "未发布" }
+      ],
+      tableList: [],
+      totalNum: 0,
+      isDisabledForm: { del: true, edit: true, send: true, notSend: true },
+      isShowForm: { send: true },
+      clickRow: {},
+      dialogVisible: false
+    };
+  },
+  watch: {
+    clickRow(row) {
+      if (row.id !== undefined && row.id !== "" && row.id !== null) {
+        this.isDisabledForm = {
+          del: false,
+          edit: false,
+          send: false,
+          notSend: false
+        };
+        this.isShowForm.send = row.status == 2 ? true : false;
+      } else {
+        this.isDisabledForm = {
+          del: true,
+          edit: true,
+          send: true,
+          notSend: true
+        };
+        this.isShowForm = { send: true };
+      }
     }
+  },
+  created() {
+    this.getAuthor();
+    this.getList();
+  },
+  methods: {
+    getAuthor() {
+      getAuthorList().then(res => {
+        this.authorList = res.Data;
+      });
+    },
+    getList() {
+      this.clickRow = {};
+      getClaimsKnowledgeList(this.form).then(res => {
+        this.tableList = res.result.items;
+        this.totalNum = res.result.totalCount;
+      });
+    },
+    handleQuery() {
+      this.form.SkipCount = 0;
+      this.getList();
+    },
+    changeSize(val) {
+      this.form.SkipCount = 0;
+      this.form.MaxResultCount = val;
+      this.getList(this.form);
+    },
+    //  当前页发生改变时
+    changeCurrentPage(val) {
+      this.form.SkipCount = (val - 1) * this.form.MaxResultCount;
+      this.getList(this.form);
+    },
+    del() {
+      delClaimsKnowledge({ id: this.clickRow.id }).then(res => {
+        this.$message(res.data.Msg);
+        this.dialogVisible = false;
+        this.getList();
+      });
+    },
+    changeStatus(n) {
+      sendClaimsKnowledge({ id: this.clickRow.id, status: n }).then(res => {
+        this.$message(res.data.Msg);
+        this.getList();
+      });
+    },
+    handleClick(row, column, event) {
+      this.clickRow = row;
+    },
+    edit() {
+      this.$router.push({
+        path: "/edit_claims_knowledge",
+        params: { id: this.clickRow.id }
+      });
+    }
+  },
+
+  components: { PageHr, PageInation }
+};
 </script>
 
 <style scoped>
-  .fuwenbenkaung{
-    width: 100%;
-    height: 458px;
-    font-size: 18px;
-    /*background-color: red;*/
-  }
+.content_box {
+  width: 100%;
+  height: auto;
+  box-sizing: border-box;
+  padding-left: 16px;
+}
+
+.content_title_1 {
+  width: 100%;
+  height: 18px;
+  display: block;
+  line-height: 18px;
+  font-size: 18px;
+  color: #ef8412;
+  text-align: left;
+  margin-bottom: 20px;
+}
+.fuwenbenkaung {
+  width: 100%;
+  height: 458px;
+  font-size: 18px;
+  /*background-color: red;*/
+}
+.row {
+  display: flex;
+  justify-content: flex-start;
+}
+.row >>> .el-col {
+  width: 30%;
+}
+.row >>> .el-col .el-input,
+.row >>> .el-col .el-select {
+  width: 100%;
+}
 </style>

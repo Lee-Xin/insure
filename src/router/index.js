@@ -91,6 +91,8 @@ import addHeadlineNews from "@/page/ClassManagement/addHeadlineNews.vue";
 import editHeadlineNews from "@/page/ClassManagement/editHeadlineNews.vue";
 import addMyCollege from "@/page/ClassManagement/addMyCollege.vue";
 import editMyCollege from "@/page/ClassManagement/editMyCollege.vue";
+import addClaimsKnowledge from "@/page/ClaimsManagement/addClaimsKnowledge.vue";
+import editClaimsKnowledge from "@/page/ClaimsManagement/editClaimsKnowledge.vue";
 Vue.use(Router);
 
 const router = new Router({
@@ -503,7 +505,29 @@ const router = new Router({
         {
             path: "/claims_knowledge",
             name: "claims_knowledge",
-            component: ClaimsKnowledge
+            component: ClaimsKnowledge,
+            meta: {
+                title: "理赔管理",
+                subTitle: "这是理赔管理页面"
+            }
+        },
+        {
+            path: "/add_claims_knowledge",
+            name: "add_claims_knowledge",
+            component: addClaimsKnowledge,
+            meta: {
+                title: "新增理赔",
+                subTitle: "这是新增理赔页面"
+            }
+        },
+        {
+            path: "/edit_claims_knowledge",
+            name: "edit_claims_knowledge",
+            component: editClaimsKnowledge,
+            meta: {
+                title: "编辑理赔",
+                subTitle: "这是编辑理赔页面"
+            }
         },
         {
             path: "/claims_list",
