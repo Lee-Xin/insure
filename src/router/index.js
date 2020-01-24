@@ -542,7 +542,11 @@ const router = new Router({
         {
             path: "/classification_of_knowledge",
             name: "classification_of_knowledge",
-            component: ClassificationOfKnowledge
+            component: ClassificationOfKnowledge,
+            meta: {
+                title: "理赔分类",
+                subTitle: "这是理赔分类页面"
+            }
         },
         {
             path: "/continuous_claims",

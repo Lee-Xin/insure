@@ -1,236 +1,209 @@
 <template>
   <div>
-    <main-title :title="title" :title_f="title_f"></main-title>
     <page-hr></page-hr>
-    <div v-show="mainshow">
-      <el-table
-              ref="singleTable"
-              :data="accountdata"
-              highlight-current-row
-              @current-change="handleCurrentChange"
-              style="width: 100%" >
-        <el-table-column
-                type="index"
-                width="50">
-        </el-table-column>
-        <el-table-column
-                property="lv_name"
-                label="分类级别"
-                width="120">
-        </el-table-column>
-        <el-table-column
-                property="name"
-                label="分类名称"
-                width="120">
-        </el-table-column>
-      </el-table>
-      <div style="margin-top: 20px">
-        <el-button @click="upd()">修改</el-button>
-        <el-button @click="del()">删除</el-button>
-        <el-button @click="add()">添加</el-button>
+    <div class="content_box">
+      <div style="text-align:right;padding:10px 0;margin:10px 0;">
+        <el-button type="warning" @click="addOrEdit(1)">新增</el-button>
       </div>
-      <el-pagination
-              @size-change="handleSizeChange"
-              @current-change="handleCurrentChange2"
-              :current-page.sync="PageIndex"
-              :page-sizes="[50,100, 200, 300, 400]"
-              :page-size="PageSize"
-              layout="sizes, prev, pager, next"
-              :total="total">
-      </el-pagination>
+      <!--列表-->
+      <el-table
+        ref="singleTable"
+        :data="tableList"
+        highlight-current-row
+        @row-click="handleClick"
+        style="width: 100%;"
+      >
+        <el-table-column prop="id2" label="序号"></el-table-column>
+        <el-table-column prop="jibie" label="分类级别"></el-table-column>
+        <el-table-column prop="name" label="分类名称"></el-table-column>
+      </el-table>
+      <page-ination :isHide="true">
+        <div>
+          <el-button @click="dialogVisible=true" type="danger" :disabled="isDisabledForm.del">删除</el-button>
+          <el-button type="primary" @click="addOrEdit(2)" :disabled="isDisabledForm.edit">编辑</el-button>
+        </div>
+      </page-ination>
     </div>
-    <!--添加-->
-    <el-form v-show="addshow" label-width="100px" class="demo-dynamic">
-      <el-form-item label="上级分类" >
-        <el-select v-model="lvs" placeholder="请选择">
-          <el-option
-                  v-for="(item,index) in jigoudata"
-                  :key="item.id"
-                  :label="item.name"
-                  :value="index">
-          </el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="分类名称" >
-        <el-input v-model="name"></el-input>
-      </el-form-item>
+    <el-dialog :title="title" :visible.sync="addOrEditFormIsShow">
+      <el-form ref="addOrEditForm" :model="addOrEditForm" class="dialog_from_center100">
+        <el-form-item>
+          <div class="cell_before">上级分类</div>
+          <el-select v-model="addOrEditForm.id1" placeholder="请选择上级分类" clearable filterable>
+            <el-option
+              v-for="item in typeList"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <div class="cell_before">分类名称</div>
+          <el-input v-model="addOrEditForm.name" placeholder="请输入分类名称"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="addOrEditFormIsShow = false">取消</el-button>
+        <el-button type="primary" @click="confirm()">确定</el-button>
+      </span>
+    </el-dialog>
 
-      <el-form-item  >
-        <el-button @click="oks">确认</el-button>
-        <el-button @click="back1">返回</el-button>
-      </el-form-item>
-    </el-form>
-    <!--修改-->
-    <el-form v-if="updshow" label-width="100px" class="demo-dynamic">
-      <el-form-item label="上级分类" >
-        <el-select v-model="updata.pid" placeholder="请选择">
-          <el-option
-                  v-for="(item,index) in jigoudata"
-                  :key="index"
-                  :label="item.name"
-                  :value="item.id">
-          </el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="分类名称" >
-        <el-input  v-model="updata.name"></el-input>
-      </el-form-item>
-
-      <el-form-item  >
-        <el-button @click="oks1">确认</el-button>
-        <el-button @click="back2">返回</el-button>
-      </el-form-item>
-    </el-form>
+    <el-dialog title="删除" :visible.sync="dialogVisible" width="400px">
+      <div style="text-align:left">
+        <span>请确认删除此项数据。</span>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="del()">确定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
+
 <script>
-  import MainTitle from "@/common/MainTitle";
-  import PageHr from "@/common/PageHr";
-  import {GetLpclass,GetLpdata,Addlipei,Dellipei,Updlipei} from "@/request/api"
-  export default {
-    name: "ClassificationOfKnowledge",
-    data () {
-      return {
-        //当前页数
-        PageIndex:1,
-        //每页条数
-        PageSize:50,
-        //总共条数
-        total:1000,
-        mainshow:true,
-        addshow:false,
-        updshow:false,
-        title: '理赔分类',
-        title_f: '理赔分类',
-        jigoudata:[],//机构列表
-        accountdata:[],//机构账号
-        currentRow: -1,
-        celuezu:[],//策略组列表,
+import PageHr from "@/common/PageHr";
+import PageInation from "../../common/PageInation";
 
-        roles:'',//选择的策略组
-        accounts:'',//策略组账号
-        names:'',//选择的机构
-        pwd1:'',//密码1
-        pwd2:'',//密码2
-        //修改数据
-        updata:[],
-        //添加
-        lvs:'',
-        name:''
+import {
+  getClassificationOfKnowledgeList,
+  delClassificationOfKnowledge,
+  addClassificationOfKnowledge,
+  editClassificationOfKnowledge
+} from "@/mock/api";
+export default {
+  name: "ClaimsKnowledge",
+  data() {
+    return {
+      addOrEditForm: {
+        id1: null,
+        id2: null,
+        name: null
+      },
+      title: null,
+      typeList: [],
+      addOrEditFormIsShow: false,
+      tableList: [],
+      isDisabledForm: { del: true, edit: true },
+      clickRow: {},
+      dialogVisible: false,
+      n: null //1添加2编辑
+    };
+  },
+  watch: {
+    clickRow(row) {
+      if (row.id2 !== undefined && row.id2 !== "" && row.id2 !== null) {
+        this.isDisabledForm = {
+          del: false,
+          edit: false
+        };
+      } else {
+        this.isDisabledForm = {
+          del: true,
+          edit: true
+        };
       }
+    }
+  },
+  created() {
+    this.getList();
+  },
+  methods: {
+    getList() {
+      this.clickRow = {};
+      getClassificationOfKnowledgeList(this.form).then(res => {
+        this.typeList = res.Data;
+        let list = [];
+        res.Data.map(item => {
+          item.children &&
+            item.children.map(item2 => {
+              list.push({
+                jibie: item.label,
+                id1: item.value,
+                name: item2.label,
+                id2: item2.value
+              });
+            });
+        });
+        this.tableList = list;
+      });
     },
-    methods:{
-      //分页
-      handleSizeChange(val) {
-        this.PageSize=val
-        window.console.log(`每页 ${val} 条`);
-        this.getstaff();
-      },
-      handleCurrentChange2(val) {
-        this.PageIndex=val
-        window.console.log(`当前页: ${val}`);
-        this.getstaff();
-      },
-      search:function(){
-        this.$message('搜索中');
-      },
-      back1:function(){
-        this.addshow=false
-        this.mainshow=true
-      },
-      back2:function(){
-        this.updshow=false
-        this.mainshow=true
-      },
-      handleCurrentChange(val) {
-        this.currentRow = val.id;
-        this.updata=val
-        window.console.log(val)
-      },
-      add:function(){
-        this.addshow=true
-        this.mainshow=false
-      },
-      oks1:function(){
-        var that=this
-        window.console.log(that.updata)
-        Updlipei(that.updata).then(res=>{
-          window.console.log(res)
-          that.currentRow=''
-          this.$message(res.Msg);
-          that.accountdata=res.Data
-          that.updshow=false
-          that.mainshow=true
-        })
-      },
-      oks:function () {
-        var that=this;
-        window.console.log(that.lvs)
-        Addlipei({name:that.name,pid:that.jigoudata[that.lvs]['id']}).then(res=>{
-          this.$message(res.Msg);
-          that.accountdata=res.Data
-          that.addshow=false
-          that.mainshow=true
-        })
-      },
-      upd:function () {
-        if(this.currentRow == -1){
-          this.$message('请选择一行');
-          return false
-        }
-        var that=this
-        that.updshow=true
-        that.mainshow=false
-      },
-      del:function () {
-        var that=this
-        if(this.currentRow == -1){
-          this.$message('请选择一行');
-          return false
-        }
-        Dellipei({id:this.currentRow}).then(res=>{
-          that.$message(res.Msg);
-          that.accountdata=res.Data
-        })
-      },
-      getstaff(){
-        var that=this
-        GetLpdata({PageIndex:that.PageIndex,PageSize:that.PageSize}).then(res=>{
-          var data=res.Data
-          that.accountdata = data.Rows
-          that.total = data.Records
-        })
-      }
-    },
-    mounted(){
-      var that=this
-      GetLpclass().then(res=>{
-        var data=res.Data
-        window.console.log(res)
-        that.jigoudata = data
-      })
-      that.getstaff()
 
+    del() {
+      delClassificationOfKnowledge({ id: this.clickRow.id2 }).then(res => {
+        this.$message(res.data.Msg);
+        this.dialogVisible = false;
+        this.getList();
+      });
     },
-    components: {PageHr, MainTitle}
-  }
+
+    handleClick(row, column, event) {
+      this.clickRow = row;
+    },
+    addOrEdit(n) {
+      this.n = n;
+      this.title = n == 1 ? "新增知识分类" : "编辑知识分类";
+      this.addOrEditForm.id1 = n == 1 ? null : this.clickRow.id1;
+      this.addOrEditForm.id2 = n == 1 ? null : this.clickRow.id2;
+      this.addOrEditForm.name = n == 1 ? null : this.clickRow.name;
+      this.addOrEditFormIsShow = true;
+    },
+    confirm() {
+      if (this.n == 1) this.add();
+      else this.edit();
+    },
+    add() {
+      addClassificationOfKnowledge(this.addOrEditForm).then(res => {
+        this.$message(res.data.Msg);
+        this.addOrEditFormIsShow = false;
+        this.getList();
+      });
+    },
+    edit() {
+      editClassificationOfKnowledge(this.addOrEditForm).then(res => {
+        this.$message(res.data.Msg);
+        this.addOrEditFormIsShow = false;
+        this.getList();
+      });
+    }
+  },
+
+  components: { PageHr, PageInation }
+};
 </script>
 
 <style scoped>
-  .content_box{
-    width: 100%;
-    height: auto;
-    padding-left: 16px;
-    box-sizing: border-box;
-  }
-  .content_title_1{
-    width: 100%;
-    height: 18px;
-    display: block;
-    line-height: 18px;
-    font-size: 18px;
-    color: #ef8412;
-    text-align: left;
-    margin-bottom: 20px;
-  }
+.content_box {
+  width: 100%;
+  height: auto;
+  box-sizing: border-box;
+  padding-left: 16px;
+}
+
+.content_title_1 {
+  width: 100%;
+  height: 18px;
+  display: block;
+  line-height: 18px;
+  font-size: 18px;
+  color: #ef8412;
+  text-align: left;
+  margin-bottom: 20px;
+}
+.fuwenbenkaung {
+  width: 100%;
+  height: 458px;
+  font-size: 18px;
+  /*background-color: red;*/
+}
+.row {
+  display: flex;
+  justify-content: flex-start;
+}
+.row >>> .el-col {
+  width: 30%;
+}
+.row >>> .el-col .el-input,
+.row >>> .el-col .el-select {
+  width: 100%;
+}
 </style>

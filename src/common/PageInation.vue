@@ -13,6 +13,7 @@
         :page-size="50"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"
+        v-if="!isHide"
       ></el-pagination>
     </div>
   </div>
@@ -32,7 +33,8 @@ export default {
     }
   },
   props: {
-    total: Number
+    total: Number,
+    isHide: Boolean
   },
   data() {
     return {
