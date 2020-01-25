@@ -324,6 +324,17 @@ export const editClassificationOfKnowledge = p =>
 //删除分类
 export const delClassificationOfKnowledge = p =>
     post("/delClassificationOfKnowledge", p);
+
+//理赔管理-连续理赔
+//查询
+export const getContinuousClaimsList = p => get("/ContinuousClaims_list", p);
+//删除
+export const delContinuousClaims = p => post("delContinuousClaims", p);
+//添加编辑
+export const addContinuousClaims = p => post("addContinuousClaims", p);
+//根据id查询详情
+export const getContinuousClaimsDetail = p =>
+    get("/ContinuousClaims_detail", p);
 // 我的消息
 export const MyMessage = obj => get("MyMessage", obj);
 // 我的消息搜索

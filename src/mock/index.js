@@ -2634,4 +2634,52 @@ Mock.mock(RegExp(url + "/delClassificationOfKnowledge"), "post", p => {
     };
     return returnArray;
 });
+//连续理赔
+import {
+    ContinuousClaimsList,
+    ContinuousClaimsDetail
+} from "./ClaimsManagement/ContinuousClaims";
+//查询
+Mock.mock(RegExp(url + "/ContinuousClaims_list"), "get", p => {
+    let param = util.getQueryValue(p.url);
+    return {
+        success: true,
+        result: {
+            totalCount: ContinuousClaimsList.length,
+            items: ContinuousClaimsList.filter((t, index) => {
+                return (
+                    index >= param.SkipCount &&
+                    index < +param.SkipCount + +param.MaxResultCount
+                );
+            })
+        }
+    };
+});
+//删除
+Mock.mock(RegExp(url + "/delContinuousClaims"), "post", function(par) {
+    par = par.body;
+    let returnArray = {
+        StatusCode: 200,
+        Msg: "success"
+    };
+    return returnArray;
+});
+//添加
+Mock.mock(RegExp(url + "/addContinuousClaims"), "post", function(par) {
+    par = par.body;
+    let returnArray = {
+        StatusCode: 200,
+        Msg: "success"
+    };
+    return returnArray;
+});
+//根据id查询详情
+Mock.mock(RegExp(url + "/ContinuousClaims_detail"), "get", p => {
+    let returnArray = {
+        StatusCode: 200,
+        Msg: "success",
+        Data: ContinuousClaimsDetail
+    };
+    return returnArray;
+});
 export default Mock;

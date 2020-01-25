@@ -92,7 +92,9 @@ import editHeadlineNews from "@/page/ClassManagement/editHeadlineNews.vue";
 import addMyCollege from "@/page/ClassManagement/addMyCollege.vue";
 import editMyCollege from "@/page/ClassManagement/editMyCollege.vue";
 import addClaimsKnowledge from "@/page/ClaimsManagement/addClaimsKnowledge.vue";
+import addContinuousClaims from "@/page/ClaimsManagement/addContinuousClaims.vue";
 import editClaimsKnowledge from "@/page/ClaimsManagement/editClaimsKnowledge.vue";
+import editContinuousClaims from "@/page/ClaimsManagement/editContinuousClaims.vue";
 Vue.use(Router);
 
 const router = new Router({
@@ -551,7 +553,29 @@ const router = new Router({
         {
             path: "/continuous_claims",
             name: "continuous_claims",
-            component: ContinuousClaims
+            component: ContinuousClaims,
+            meta: {
+                title: "连接理赔",
+                subTitle: "这是连接理赔页面"
+            }
+        },
+        {
+            path: "/add_continuous_claims",
+            name: "add_continuous_claims",
+            component: addContinuousClaims,
+            meta: {
+                title: "新增连接理赔",
+                subTitle: "这是新增连接理赔页面"
+            }
+        },
+        {
+            path: "/edit_continuous_claims",
+            name: "edit_continuous_claims",
+            component: editContinuousClaims,
+            meta: {
+                title: "编辑连接理赔",
+                subTitle: "这是编辑连接理赔页面"
+            }
         },
         //   APP首页管理 APPIndexManagment
         {
