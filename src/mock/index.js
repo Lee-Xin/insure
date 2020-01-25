@@ -1520,7 +1520,7 @@ Mock.mock(url + "/bindgongsi", "post", function(param) {
     return returnArray;
 });
 //获取绑定的理赔公司列表
-Mock.mock(url + "/getlipeigongsidata", "post", function(param) {
+Mock.mock(RegExp(url + "/getlipeigongsidata"), "post", function(param) {
     param = qs.parse(param.body);
     window.console.log(
         `当前页数${param.PageIndex},显示数据条数${param.PageSize}`
@@ -2679,6 +2679,45 @@ Mock.mock(RegExp(url + "/ContinuousClaims_detail"), "get", p => {
         StatusCode: 200,
         Msg: "success",
         Data: ContinuousClaimsDetail
+    };
+    return returnArray;
+});
+//理赔工具
+import {
+    ClaimsToolList,
+    companyList
+} from "./ClaimsManagement/ClaimsTool";
+//查询
+Mock.mock(RegExp(url + "/ClaimsTool_list"), "get", p => {
+    let param = util.getQueryValue(p.url);
+    return {
+        success: true,
+        result: {
+            totalCount: ClaimsToolList.length,
+            items: ClaimsToolList.filter((t, index) => {
+                return (
+                    index >= param.SkipCount &&
+                    index < +param.SkipCount + +param.MaxResultCount
+                );
+            })
+        }
+    };
+});
+//公司列表
+Mock.mock(RegExp(url + "/company_list"), "get", p => {
+    returnArray = {
+        StatusCode: 200,
+        Msg: "query success",
+        Data: companyList
+    };
+    return returnArray;
+});
+//关联公司
+Mock.mock(RegExp(url + "/guanlianCompany"), "post", function(par) {
+    par = par.body;
+    let returnArray = {
+        StatusCode: 200,
+        Msg: "success"
     };
     return returnArray;
 });

@@ -1,148 +1,138 @@
 <template>
   <div>
-    <main-title :title="title" :title_f="title_f"></main-title>
     <page-hr></page-hr>
-    <div v-if="mainshow">
-      <el-table
-              :data="datas"
-              highlight-current-row
-              @current-change="handleCurrentChange"
-              style="width: 100%" v-show="mainshow">
-        <el-table-column
-                type="index"
-                width="50">
-        </el-table-column>
-        <el-table-column
-                prop="name"
-                label="公司名称"
-                width="180">
-        </el-table-column>
-        <el-table-column
-                prop="description"
-                label="说明"
-                width="180">
-        </el-table-column>
-        <el-table-column
-                prop="mobile"
-                label="联系电话"
-                width="180">
-        </el-table-column>
-
-      </el-table>
-      <div style="margin-top: 20px" >
-        <el-button @click="addbtn()">添加</el-button>
-        <el-pagination
-                @size-change="handleSizeChange"
-                @current-change="handleCurrentChange2"
-                :current-page.sync="PageIndex"
-                :page-sizes="[50,100, 200, 300, 400]"
-                :page-size="PageSize"
-                layout="sizes, prev, pager, next"
-                :total="total">
-        </el-pagination>
+    <div class="content_box">
+      <div style="text-align:right;margin-bottom:10px">
+        <el-button type="warning" @click="dialogVisible=true">设置关联工具</el-button>
       </div>
+      <!--列表-->
+      <el-table ref="singleTable" gongj :data="tableList" style="width: 100%;">
+        <el-table-column prop="id" label="序号"></el-table-column>
+        <el-table-column prop="company" label="公司名称"></el-table-column>
+        <el-table-column prop="remark" label="理赔说明"></el-table-column>
+        <el-table-column prop="phone" label="公司电话"></el-table-column>
+      </el-table>
+      <page-ination
+        @changeSize="changeSize"
+        @changeCurrentPage="changeCurrentPage"
+        :total="totalNum"
+      ></page-ination>
     </div>
-    <div v-if="addshow">
-      <el-form label-width="100px" class="demo-dynamic">
-        <el-form-item label="选择公司" >
-          <el-checkbox-group v-model="selectgongsi">
-            <el-checkbox v-for="(item,index) in gongsi" :key="index" :label="item.id">{{item.name}}</el-checkbox>
-          </el-checkbox-group>
-        </el-form-item>
-        <el-form-item  >
-          <el-button @click="oks1">确认</el-button>
-          <el-button @click="back2">返回</el-button>
-        </el-form-item>
-      </el-form>
-    </div>
+    <el-dialog title="关联公司" :visible.sync="dialogVisible" width="800px">
+      <div style="text-align:left">
+        <el-checkbox-group v-model="checkList" @change="handleChange">
+          <el-row>
+            <el-col
+              :span="12"
+              v-for="item in companyList"
+              :key="item.id"
+              style="margin-bottom:10px"
+            >
+              <el-checkbox :label="item.name"></el-checkbox>
+            </el-col>
+          </el-row>
+        </el-checkbox-group>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">关闭</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-    import MainTitle from "@/common/MainTitle";
-    import PageHr from "@/common/PageHr";
-    import {lipeigongsi,bindgongsi,getlipeigongsidata} from "@/request/api"
-    export default {
-        name: "ClaimsTool",
-        data () {
-            return {
-                title: '理赔工具',
-                title_f: '理赔工具页面',
-              //当前页数
-              PageIndex:1,
-              //每页条数
-              PageSize:50,
-              //总共条数
-              total:1000,
-              datas:[],
-              mainshow:true,
-              updshow:false,
-              addshow:false,
-              currentRow: -1,
-              //理赔公司列表
-              gongsi:[],
-              //选择的公司列表
-              selectgongsi:[]
-            }
-        },
-      methods:{
-        back2:function(){
-          this.updshow=false
-          this.mainshow=true
-        },
-        addbtn(){
-          this.mainshow=false
-          this.addshow=true
-        },
-        //分页
-        handleSizeChange(val) {
-          this.PageSize=val
-          window.console.log(`每页 ${val} 条`);
-          this.getdata();
-        },
-        oks1:function(){
-          var that=this
-          window.console.log(that.selectgongsi)
-          bindgongsi({gs:that.selectgongsi}).then(res=>{
-            window.console.log(res)
-            that.currentRow='-1'
-            this.$message(res.Msg);
-            that.data=res.Data
-            that.addshow=false
-            that.mainshow=true
-          })
-        },
-        handleCurrentChange(val){
-          window.console.log(val)
-          this.currentRow = val;
+import PageHr from "@/common/PageHr";
+import PageInation from "../../common/PageInation";
 
-        },
-        handleCurrentChange2(val) {
-          this.PageIndex=val
-          window.console.log(`当前页: ${val}`);
-          this.getdata();
-        },
-        getdata(){
-          var that=this;
-          getlipeigongsidata({PageIndex:that.PageIndex,PageSize:that.PageSize}).then(res=>{
-            var data = res.Data
-            that.datas = data.Rows
-            that.total = data.Records
-          });
-        }
+import { getClaimsToolList, getCompanyList, guanlianCompany } from "@/mock/api";
+export default {
+  name: "ClaimsTool",
+  data() {
+    return {
+      form: {
+        MaxResultCount: 50, //页码数
+        Sorting: 1, //排序
+        SkipCount: 0 //开始的索引
       },
-      mounted(){
-        var that=this
-        that.getdata();
-        lipeigongsi().then(res=>{
-          window.console.log(res)
-          that.gongsi=res.Data
-        })
-      },
-        components: {PageHr, MainTitle}
+      tableList: [],
+      totalNum: 0,
+      dialogVisible: false,
+      companyList: [],
+      checkList: []
+    };
+  },
+  watch: {},
+  created() {
+    this.getList();
+    this.getCompanyList();
+  },
+  methods: {
+    getList() {
+      getClaimsToolList(this.form).then(res => {
+        this.tableList = res.result.items;
+        this.totalNum = res.result.totalCount;
+      });
+    },
+    getCompanyList() {
+      getCompanyList().then(res => {
+        this.companyList = res.Data;
+      });
+    },
+    handleChange(val) {
+      guanlianCompany({ list: val }).then(res => {
+        console.log(res);
+        this.$message(res.data.Msg);
+      });
+    },
+    changeSize(val) {
+      this.form.SkipCount = 0;
+      this.form.MaxResultCount = val;
+      this.getList(this.form);
+    },
+    //  当前页发生改变时
+    changeCurrentPage(val) {
+      this.form.SkipCount = (val - 1) * this.form.MaxResultCount;
+      this.getList(this.form);
     }
+  },
+
+  components: { PageHr, PageInation }
+};
 </script>
 
 <style scoped>
+.content_box {
+  width: 100%;
+  height: auto;
+  box-sizing: border-box;
+  padding-left: 16px;
+}
 
+.content_title_1 {
+  width: 100%;
+  height: 18px;
+  display: block;
+  line-height: 18px;
+  font-size: 18px;
+  color: #ef8412;
+  text-align: left;
+  margin-bottom: 20px;
+}
+.fuwenbenkaung {
+  width: 100%;
+  height: 458px;
+  font-size: 18px;
+  /*background-color: red;*/
+}
+.row {
+  display: flex;
+  justify-content: flex-start;
+}
+.row >>> .el-col {
+  width: 30%;
+}
+.row >>> .el-col .el-input,
+.row >>> .el-col .el-select {
+  width: 100%;
+}
 </style>

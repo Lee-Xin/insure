@@ -539,7 +539,11 @@ const router = new Router({
         {
             path: "/claims_tool",
             name: "claims_tool",
-            component: ClaimsTool
+            component: ClaimsTool,
+            meta: {
+                title: "理赔工具",
+                subTitle: "这是理赔工具页面"
+            }
         },
         {
             path: "/classification_of_knowledge",

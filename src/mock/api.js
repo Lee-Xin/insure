@@ -324,7 +324,6 @@ export const editClassificationOfKnowledge = p =>
 //删除分类
 export const delClassificationOfKnowledge = p =>
     post("/delClassificationOfKnowledge", p);
-
 //理赔管理-连续理赔
 //查询
 export const getContinuousClaimsList = p => get("/ContinuousClaims_list", p);
@@ -335,6 +334,13 @@ export const addContinuousClaims = p => post("addContinuousClaims", p);
 //根据id查询详情
 export const getContinuousClaimsDetail = p =>
     get("/ContinuousClaims_detail", p);
+//理赔工具
+//查询
+export const getClaimsToolList = p => get("/ClaimsTool_list", p);
+//获取公司
+export const getCompanyList = p => get("/company_list", p);
+//关联公司
+export const guanlianCompany = p => post("/guanlianCompany", p);
 // 我的消息
 export const MyMessage = obj => get("MyMessage", obj);
 // 我的消息搜索
