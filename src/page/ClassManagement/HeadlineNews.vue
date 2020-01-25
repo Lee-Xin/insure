@@ -201,7 +201,7 @@ export default {
     edit() {
       this.$router.push({
         path: "/edit_headline_news",
-        params: { id: this.clickRow.id }
+        query: { id: this.clickRow.id }
       });
     }
   },

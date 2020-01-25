@@ -2683,10 +2683,7 @@ Mock.mock(RegExp(url + "/ContinuousClaims_detail"), "get", p => {
     return returnArray;
 });
 //理赔工具
-import {
-    ClaimsToolList,
-    companyList
-} from "./ClaimsManagement/ClaimsTool";
+import { ClaimsToolList, companyList } from "./ClaimsManagement/ClaimsTool";
 //查询
 Mock.mock(RegExp(url + "/ClaimsTool_list"), "get", p => {
     let param = util.getQueryValue(p.url);
@@ -2718,6 +2715,81 @@ Mock.mock(RegExp(url + "/guanlianCompany"), "post", function(par) {
     let returnArray = {
         StatusCode: 200,
         Msg: "success"
+    };
+    return returnArray;
+});
+//理赔列表
+import { ClaimsList } from "./ClaimsManagement/ClaimsList";
+//查询
+Mock.mock(RegExp(url + "/Claims_list"), "get", p => {
+    let param = util.getQueryValue(p.url);
+    return {
+        success: true,
+        result: {
+            totalCount: ClaimsList.length,
+            items: ClaimsList.filter((t, index) => {
+                return (
+                    index >= param.SkipCount &&
+                    index < +param.SkipCount + +param.MaxResultCount
+                );
+            })
+        }
+    };
+});
+//删除
+Mock.mock(RegExp(url + "/delClaims"), "post", function(par) {
+    par = par.body;
+    let returnArray = {
+        StatusCode: 200,
+        Msg: "success"
+    };
+    return returnArray;
+});
+//添加
+Mock.mock(RegExp(url + "/addClaims"), "post", function(par) {
+    par = par.body;
+    let returnArray = {
+        StatusCode: 200,
+        Msg: "success"
+    };
+    return returnArray;
+});
+//根据id查询详情
+Mock.mock(RegExp(url + "/Claims_detail"), "get", p => {
+    let returnArray = {
+        StatusCode: 200,
+        Msg: "success",
+        Data: ClaimsList[0]
+    };
+    return returnArray;
+});
+//模板下载
+Mock.mock(RegExp(url + "/Claims_downloadModel"), "post", function(par) {
+    par = par.body;
+    let returnArray = {
+        StatusCode: 200,
+        Msg: "success",
+        Data:{url:""}
+    };
+    return returnArray;
+});
+//导入理赔
+Mock.mock(RegExp(url + "/Claims_uploadModel"), "post", function(par) {
+    par = par.body;
+    let returnArray = {
+        StatusCode: 200,
+        Msg: "success",
+        Data:{url:""}
+    };
+    return returnArray;
+});
+//导出理赔
+Mock.mock(RegExp(url + "/Claims_download"), "post", function(par) {
+    par = par.body;
+    let returnArray = {
+        StatusCode: 200,
+        Msg: "success",
+        Data:{url:""}
     };
     return returnArray;
 });

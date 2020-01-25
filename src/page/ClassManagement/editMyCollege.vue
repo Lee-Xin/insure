@@ -59,64 +59,66 @@
       @uploadSuccess="uploadSuccess"
       @closeDialog="closeDialog"
     ></img-upload-big>
-    <el-dialog title="分类管理" :visible.sync="dialogVisible" width="1000px">
-      <div class="typeBox">
-        <div>
-          <el-collapse v-model="activeNames" :accordion="true">
-            <el-collapse-item :name="item.value" v-for="item in typeList" :key="item.value">
-              <template slot="title">
-                <div class="flex">
-                  <span v-if="item.isEdit">{{item.label}}</span>
-                  <el-input @click.native.stop v-else v-model="item.label"></el-input>
-                  <span class="right">
-                    <i class="el-icon-delete" @click.stop="delType(item)"></i>
-                    <i class="el-icon-edit" v-if="item.isEdit" @click.stop="editType(item)"></i>
-                    <i class="el-icon-success" v-else @click.stop="confirmEditType(item)"></i>
-                  </span>
-                </div>
-              </template>
-              <ul v-if="item.children">
-                <li v-for="item2 in item.children" :key="item2.value">
-                  <span class="left" v-if="item2.isEdit">------ {{item2.label}}</span>
-                  <div v-else>
-                    ------
-                    <el-input v-model="item2.label"></el-input>
+    <div class="p0">
+      <el-dialog title="分类管理" :visible.sync="dialogVisible" width="1000px">
+        <div class="typeBox">
+          <div>
+            <el-collapse v-model="activeNames" :accordion="true">
+              <el-collapse-item :name="item.value" v-for="item in typeList" :key="item.value">
+                <template slot="title">
+                  <div class="flex">
+                    <span v-if="item.isEdit">{{item.label}}</span>
+                    <el-input @click.native.stop v-else v-model="item.label"></el-input>
+                    <span class="right">
+                      <i class="el-icon-delete" @click.stop="delType(item)"></i>
+                      <i class="el-icon-edit" v-if="item.isEdit" @click.stop="editType(item)"></i>
+                      <i class="el-icon-success" v-else @click.stop="confirmEditType(item)"></i>
+                    </span>
                   </div>
-                  <div class="right">
-                    <i class="el-icon-delete" @click="delType(item2)"></i>
-                    <i class="el-icon-edit" v-if="item2.isEdit" @click="editType(item2)"></i>
-                    <i class="el-icon-success" v-else @click="confirmEditType(item2)"></i>
-                  </div>
-                </li>
-              </ul>
-            </el-collapse-item>
-          </el-collapse>
+                </template>
+                <ul v-if="item.children">
+                  <li v-for="item2 in item.children" :key="item2.value">
+                    <span class="left" v-if="item2.isEdit">------ {{item2.label}}</span>
+                    <div v-else>
+                      ------
+                      <el-input v-model="item2.label"></el-input>
+                    </div>
+                    <div class="right">
+                      <i class="el-icon-delete" @click="delType(item2)"></i>
+                      <i class="el-icon-edit" v-if="item2.isEdit" @click="editType(item2)"></i>
+                      <i class="el-icon-success" v-else @click="confirmEditType(item2)"></i>
+                    </div>
+                  </li>
+                </ul>
+              </el-collapse-item>
+            </el-collapse>
+          </div>
+          <div>
+            <h3 class="title">添加分类</h3>
+            <el-form ref="typeForm" :model="typeForm" class="dialog_from_center200">
+              <el-form-item>
+                <div class="cell_before">上级分类</div>
+                <el-select v-model="typeForm.id" placeholder="请选择上级分类" clearable filterable>
+                  <el-option
+                    v-for="item in typeList"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item>
+                <div class="cell_before">分类名称</div>
+                <el-input v-model="typeForm.name" placeholder="请输入分类名称"></el-input>
+              </el-form-item>
+              <el-form-item>
+                <el-button type="primary" @click="addType()">新增分类</el-button>
+              </el-form-item>
+            </el-form>
+          </div>
         </div>
-        <div>
-          <h3 class="title">添加分类</h3>
-          <el-form ref="typeForm" :model="typeForm" class="dialog_from_center200">
-            <el-form-item>
-              <div class="cell_before">上级分类</div>
-              <el-select v-model="typeForm.id" placeholder="请选择上级分类" clearable filterable>
-                <el-option
-                  v-for="item in typeList"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item>
-              <div class="cell_before">分类名称</div>
-              <el-input v-model="typeForm.name" placeholder="请输入分类名称"></el-input>
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" @click="addType()">新增分类</el-button>
-            </el-form-item>
-          </el-form>
-        </div>
-      </div>
-    </el-dialog>
+      </el-dialog>
+    </div>
   </div>
 </template>
 
@@ -164,7 +166,7 @@ export default {
   },
 
   created() {
-    this.form.id = this.$route.params.id;
+    this.form.id = this.$route.query.id;
     this.getDetail();
     this.getType();
   },

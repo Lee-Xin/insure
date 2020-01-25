@@ -149,7 +149,7 @@ export default {
     edit() {
       this.$router.push({
         path: "/edit_continuous_claims",
-        params: { id: this.clickRow.id }
+        query: { id: this.clickRow.id }
       });
     }
   },

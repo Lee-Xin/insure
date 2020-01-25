@@ -79,7 +79,7 @@ export default {
   },
 
   created() {
-    this.form.id = this.$route.params.id;
+    this.form.id = this.$route.query.id;
     this.getDetail();
   },
   methods: {

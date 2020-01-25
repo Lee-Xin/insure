@@ -91,8 +91,10 @@ import addHeadlineNews from "@/page/ClassManagement/addHeadlineNews.vue";
 import editHeadlineNews from "@/page/ClassManagement/editHeadlineNews.vue";
 import addMyCollege from "@/page/ClassManagement/addMyCollege.vue";
 import editMyCollege from "@/page/ClassManagement/editMyCollege.vue";
+import addClaims from "@/page/ClaimsManagement/addClaims.vue";
 import addClaimsKnowledge from "@/page/ClaimsManagement/addClaimsKnowledge.vue";
 import addContinuousClaims from "@/page/ClaimsManagement/addContinuousClaims.vue";
+import editClaims from "@/page/ClaimsManagement/editClaims.vue";
 import editClaimsKnowledge from "@/page/ClaimsManagement/editClaimsKnowledge.vue";
 import editContinuousClaims from "@/page/ClaimsManagement/editContinuousClaims.vue";
 Vue.use(Router);
@@ -534,7 +536,29 @@ const router = new Router({
         {
             path: "/claims_list",
             name: "claims_list",
-            component: ClaimsList
+            component: ClaimsList,
+            meta: {
+                title: "理赔列表",
+                subTitle: "这是理赔列表页面"
+            }
+        },
+        {
+            path: "/add_claims",
+            name: "add_claims",
+            component: addClaims,
+            meta: {
+                title: "新增理赔",
+                subTitle: "这是新增理赔页面"
+            }
+        },
+        {
+            path: "/edit_claims",
+            name: "edit_claims",
+            component: editClaims,
+            meta: {
+                title: "编辑理赔",
+                subTitle: "这是编辑理赔页面"
+            }
         },
         {
             path: "/claims_tool",

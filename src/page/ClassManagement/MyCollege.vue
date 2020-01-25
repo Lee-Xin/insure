@@ -203,7 +203,7 @@ export default {
     edit() {
       this.$router.push({
         path: "/edit_my_college",
-        params: { id: this.clickRow.id }
+        query: { id: this.clickRow.id }
       });
     }
   },

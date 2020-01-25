@@ -211,7 +211,7 @@ export default {
     edit() {
       this.$router.push({
         path: "/edit_claims_knowledge",
-        params: { id: this.clickRow.id }
+        query: { id: this.clickRow.id }
       });
     }
   },

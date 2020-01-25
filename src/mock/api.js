@@ -337,10 +337,27 @@ export const getContinuousClaimsDetail = p =>
 //理赔工具
 //查询
 export const getClaimsToolList = p => get("/ClaimsTool_list", p);
+
 //获取公司
 export const getCompanyList = p => get("/company_list", p);
 //关联公司
 export const guanlianCompany = p => post("/guanlianCompany", p);
+//理赔列表
+//查询
+export const getClaimsList = p => get("/Claims_list", p);
+//删除
+export const delClaims = p => post("delClaims", p);
+//添加编辑
+export const addClaims = p => post("addClaims", p);
+//根据id查询详情
+export const getClaimsDetail = p => get("/Claims_detail", p);
+//下载模板
+export const ClaimsDownloadModel = p => post("/Claims_downloadModel", p);
+//导入理赔
+export const ClaimsUploadModel = p => post("/Claims_uploadModel", p);
+//导出理赔
+export const ClaimsDownload = p => post("/Claims_download", p);
+
 // 我的消息
 export const MyMessage = obj => get("MyMessage", obj);
 // 我的消息搜索
