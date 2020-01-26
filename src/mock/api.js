@@ -357,7 +357,17 @@ export const ClaimsDownloadModel = p => post("/Claims_downloadModel", p);
 export const ClaimsUploadModel = p => post("/Claims_uploadModel", p);
 //导出理赔
 export const ClaimsDownload = p => post("/Claims_download", p);
-
+//权限列表
+//查询
+export const getPermissionList = p => get("/PermissionList_list", p);
+//删除
+export const delPermissionList = p => post("delPermissionList", p);
+//添加编辑
+export const addPermissionList = p => post("addPermissionList", p);
+//根据id查询详情
+export const getPermissionListDetail = p => get("/PermissionList_detail", p);
+//获取所有的权限列表
+export const getAllPermissionList = p => get("/allPermissionList_list", p);
 // 我的消息
 export const MyMessage = obj => get("MyMessage", obj);
 // 我的消息搜索

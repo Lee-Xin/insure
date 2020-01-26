@@ -97,6 +97,8 @@ import addContinuousClaims from "@/page/ClaimsManagement/addContinuousClaims.vue
 import editClaims from "@/page/ClaimsManagement/editClaims.vue";
 import editClaimsKnowledge from "@/page/ClaimsManagement/editClaimsKnowledge.vue";
 import editContinuousClaims from "@/page/ClaimsManagement/editContinuousClaims.vue";
+import addPermissionList from "@/page/AccountManagement/addPermissionList.vue";
+import editPermissionList from "@/page/AccountManagement/editPermissionList.vue";
 Vue.use(Router);
 
 const router = new Router({
@@ -655,7 +657,29 @@ const router = new Router({
         {
             path: "/permission_list",
             name: "permission_list",
-            component: PermissionList
+            component: PermissionList,
+            meta: {
+                title: "策略组设置",
+                subTitle: "这是策略组设置页面"
+            }
+        },
+        {
+            path: "/add_permission_list",
+            name: "add_permission_list",
+            component: addPermissionList,
+            meta: {
+                title: "添加策略组",
+                subTitle: "这是添加策略组页面"
+            }
+        },
+        {
+            path: "/edit_permission_list",
+            name: "edit_permission_list",
+            component: editPermissionList,
+            meta: {
+                title: "编辑策略组",
+                subTitle: "这是编辑策略组页面"
+            }
         },
         //   账号设置   AccountIDManagement
         {

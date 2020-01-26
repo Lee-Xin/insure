@@ -2793,4 +2793,58 @@ Mock.mock(RegExp(url + "/Claims_download"), "post", function(par) {
     };
     return returnArray;
 });
+//权限列表
+import { PermissionList ,PermissionDetail,allPermissionList} from "./AccountMangement/PermissionList";
+//查询
+Mock.mock(RegExp(url + "/PermissionList_list"), "get", p => {
+    let param = util.getQueryValue(p.url);
+    return {
+        success: true,
+        result: {
+            totalCount: PermissionList.length,
+            items: PermissionList.filter((t, index) => {
+                return (
+                    index >= param.SkipCount &&
+                    index < +param.SkipCount + +param.MaxResultCount
+                );
+            })
+        }
+    };
+});
+//删除
+Mock.mock(RegExp(url + "/delPermissionList"), "post", function(par) {
+    par = par.body;
+    let returnArray = {
+        StatusCode: 200,
+        Msg: "success"
+    };
+    return returnArray;
+});
+//添加
+Mock.mock(RegExp(url + "/addPermissionList"), "post", function(par) {
+    par = par.body;
+    let returnArray = {
+        StatusCode: 200,
+        Msg: "success"
+    };
+    return returnArray;
+});
+//根据id查询详情
+Mock.mock(RegExp(url + "/PermissionList_detail"), "get", p => {
+    let returnArray = {
+        StatusCode: 200,
+        Msg: "success",
+        Data:PermissionDetail 
+    };
+    return returnArray;
+});
+//获取所有权限列表
+Mock.mock(RegExp(url + "/allPermissionList_list"), "get", p => {
+    let returnArray = {
+        StatusCode: 200,
+        Msg: "success",
+        Data:allPermissionList 
+    };
+    return returnArray;
+});
 export default Mock;
