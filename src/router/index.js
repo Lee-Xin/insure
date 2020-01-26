@@ -652,7 +652,11 @@ const router = new Router({
         {
             path: "/institutional_account",
             name: "institutional_account",
-            component: InstitutionalAccount
+            component: InstitutionalAccount,
+            meta: {
+                title: "机构账号",
+                subTitle: "这是机构账号页面"
+            }
         },
         {
             path: "/permission_list",

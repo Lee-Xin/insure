@@ -2769,7 +2769,7 @@ Mock.mock(RegExp(url + "/Claims_downloadModel"), "post", function(par) {
     let returnArray = {
         StatusCode: 200,
         Msg: "success",
-        Data:{url:""}
+        Data: { url: "" }
     };
     return returnArray;
 });
@@ -2779,7 +2779,7 @@ Mock.mock(RegExp(url + "/Claims_uploadModel"), "post", function(par) {
     let returnArray = {
         StatusCode: 200,
         Msg: "success",
-        Data:{url:""}
+        Data: { url: "" }
     };
     return returnArray;
 });
@@ -2789,12 +2789,16 @@ Mock.mock(RegExp(url + "/Claims_download"), "post", function(par) {
     let returnArray = {
         StatusCode: 200,
         Msg: "success",
-        Data:{url:""}
+        Data: { url: "" }
     };
     return returnArray;
 });
 //权限列表
-import { PermissionList ,PermissionDetail,allPermissionList} from "./AccountMangement/PermissionList";
+import {
+    PermissionList,
+    PermissionDetail,
+    allPermissionList
+} from "./AccountMangement/PermissionList";
 //查询
 Mock.mock(RegExp(url + "/PermissionList_list"), "get", p => {
     let param = util.getQueryValue(p.url);
@@ -2834,7 +2838,7 @@ Mock.mock(RegExp(url + "/PermissionList_detail"), "get", p => {
     let returnArray = {
         StatusCode: 200,
         Msg: "success",
-        Data:PermissionDetail 
+        Data: PermissionDetail
     };
     return returnArray;
 });
@@ -2843,8 +2847,53 @@ Mock.mock(RegExp(url + "/allPermissionList_list"), "get", p => {
     let returnArray = {
         StatusCode: 200,
         Msg: "success",
-        Data:allPermissionList 
+        Data: allPermissionList
     };
     return returnArray;
+});
+//机构账号
+import { InstitutionalAccount } from "./AccountMangement/InstitutionalAccount";
+//查询
+Mock.mock(RegExp(url + "/InstitutionalAccount_list"), "get", p => {
+    let param = util.getQueryValue(p.url);
+    return {
+        success: true,
+        result: {
+            totalCount: InstitutionalAccount.length,
+            items: InstitutionalAccount.filter((t, index) => {
+                return (
+                    index >= param.SkipCount &&
+                    index < +param.SkipCount + +param.MaxResultCount
+                );
+            })
+        }
+    };
+});
+//删除
+Mock.mock(RegExp(url + "/delInstitutionalAccount"), "post", function(par) {
+    par = par.body;
+    let returnArray = {
+        StatusCode: 200,
+        Msg: "success"
+    };
+    return returnArray;
+});
+//添加
+Mock.mock(RegExp(url + "/addInstitutionalAccount"), "post", function(par) {
+    par = par.body;
+    let returnArray = {
+        StatusCode: 200,
+        Msg: "success"
+    };
+    return returnArray;
+});
+//获取策略组没有分页
+Mock.mock(RegExp(url + "/PermissionListNoPage_list"), "get", p => {
+    let param = util.getQueryValue(p.url);
+    return {
+        StatusCode: 200,
+        Msg: "success",
+        Data: PermissionList
+    };
 });
 export default Mock;

@@ -368,6 +368,18 @@ export const addPermissionList = p => post("addPermissionList", p);
 export const getPermissionListDetail = p => get("/PermissionList_detail", p);
 //获取所有的权限列表
 export const getAllPermissionList = p => get("/allPermissionList_list", p);
+//机构账号
+//查询
+export const getInstitutionalAccount = p =>
+    get("/InstitutionalAccount_list", p);
+//删除
+export const delInstitutionalAccount = p => post("delInstitutionalAccount", p);
+//添加编辑
+export const addInstitutionalAccount = p => post("addInstitutionalAccount", p);
+//获取策略组没有分页
+export const getPermissionListNoPage = p =>
+    get("/PermissionListNoPage_list", p);
+
 // 我的消息
 export const MyMessage = obj => get("MyMessage", obj);
 // 我的消息搜索
