@@ -2896,4 +2896,52 @@ Mock.mock(RegExp(url + "/PermissionListNoPage_list"), "get", p => {
         Data: PermissionList
     };
 });
+//内勤人员账号
+import {
+    InsideStaffAccount,
+    employeeList
+} from "./AccountMangement/InsideStaffAccount";
+//查询
+Mock.mock(RegExp(url + "/InsideStaffAccount_list"), "get", p => {
+    let param = util.getQueryValue(p.url);
+    return {
+        success: true,
+        result: {
+            totalCount: InsideStaffAccount.length,
+            items: InsideStaffAccount.filter((t, index) => {
+                return (
+                    index >= param.SkipCount &&
+                    index < +param.SkipCount + +param.MaxResultCount
+                );
+            })
+        }
+    };
+});
+//删除
+Mock.mock(RegExp(url + "/delInsideStaffAccount"), "post", function(par) {
+    par = par.body;
+    let returnArray = {
+        StatusCode: 200,
+        Msg: "success"
+    };
+    return returnArray;
+});
+//添加
+Mock.mock(RegExp(url + "/addInsideStaffAccount"), "post", function(par) {
+    par = par.body;
+    let returnArray = {
+        StatusCode: 200,
+        Msg: "success"
+    };
+    return returnArray;
+});
+//员工列表
+Mock.mock(RegExp(url + "/employeeList_list"), "get", p => {
+    let param = util.getQueryValue(p.url);
+    return {
+        StatusCode: 200,
+        Msg: "success",
+        Data: employeeList
+    };
+});
 export default Mock;

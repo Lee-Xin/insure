@@ -647,7 +647,11 @@ const router = new Router({
         {
             path: "/inside_staff_account",
             name: "inside_staff_account",
-            component: InsideStaffAccount
+            component: InsideStaffAccount,
+            meta: {
+                title: "内勤人员账号",
+                subTitle: "这是内勤人员账号页面"
+            }
         },
         {
             path: "/institutional_account",

@@ -379,7 +379,15 @@ export const addInstitutionalAccount = p => post("addInstitutionalAccount", p);
 //获取策略组没有分页
 export const getPermissionListNoPage = p =>
     get("/PermissionListNoPage_list", p);
-
+//内勤人员账号
+//查询
+export const getInsideStaffAccount = p => get("/InsideStaffAccount_list", p);
+//删除
+export const delInsideStaffAccount = p => post("delInsideStaffAccount", p);
+//添加编辑
+export const addInsideStaffAccount = p => post("addInsideStaffAccount", p);
+//员工列表
+export const getEmployeeList = p => get("/employeeList_list", p);
 // 我的消息
 export const MyMessage = obj => get("MyMessage", obj);
 // 我的消息搜索
