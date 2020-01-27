@@ -393,6 +393,8 @@ export const getEmployeeList = p => get("/employeeList_list", p);
 export const getAvatar = p => get("/getAvatar", p);
 //修改头像
 export const editAvatar = p => post("/editAvatar", p);
+//重置密码
+export const resetPassword = p => post("/resetPassword", p);
 
 // 我的消息
 export const MyMessage = obj => get("MyMessage", obj);

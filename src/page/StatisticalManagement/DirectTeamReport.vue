@@ -8,7 +8,6 @@
             <el-form ref="monthForm" :model="monthForm" class="search_form">
               <el-form-item>
                 <div class="cell_before">机构</div>
-
                 <el-select v-model="monthForm.mechanism" placeholder="请选择分支机构" clearable filterable>
                   <el-option
                     v-for="item in mechanismList"
@@ -143,7 +142,7 @@
             :total="totalNum2"
           ></page-ination>
         </el-tab-pane>
-         <el-tab-pane label="年度">
+        <el-tab-pane label="年度">
           <div class="ManpowerReportSearch_moth">
             <el-form ref="yearForm" :model="yearForm" class="search_form">
               <el-form-item>
@@ -174,7 +173,7 @@
                 <div class="cell_before">年度</div>
                 <el-date-picker v-model="yearForm.year" type="year" value-format="yyyy"></el-date-picker>
               </el-form-item>
-              
+
               <el-form-item>
                 <el-button type="primary" @click="handleQuery3">搜索</el-button>
               </el-form-item>
@@ -191,7 +190,11 @@
               <el-table-column prop="teamContiune" label="团队继续率R13"></el-table-column>
             </el-table>
           </div>
-          <page-ination @changeSize="changeSize3" @changeCurrentPage="changeCurrentPage3" :total="totalNum3"></page-ination>
+          <page-ination
+            @changeSize="changeSize3"
+            @changeCurrentPage="changeCurrentPage3"
+            :total="totalNum3"
+          ></page-ination>
         </el-tab-pane>
       </el-tabs>
     </div>

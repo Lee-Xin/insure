@@ -2961,4 +2961,11 @@ Mock.mock(RegExp(url + "/editAvatar"), "post", p => {
         Msg: "success"
     };
 });
+//重置密码
+Mock.mock(RegExp(url + "/resetPassword"), "post", p => {
+    return {
+        StatusCode: 200,
+        Msg: "success"
+    };
+});
 export default Mock;

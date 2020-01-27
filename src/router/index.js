@@ -707,7 +707,11 @@ const router = new Router({
         {
             path: "/password_reset",
             name: "password_reset",
-            component: PasswordReset
+            component: PasswordReset,
+            meta: {
+                title: "修改密码",
+                subTitle: "这是修改密码页面"
+            }
         },
         // 404时跳转到Index页面
         {
