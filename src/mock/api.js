@@ -388,6 +388,12 @@ export const delInsideStaffAccount = p => post("delInsideStaffAccount", p);
 export const addInsideStaffAccount = p => post("addInsideStaffAccount", p);
 //员工列表
 export const getEmployeeList = p => get("/employeeList_list", p);
+//头像设置
+//获取头像
+export const getAvatar = p => get("/getAvatar", p);
+//修改头像
+export const editAvatar = p => post("/editAvatar", p);
+
 // 我的消息
 export const MyMessage = obj => get("MyMessage", obj);
 // 我的消息搜索

@@ -698,7 +698,11 @@ const router = new Router({
         {
             path: "/head_set",
             name: "head_set",
-            component: HeadSet
+            component: HeadSet,
+            meta: {
+                title: "账户设置",
+                subTitle: "这是账户设置页面"
+            }
         },
         {
             path: "/password_reset",

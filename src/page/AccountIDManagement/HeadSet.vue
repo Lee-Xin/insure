@@ -1,80 +1,84 @@
 <template>
-  <div>
-    <main-title :title="title" :title_f="title_f"></main-title>
+  <div class="box">
     <page-hr></page-hr>
-    <div class="title">点击下方上传</div>
-    <el-upload
-      class="avatar-uploader"
-      action="https://jsonplaceholder.typicode.com/posts/"
-      :show-file-list="false"
-      :on-success="handleAvatarSuccess"
-      :before-upload="beforeAvatarUpload">
-      <img v-if="imageUrl" :src="imageUrl" class="avatar">
-      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-    </el-upload>
+    <div>
+      <h3 class="title">头像:</h3>
+      <div class="avator">
+        <img :src="imgUrl" @click="showImgUpload=true" />
+      </div>
+    </div>
+    <img-upload
+      :isShow.sync="showImgUpload"
+      @uploadSuccess="uploadSuccess"
+      @closeDialog="closeDialog"
+    ></img-upload>
+    <div class="btn">
+      <el-button type="primary" @click="save">提交</el-button>
+    </div>
   </div>
 </template>
 
 <script>
-    import MainTitle from '@/common/MainTitle'
-    import PageHr from "@/common/PageHr";
-    export default {
-        name: "HeadSet",
-        components: {PageHr, MainTitle},
-        data () {
-            return {
-                title: '账户设置',
-                title_f: '这是账户设置页面'
-            }
-        },
-        methods: {
-            handleAvatarSuccess(res, file) {
-                this.imageUrl = URL.createObjectURL(file.raw);
-            },
-            beforeAvatarUpload(file) {
-                // const isJPG = file.type === 'image/jpeg';
-                const isLt2M = file.size / 1024 / 1024 < 2;
-                if (!isLt2M) {
-                    this.$message.error('上传头像图片大小不能超过 2MB!');
-                }
-                return isLt2M;
-            }
-        }
+import PageHr from "@/common/PageHr";
+import ImgUpload from "@/common/ImgUpload";
+import { getAvatar, editAvatar } from "@/mock/api";
+export default {
+  name: "HeadSet",
+  components: { PageHr, ImgUpload },
+  data() {
+    return {
+      showImgUpload: false,
+      imgUrl: "",
+      form: { imgUrl: null }
+    };
+  },
+  created() {
+    this.getAvatar();
+  },
+  methods: {
+    closeDialog() {
+      this.showImgUpload = false;
+    },
+    uploadSuccess(res) {
+      this.$message(res.Msg);
+      this.form.imgUrl = res.Data.url;
+      this.imgUrl = res.Data.url;
+      this.showImgUpload = false;
+    },
+    getAvatar() {
+      getAvatar().then(res => {
+        this.imgUrl = res.Data.imgUrl;
+      });
+    },
+    save() {
+      editAvatar(this.form).then(res => {
+        if (!this.imgUrl) this.$message("请上传头像");
+        this.$message(res.data.Msg);
+      });
     }
+  }
+};
 </script>
 
-<style scoped>
-  .avatar-uploader{
-    width: 178px;
-    height: 178px;
-
+<style scoped lang=less>
+.box {
+  background: #fff;
+  height: 700px;
+  text-align: left;
+  h3 {
+    padding: 20px 20px 0;
   }
-  .avatar-uploader .el-upload {
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-  }
-  .avatar-uploader .el-upload:hover {
-    border-color: #409EFF;
-  }
-  .avatar-uploader-icon {
-    font-size: 28px;
-    color: #8c939d;
-    width: 178px;
-    height: 178px;
-    line-height: 178px;
-    text-align: center;
-  }
-  .avatar {
-    width: 178px;
-    height: 178px;
-    display: block;
-  }
-  .title{
+  .avator {
     text-align: left;
-    font-size: 24px;
-    color: #aaa;
+    padding-left: 30px;
+    img {
+      cursor: pointer;
+      width: 100px;
+      height: 100px;
+    }
   }
+  .btn {
+    padding: 20px 50px;
+  }
+}
 </style>

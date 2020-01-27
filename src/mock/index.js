@@ -2944,4 +2944,21 @@ Mock.mock(RegExp(url + "/employeeList_list"), "get", p => {
         Data: employeeList
     };
 });
+//头像设置
+import { getAvatar } from "./AccountIDManagement/HeadSet";
+//获取头像
+Mock.mock(RegExp(url + "/getAvatar"), "get", p => {
+    return {
+        StatusCode: 200,
+        Msg: "success",
+        Data: getAvatar
+    };
+});
+//修改头像
+Mock.mock(RegExp(url + "/editAvatar"), "post", p => {
+    return {
+        StatusCode: 200,
+        Msg: "success"
+    };
+});
 export default Mock;
