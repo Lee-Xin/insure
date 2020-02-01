@@ -72,6 +72,13 @@ export const apiRenewalServicePageInation = p =>
 //--------------------------
 //重置密码
 export const passwordReset = p => post("passwordReset", p);
+
+//公司类型
+export const getComTypeList = () => get("getComTypeList");
+
+//经营范围
+export const getBusinessScopeList = () => get("getBusinessScopeList");
+
 //获取账户详情
 export const getaccountdetailss = () => get("getaccountdetailss");
 //账户详情

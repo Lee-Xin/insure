@@ -951,7 +951,7 @@ Mock.mock(url + "/passwordReset", "post", function(param) {
     });
     return returnArray;
 });
-Mock.mock(url + "/getaccountdetailss", "get", function() {
+Mock.mock(RegExp(url + "/getaccountdetailss"), "get", function() {
     returnArray = {
         StatusCode: 200,
         Msg: "query success",
@@ -959,13 +959,33 @@ Mock.mock(url + "/getaccountdetailss", "get", function() {
     };
     return returnArray;
 });
+import {
+    comTypeList,
+    BusinessScopeList
+} from "./AccountIDManagement/AccountDetails";
+Mock.mock(RegExp(url + "/getComTypeList"), "get", function() {
+    returnArray = {
+        StatusCode: 200,
+        Msg: "query success",
+        Data: comTypeList
+    };
+    return returnArray;
+});
+Mock.mock(RegExp(url + "/getBusinessScopeList"), "get", function() {
+    returnArray = {
+        StatusCode: 200,
+        Msg: "query success",
+        Data: BusinessScopeList
+    };
+    return returnArray;
+});
 //账号详情
-Mock.mock(url + "/accountdetailss", "post", function(param) {
+Mock.mock(RegExp(url + "/accountdetailss"), "post", function(param) {
     // userData.forEach((item, index, userData)=>{
     param = qs.parse(param.body);
     window.console.debug(param);
     window.console.debug(accountdata);
-
+    let returnArray = {};
     accountdata.forEach(item => {
         if (param.id) {
             if (parseInt(param.id) === parseInt(item.id)) {

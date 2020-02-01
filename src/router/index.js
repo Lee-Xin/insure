@@ -693,7 +693,11 @@ const router = new Router({
         {
             path: "/account_details",
             name: "account_details",
-            component: AccountDetails
+            component: AccountDetails,
+            meta: {
+                title: "账号详情",
+                subTitle: "这是账号详情页面"
+            }
         },
         {
             path: "/head_set",

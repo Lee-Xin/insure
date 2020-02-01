@@ -1,416 +1,476 @@
 <template>
-  <div>
-    <main-title :title="title" :title_f="title_f"></main-title>
+  <div class="wrapper">
     <page-hr></page-hr>
-    <el-form  :model="ruleForm" :rules="rules" ref="ruleForm"  label-width="100px" class="demo-ruleForm">
-      <el-form-item class="el-form-item__labels" label="基本信息" prop="delivery"></el-form-item>
-      <div class="row_2">
-        <el-form-item label="公司名称" prop="region">
-          <el-input v-model="ruleForm.comname" placeholder="请输入"></el-input>
-        </el-form-item>
-        <el-form-item label="公司地址" prop="name">
-          <el-input v-model="ruleForm.comaddress" placeholder="请输入"></el-input>
-        </el-form-item>
-      </div>
-      <div class="row_3">
-        <el-form-item label="公司简称" prop="region">
-          <el-input v-model="ruleForm.comjc" placeholder="请输入"></el-input>
-        </el-form-item>
-        <el-form-item label="公司类型" prop="name">
-          <el-select v-model="ruleForm.comtype" placeholder="未知">
-            <el-option label="未知" value="未知"></el-option>
-            <el-option label="中资" value="中资"></el-option>
-            <el-option label="合资" value="合资"></el-option>
-            <el-option label="外资" value="外资"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="官网地址" prop="region">
-          <el-input v-model="ruleForm.comwebaddress" placeholder="请输入"></el-input>
-        </el-form-item>
-      </div>
-      <div class="row_3">
-        <el-form-item label="统一社会信用代码" prop="region">
-          <el-input v-model="ruleForm.comcode" placeholder="请输入"></el-input>
-        </el-form-item>
-        <el-form-item label="注册资本" prop="name">
-          <el-input v-model="ruleForm.comprice" placeholder="请输入"></el-input>
-        </el-form-item>
-        <el-form-item label="成交日期" prop="region">
-          <el-date-picker
-                  v-model="ruleForm.comdate"
-                  type="date"
-                  placeholder="选择日期">
-          </el-date-picker>
-        </el-form-item>
-      </div>
-      <div class="row_3">
-        <el-form-item label="经营范围" prop="name">
-          <el-select v-model="ruleForm.comrange" placeholder="未知">
-            <el-option label="专业中介机构-公估公司" value="专业中介机构-公估公司"></el-option>
-            <el-option label="保险公司-人身险" value="保险公司-人身险"></el-option>
-            <el-option label="保险公司-财产险" value="保险公司-财产险"></el-option>
-            <el-option label="专业中介机构-代理公司" value="专业中介机构-代理公司"></el-option>
-            <el-option label="专业中介机构-经纪公司" value="专业中介机构-经纪公司"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="服务热线" prop="region">
-          <el-input v-model="ruleForm.commobile" placeholder="请输入"></el-input>
-        </el-form-item>
-        <el-form-item label="投诉电话" prop="region">
-          <el-input v-model="ruleForm.Complaint" placeholder="请输入"></el-input>
-        </el-form-item>
-      </div>
-      <div class="row_2">
-        <el-form-item label="邮政编码" prop="region">
-          <el-input v-model="ruleForm.compostcode" placeholder="请输入"></el-input>
-        </el-form-item>
-        <el-form-item label="E-mail" prop="name">
-          <el-input v-model="ruleForm.comemail" placeholder="请输入"></el-input>
-        </el-form-item>
-      </div>
-      <el-form-item class="el-form-item__labels" label="经营资质" prop="delivery"></el-form-item>
-      <div class="row_3">
-        <el-form-item label="工商营业执照" prop="name">
-          <el-upload
-                  class="avatar-uploader"
-                  action="https://jsonplaceholder.typicode.com/posts/"
-                  :show-file-list="false"
-                  :on-success="handleAvatarSuccess"
-                  :before-upload="beforeAvatarUpload">
-            <img v-if="ruleForm.Gsurl" :src="ruleForm.Gsurl" class="avatar">
-            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-          </el-upload>
+    <div class="form-area">
+      <div class="section">基本信息</div>
+      <el-row :gutter="20">
+        <el-col v-for="(item, index) in forms" :key="index" :span="item.span || 12">
+          <form-item
+            :type="item.type"
+            :label="item.label"
+            :options="item.options"
+            v-model="item.value"
+            :required="item.required"
+            :placeholder="item.placeholder"
+            :errorText="item.errorText || ''"
+          ></form-item>
+        </el-col>
+      </el-row>
+      <div class="section">经营资质</div>
+      <el-row :gutter="20" style="padding: 10px 0;">
+        <el-col :span="8" v-for="(item, index) in jingyingzhizhi" :key="index">
+          <div class="upload-img">
+            <span class="label">{{item.label}}</span>
+            <span class="camera" @click="handleUpload(item)" style="margin-right:0">
+              <img v-if="item.url" :src="item.url" />
+              <img v-else :src="require('@/assets/img/camera.png')" />
+            </span>
+            <el-button
+              v-if="item.url"
+              type="text"
+              size="mini"
+              style="padding:5px"
+              @click="item.url=''"
+            >删除</el-button>
+          </div>
+        </el-col>
+      </el-row>
+      <div class="section">其他信息</div>
+      <el-row :gutter="20" style="padding: 20px 0;">
+        <el-col :span="6" v-for="(item, index) in otherInfo" :key="index">
+          <div class="upload-img">
+            <span class="label">{{item.label}}</span>
+            <span class="camera" @click="handleUpload(item)" style="margin-right:0">
+              <img v-if="item.url" :src="item.url" />
+              <img v-else :src="require('@/assets/img/camera.png')" />
+            </span>
+            <el-button
+              v-if="item.url"
+              type="text"
+              size="mini"
+              style="padding:5px"
+              @click="item.url=''"
+            >删除</el-button>
+          </div>
+        </el-col>
+      </el-row>
+      <div class="section">互联网信息披露</div>
 
-        </el-form-item>
-        <el-form-item label="经营保险业务许可证" prop="name">
-          <el-upload
-                  class="avatar-uploader"
-                  action="https://jsonplaceholder.typicode.com/posts/"
-                  :show-file-list="false"
-                  :on-success="handleAvatarSuccess2"
-                  :before-upload="beforeAvatarUpload">
-            <img v-if="ruleForm.xkzurl" :src="ruleForm.xkzurl" class="avatar">
-            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-          </el-upload>
-        </el-form-item>
-        <el-form-item label="互联网资质信息" prop="name">
-          <el-upload
-                  class="avatar-uploader"
-                  action="https://jsonplaceholder.typicode.com/posts/"
-                  :show-file-list="false"
-                  :on-success="handleAvatarSuccess3"
-                  :before-upload="beforeAvatarUpload">
-            <img v-if="ruleForm.zzurl" :src="ruleForm.zzurl" class="avatar">
-            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-          </el-upload>
-        </el-form-item>
-      </div>
-      <el-form-item  class="el-form-item__labels" label="其他信息" prop="delivery"></el-form-item>
-      <div class="row_3">
-        <el-form-item label="公司logo" prop="name">
-          <el-upload
-                  class="avatar-uploader"
-                  action="https://jsonplaceholder.typicode.com/posts/"
-                  :show-file-list="false"
-                  :on-success="handleAvatarSuccess4"
-                  :before-upload="beforeAvatarUpload">
-            <img v-if="ruleForm.comlogo" :src="ruleForm.comlogo" class="avatar">
-            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-          </el-upload>
-        </el-form-item>
-        <el-form-item label="App二维码" prop="name">
-          <el-upload
-                  class="avatar-uploader"
-                  action="https://jsonplaceholder.typicode.com/posts/"
-                  :show-file-list="false"
-                  :on-success="handleAvatarSuccess5"
-                  :before-upload="beforeAvatarUpload">
-            <img v-if="ruleForm.appqrcode" :src="ruleForm.appqrcode" class="avatar">
-            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-          </el-upload>
-        </el-form-item>
-        <el-form-item label="微信服务号二维码" prop="name">
-          <el-upload
-                  class="avatar-uploader"
-                  action="https://jsonplaceholder.typicode.com/posts/"
-                  :show-file-list="false"
-                  :on-success="handleAvatarSuccess6"
-                  :before-upload="beforeAvatarUpload">
-            <img v-if="ruleForm.wxserverqrcode" :src="ruleForm.wxserverqrcode" class="avatar">
-            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-          </el-upload>
-        </el-form-item>
-        <el-form-item label="微信订阅号二维码" prop="name">
-          <el-upload
-                  class="avatar-uploader"
-                  action="https://jsonplaceholder.typicode.com/posts/"
-                  :show-file-list="false"
-                  :on-success="handleAvatarSuccess7"
-                  :before-upload="beforeAvatarUpload">
-            <img v-if="ruleForm.wxsubqrcode" :src="ruleForm.wxsubqrcode" class="avatar">
-            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-          </el-upload>
-        </el-form-item>
-      </div>
-      <el-form-item class="el-form-item__labels" label="互联网信息披露" prop="delivery"></el-form-item>
-
-      <div class="row_2">
-        <el-form-item label="披露机构全称" prop="region">
-          <el-input v-model="ruleForm.MechanismFullName" placeholder="请输入"></el-input>
-        </el-form-item>
-        <el-form-item label="披露机构简称" prop="name">
-          <el-input v-model="ruleForm.MechanismAbbreviationName" placeholder="请输入"></el-input>
-        </el-form-item>
-      </div>
-      <div class="row_2">
-        <el-form-item label="披露机构网站地址" prop="region">
-          <el-input v-model="ruleForm.MechanismWebAddress" placeholder="请输入"></el-input>
-        </el-form-item>
-        <el-form-item label="经营互联网保险业务网站名称" prop="name">
-          <el-input v-model="ruleForm.OperatingWebName" placeholder="请输入"></el-input>
-        </el-form-item>
-      </div>
-      <div class="row_2">
-        <el-form-item label="经营互联网保险业务网站地址" prop="region">
-          <el-input v-model="ruleForm.OperatingWebAddress" placeholder="请输入"></el-input>
-        </el-form-item>
-        <el-form-item label="经营互联网保险业务App名称" prop="name">
-          <el-input v-model="ruleForm.OperatingAppName" placeholder="请输入"></el-input>
-        </el-form-item>
-      </div>
-      <div class="row_2">
-        <el-form-item label="经营互联网保险业务微信公众号名称" prop="region">
-          <el-input v-model="ruleForm.OperatingWechatName" placeholder="请输入"></el-input>
-        </el-form-item>
-        <el-form-item label="客户服务及消费者投诉电话" prop="name">
-          <el-input v-model="ruleForm.ServiceMobile" placeholder="请输入"></el-input>
-        </el-form-item>
-      </div>
-      <el-tabs v-model="activeName2" type="card">
-        <el-tab-pane label="公司简介" name="first" class="fuwenbenkaung">
-          <editor-item v-model="ruleForm.comdetail" :isClear="isClear" @change="change1"></editor-item>
+      <el-row :gutter="20">
+        <el-col v-for="(item, index) in internetInfo" :key="index" :span="item.span || 12">
+          <form-item
+            :type="item.type"
+            :label="item.label"
+            :options="item.options"
+            v-model="item.value"
+            :required="item.required"
+            :placeholder="item.placeholder"
+          ></form-item>
+        </el-col>
+      </el-row>
+      <el-tabs style="margin-top: 20px; margin-bottom: 40px;" v-model="activeName" type="card">
+        <el-tab-pane label="公司简介" name="first">
+          <div class="fuwenbenkaung">
+            <editor-item v-model="editorContent.comdetail"></editor-item>
+          </div>
         </el-tab-pane>
-        <el-tab-pane label="公司荣誉" name="second"  class="fuwenbenkaung">
-          <editor-item v-model="ruleForm.comhonor" :isClear="isClear" @change="change2"></editor-item>
+        <el-tab-pane label="公司荣誉" name="second">
+          <div class="fuwenbenkaung">
+            <editor-item v-model="editorContent.comhonor"></editor-item>
+          </div>
         </el-tab-pane>
-        <el-tab-pane label="发展历程" name="third"  class="fuwenbenkaung">
-          <editor-item v-model="ruleForm.comcourse" :isClear="isClear"  @change="change3"></editor-item>
+        <el-tab-pane label="发展历程" name="third">
+          <div class="fuwenbenkaung">
+            <editor-item v-model="editorContent.comcourse"></editor-item>
+          </div>
         </el-tab-pane>
       </el-tabs>
-
-      <el-form-item>
-        <el-button type="primary"  @click="submitForm('ruleForm')">立即创建</el-button>
-      </el-form-item>
-    </el-form>
+    </div>
+    <img-upload
+      :isShow.sync="showImgUpload"
+      @uploadSuccess="uploadSuccess"
+      @closeDialog="closeDialog"
+    ></img-upload>
+    <div class="bottom-toolbar">
+      <el-button @click="save" type="primary" round icon="el-icon-success">保存/提交</el-button>
+    </div>
   </div>
 </template>
 
 <script>
-    import MainTitle from '@/common/MainTitle'
-    import PageHr from "@/common/PageHr";
-    import EditorItem from "@/common/wangEnduit/EditorItem";
-    import {accountdetailss,getaccountdetailss} from "@/request/api"
-    export default {
-        name: "AccountDetails",
-        components: {EditorItem,PageHr, MainTitle},
-        data () {
-            return {
-              isClear: false,
-                title: '账户详情',
-                title_f: '系统指引（欢迎您使用快保家系统）',
-              ruleForm:{
-                id:1,
-                comname:'',//公司名称
-                comaddress:'',//公司地址
-                comjc:'',//公司简称
-                comtype:'',//公司类型
-                comwebaddress:'',//官网地址
-                comcode:'',//统一社会信用代码
-                comprice:'',//注册资本
-                comdate:'',//成交日期
-                comrange:'',//经营范围
-                commobile:'',//服务热线
-                Complaint:'',//投诉电话
-                compostcode:'',//邮政编码
-                comemail:'',//电子邮箱
-                MechanismFullName:'',//披露机构全称
-                MechanismAbbreviationName:'',//披露机构简称
-                MechanismWebAddress:'',//机构网站地址
-                OperatingWebName:'',//保险业务网站名称
-                OperatingWebAddress:'',//保险业务网站地址
-                OperatingAppName:'',//网线业务APP名称
-                OperatingWechatName:'',//经营互联网保险业务微信公众号名称
-                ServiceMobile:'',//客户服务及消费者投诉电话
-                comdetail:'',//公司简介富文本
-                comhonor:'',//公司荣誉
-                comcourse:'',//发展历程
-                //图片===================================
-                Gsurl:'',//工商营业执照
-                xkzurl:'',//经营保险业务许可证
-                zzurl:'',//互联网资质信息
-                comlogo:'',//公司logo
-                appqrcode:'',//App二维码
-                wxserverqrcode:'',//微信服务号二维码
-                wxsubqrcode:'',//微信订阅号二维码
-              },
-              activeName2: 'first', //tab选择
-              rules: {
-                comname: [
-                  { required: true, message: '请输入公司名称', trigger: 'blur' }
-                ]
-              }
-            }
-        },
-      mounted(){
-        getaccountdetailss().then(res=>{
-          this.ruleForm=res.Data
-        })
-      },
-      methods:{
-        handleAvatarSuccess(res, file) {
-          this.ruleForm.Gsurl = URL.createObjectURL(file.raw);
-        },
-        handleAvatarSuccess2(res, file) {
-          this.ruleForm.xkzurl = URL.createObjectURL(file.raw);
-        },
-        handleAvatarSuccess3(res, file) {
-          this.ruleForm.zzurl = URL.createObjectURL(file.raw);
-        },
-        handleAvatarSuccess4(res, file) {
-          this.ruleForm.comlogo = URL.createObjectURL(file.raw);
-        },
-        handleAvatarSuccess5(res, file) {
-          this.ruleForm.appqrcode = URL.createObjectURL(file.raw);
-        },
-        handleAvatarSuccess6(res, file) {
-          this.ruleForm.wxserverqrcode = URL.createObjectURL(file.raw);
-        },
-        handleAvatarSuccess7(res, file) {
-          this.ruleForm.wxsubqrcode = URL.createObjectURL(file.raw);
-        },
-        beforeAvatarUpload(file) {
-          const isJPG = file.type === 'image/jpeg';
-          const isLt2M = file.size / 1024 / 1024 < 2;
+import PageHr from "@/common/PageHr";
+import {
+  apiSupplierAdd,
+  apiSupperlist,
+  supplierGetCooperationStatus,
+  supplierGetCooperationType,
+  getComTypeList,
+  getBusinessScopeList,
+  getaccountdetailss,
+  accountdetailss
+} from "@/mock/api";
+import FormItem from "@/common/FormItem";
+import ImgUpload from "@/common/ImgUpload";
+import EditorItem from "@/common/wangEnduit/EditorItem";
 
-          if (!isJPG) {
-            this.$message.error('上传头像图片只能是 JPG 格式!');
-          }
-          if (!isLt2M) {
-            this.$message.error('上传头像图片大小不能超过 2MB!');
-          }
-          return isJPG && isLt2M;
+export default {
+  name: "AccountDetails",
+  components: { PageHr, FormItem, ImgUpload, EditorItem },
+  data() {
+    return {
+      forms: {
+        comname: {
+          label: "公司名称",
+          type: "input",
+          value: "",
+          errorText: "",
+          placeholder: "请输入"
         },
-        change1(v){
-          this.ruleForm.comdetail=v
+        comaddress: {
+          label: "公司地址",
+          type: "input",
+          value: "",
+          placeholder: "请输入"
         },
-        change2(v){
-          this.ruleForm.comhonor=v
+        comjc: {
+          label: "公司简称",
+          type: "input",
+          value: "",
+          errorText: "",
+          placeholder: "请输入",
+          span: 8
         },
-        change3(v){
-          this.ruleForm.comcourse=v
+        comtype: {
+          label: "公司类型",
+          type: "select",
+          value: "",
+          placeholder: "请选择",
+          span: 8,
+          options: []
         },
-        submitForm(formName) {
-          var that=this
-          that.$refs[formName].validate((valid) => {
-            if (valid) {
-              var a=that.ruleForm
-              window.console.log(a)
-              accountdetailss(a).then(res => {
-                this.$message(res.Msg);
-              })
-            } else {
-              window.console.log('error submit!!');
-              return false;
-            }
-          });
+        comwebaddress: {
+          label: "官网地址",
+          type: "input",
+          value: "",
+          placeholder: "请输入",
+          span: 8
+        },
+        comcode: {
+          label: "统一社会信用代码",
+          type: "input",
+          value: "",
+          placeholder: "请输入",
+          span: 8
+        },
+        comprice: {
+          label: "注册资本",
+          type: "input",
+          value: "",
+          placeholder: "请输入",
+          span: 8
+        },
+        comdate: {
+          label: "成立时间",
+          type: "date",
+          value: "",
+          placeholder: "选择日期",
+          span: 8
+        },
+        comrange: {
+          label: "经营范围",
+          type: "select",
+          value: 0,
+          required: false,
+          errorText: "",
+          placeholder: "请选择经营范围",
+          span: 8,
+          options: []
+        },
+        commobile: {
+          label: "服务热线",
+          type: "input",
+          value: "",
+          placeholder: "请输入服务热线",
+          span: 8
+        },
+        Complaint: {
+          label: "投诉电话",
+          type: "input",
+          value: "",
+          required: false,
+          errorText: "",
+          placeholder: "请输入",
+          span: 8
+        },
+        compostcode: {
+          label: "邮政编码",
+          type: "input",
+          value: "",
+          placeholder: "请输入",
+          span: 8
+        },
+        comemail: {
+          label: "E-mail",
+          type: "input",
+          value: "",
+          placeholder: "请输入",
+          span: 8
         }
+      },
+      internetInfo: {
+        MechanismFullName: {
+          label: "披露机构全称",
+          type: "input",
+          value: "",
+          placeholder: "请输入",
+          span: 12
+        },
+        MechanismAbbreviationName: {
+          label: "披露机构简称",
+          type: "input",
+          value: "",
+          placeholder: "请输入",
+          span: 12
+        },
+        MechanismWebAddress: {
+          label: "披露机构网站地址",
+          type: "input",
+          value: "",
+          placeholder: "请输入",
+          span: 12
+        },
+        OperatingWebName: {
+          label: "经营互联网保险业务网站名称",
+          type: "input",
+          value: "",
+          placeholder: "请输入",
+          span: 12
+        },
+        OperatingWebAddress: {
+          label: "经营互联网保险业务网站地址",
+          type: "input",
+          value: "",
+          placeholder: "请输入",
+          span: 12
+        },
+        OperatingAppName: {
+          label: "经营互联网保险业务App名称",
+          type: "input",
+          value: "",
+          placeholder: "请输入",
+          span: 12
+        },
+        OperatingWechatName: {
+          label: "经营互联网保险业务微信公众号名称",
+          type: "input",
+          value: "",
+          placeholder: "请输入",
+          span: 12
+        },
+        ServiceMobile: {
+          label: "客户服务及消费者投诉电话",
+          type: "input",
+          value: "",
+          placeholder: "请输入",
+          span: 12
+        }
+      },
+      jingyingzhizhi: {
+        Gsurl: {
+          label: "工商营业执照",
+          url: ""
+        },
+        xkzurl: {
+          label: "经营保险业务许可证",
+          url: ""
+        },
+        zzurl: {
+          label: "互联网资质信息",
+          url: ""
+        }
+      },
+
+      otherInfo: {
+        comlogo: {
+          label: "公司logo",
+          url: ""
+        },
+        appqrcode: {
+          label: "APP二维码",
+          url: ""
+        },
+        wxserverqrcode: {
+          label: "微信服务号二维码",
+          url: ""
+        },
+        wxsubqrcode: {
+          label: "微信订阅号二维码",
+          url: ""
+        }
+      },
+
+      editorContent: {
+        comdetail: "",
+        comhonor: "",
+        comcourse: ""
+      },
+      showImgUpload: false,
+      clickImgItem: null,
+      activeName: "first",
+      id: null
+    };
+  },
+  created() {
+    this.getComTypeList();
+    this.getBusinessScopeList();
+    this.getaccountdetailss();
+  },
+  watch: {
+    formData: {
+      deep: true,
+      handler() {
+        // 表单值改变时，校验基本信息（this.forms）
+        this.validate(this.forms);
       }
     }
+  },
+  computed: {},
+  methods: {
+    getComTypeList() {
+      getComTypeList().then(res => {
+        this.forms.comtype.options = res.Data;
+      });
+    },
+    getBusinessScopeList() {
+      getBusinessScopeList().then(res => {
+        this.forms.comrange.options = res.Data;
+      });
+    },
+    getaccountdetailss() {
+      getaccountdetailss().then(res => {
+        let data = res.Data || [];
+        Object.keys(this.forms).map(key => {
+          this.forms[key].value = data[key];
+        });
+        Object.keys(this.otherInfo).map(key => {
+          this.otherInfo[key].url = data[key];
+        });
+        Object.keys(this.jingyingzhizhi).map(key => {
+          this.jingyingzhizhi[key].url = data[key];
+        });
+        Object.keys(this.editorContent).map(key => {
+          this.editorContent[key] = data[key];
+        });
+        Object.keys(this.internetInfo).map(key => {
+          this.internetInfo[key].value = data[key];
+        });
+        this.id = data.id;
+      });
+    },
+    closeDialog() {
+      this.showImgUpload = false;
+    },
+    uploadSuccess(res) {
+      this.$message(res.Msg);
+      this.clickImgItem.url = res.Data.url;
+      this.showImgUpload = false;
+    },
+    //点击上传图片的item
+    handleUpload(item) {
+      this.showImgUpload = true;
+      this.clickImgItem = item;
+    },
+
+    save() {
+      let data = {};
+      Object.keys(this.forms).map(key => {
+        data[key] = this.forms[key].value;
+      });
+      Object.keys(this.otherInfo).map(key => {
+        data[key] = this.otherInfo[key].url;
+      });
+      Object.keys(this.jingyingzhizhi).map(key => {
+        data[key] = this.jingyingzhizhi[key].url;
+      });
+      Object.keys(this.editorContent).map(key => {
+        data[key] = this.editorContent[key];
+      });
+      Object.keys(this.internetInfo).map(key => {
+        data[key] = this.internetInfo[key].value;
+      });
+      data.id = this.id;
+      accountdetailss(data).then(res => {
+        this.$message(res.data.Msg);
+      });
+    }
+  }
+};
 </script>
 
-<style scoped>
-  .avatar-uploader .el-upload {
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
+<style scoped lang="scss">
+.wrapper {
+  background-color: #fff;
+  height: 100%;
+  overflow-y: auto;
+  .form-area {
+    padding: 20px;
+
+    .section {
+      padding: 15px 20px;
+      margin-bottom: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      text-align: left;
+      background-color: #edf2f6;
+      color: #495060;
+    }
+  }
+
+  .upload-img {
+    text-align: left;
     cursor: pointer;
-    position: relative;
-    overflow: hidden;
-  }
-  .avatar-uploader .el-upload:hover {
-    border-color: #409EFF;
-  }
-  .avatar-uploader-icon {
-    font-size: 28px;
-    color: #8c939d;
-    width: 178px;
-    height: 178px;
-    line-height: 178px;
-    text-align: center;
-  }
-  .avatar {
-    width: 178px;
-    height: 178px;
-    display: block;
-  }
-  .el-form-item__labels{
-    background-color: #edf2f6;
-  }
-  .row_2 {
-    width: 100%;
-    display: flex;
-    justify-content: flex-start;
-    /*background-color: red;*/
+
+    > .label {
+      color: #f29f43;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    > .camera {
+      display: inline-block;
+      margin: 0 20px;
+      width: 58px;
+      height: 58px;
+      line-height: 58px;
+      text-align: center;
+      vertical-align: middle;
+      border: 1px dashed #757f98;
+      border-radius: 4px;
+
+      > img {
+        vertical-align: middle;
+        width: 100%;
+      }
+    }
   }
 
-  .row_2 .el-form-item {
-    width: 50%;
-  }
+  .bottom-toolbar {
+    position: absolute;
+    width: calc(100% - 30px);
+    margin: 0 15px;
+    padding: 0 20px;
+    box-sizing: border-box;
+    height: 80px;
+    line-height: 80px;
+    z-index: 2;
+    right: 0;
+    bottom: 0;
+    background-color: #fff;
+    box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.28);
 
-  .row_3 {
-    width: 100%;
-    display: flex;
-    justify-content: flex-start;
+    .el-button.is-round {
+      padding: 6px 15px 7px 15px;
+    }
   }
-
-  .row_3 .el-form-item {
-    width: 33.33%;
-  }
-
-  .row_4 {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .row_4 .el-form-item {
-    width: 25%;
-  }
-
-  .el-form-item__content .el-select {
-    width: 100%;
-  }
-
-  .el-form-item__content .el-col {
-    width: 100%;
-  }
-
-  .el-form-item__content .el-button{
-    width: 100%;
-    border: 1px solid #999;
-  }
-  .el-form-item__content .el-col .el-form-item {
-    width: 100%;
-  }
-  .fuwenbenkaung{
-    width: 100%;
-    height: 458px;
-    font-size: 18px;
-    /*background-color: red;*/
-  }
-  .fuwenbenkaung >>> .toolbar{
-    height: 30px;
-  }
-  .fuwenbenkaung >>> .text{
-    height: 428px;
-  }
+}
 </style>
