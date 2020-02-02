@@ -427,5 +427,7 @@ export const APPHomepageModuleDelete = obj =>
 // app 首页管理-轮播
 export const APPHomepageModuleBanner = obj =>
     get("APPHomepageModuleBanner", obj);
-
+//app首页上架
+//发布
+export const sendAppHome = p => post("sendAppHome", p);
 //===============================================

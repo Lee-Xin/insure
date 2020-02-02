@@ -611,7 +611,11 @@ const router = new Router({
         {
             path: "/app_homepage_module",
             name: "app_homepage_module",
-            component: APPHomepageModule
+            component: APPHomepageModule,
+            meta: {
+                title: "app首页管理",
+                subTitle: "这是app首页管理页面"
+            }
         },
         {
             path: "/autoguard_homepage_module",

@@ -2079,55 +2079,60 @@ Mock.mock(url + "/ExhibitionToolsDelete", "post", function(par) {
     }
     return returnArray;
 });
-// // app首页管理
-// // 热销产品
-// Mock.mock(/\/api\/test\/APPHomepageModule\/*/, 'get' , function(par){
-//     console.log(par)
-//     let returnArray = {
-//         "StatusCode": 200,
-//         "Msg": "暂无数据",
-//         "Data": APPHomepageModule.hot
-//     }
-//     return returnArray
-// });
+// app首页管理
+// 上架下架
+Mock.mock(RegExp(url + "/sendAppHome"), 'post' , function(par){
+    let returnArray = {
+        "StatusCode": 200,
+        "Msg": "操作成功",
+    }
+    return returnArray
+});
 // app首页管理-删除
 // 热销产品
 Mock.mock(RegExp(url + "/APPHomepageModuleDelete/*"), "post", function(par) {
-    console.log(par);
-    let formatPar = JSON.parse(par.body);
-    let tmpArr = APPHomepageModule.hot[formatPar.type];
-    tmpArr.find((item, index) => {
-        if (item.id == formatPar.id) {
-            tmpArr.splice(index, 1);
-            return true;
-        }
-    });
+    
     return {
         StatusCode: 200,
         Msg: "删除成功",
-        Data: APPHomepageModule.hot
     };
 });
 // app首页管理-轮播
 // 轮播
-Mock.mock(RegExp(url + "/APPHomepageModuleBanner/*"), "get", function(par) {
-    console.log(par);
+Mock.mock(RegExp(url + "/APPHomepageModuleBanner/*"), "get", function(p) {
+    let param = util.getQueryValue(p.url);
     return {
-        StatusCode: 200,
-        Msg: "成功",
-        Data: APPHomepageModule.banner
+        success: true,
+        result: {
+            totalCount: APPHomepageModule.banner.data.length,
+            items: APPHomepageModule.banner.data.filter((t, index) => {
+                return (
+                    index >= param.SkipCount &&
+                    index < +param.SkipCount + +param.MaxResultCount
+                );
+            })
+        }
     };
+    
 });
 // app首页管理
 // 热销产品
-Mock.mock(/\/api\/test\/APPHomepageModule\/*/, "get", function(par) {
-    console.log(par);
-    let returnArray = {
-        StatusCode: 200,
-        Msg: "暂无数据",
-        Data: APPHomepageModule.hot
+Mock.mock(RegExp(url + "/APPHomepageModule/*"), "get", function(p) {
+
+    let param = util.getQueryValue(p.url);
+    let items= APPHomepageModule.hot.data.filter((t, index) => {
+        return (
+            index >= param.SkipCount &&
+            index < +param.SkipCount + +param.MaxResultCount&&param.type==t.type&&(param.type!=3||t.category==param.category));
+    })
+    return {
+        success: true,
+        result: {
+            totalCount:items.length,
+            items
+        }
     };
-    return returnArray;
+   
 });
 
 //获取险种   机构   供应商  机构类型 保单状态

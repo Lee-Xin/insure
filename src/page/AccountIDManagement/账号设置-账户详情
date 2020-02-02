@@ -8,7 +8,7 @@
     获取账户详情  getaccountdetailss   参数无
 
     设置账户详情  accountdetailss
-    id:1,
+        id:1,
         comname:'',//公司名称
         comaddress:'',//公司地址
         comjc:'',//公司简称
