@@ -4,6 +4,8 @@ const data = {
             {
                 id: 1,
                 title: "1",
+                product: "产品1",
+                company: "公司1",
                 date: "2019-11-02",
                 description: "说明",
                 type: 1, //1热销热卖，2新品推荐，3热销产品
@@ -11,6 +13,8 @@ const data = {
             },
             {
                 id: 12,
+                product: "产品1",
+                company: "公司1",
                 title: "1333333",
                 date: "2019-11-02",
                 description: "说明22222222",
@@ -20,6 +24,8 @@ const data = {
             {
                 id: 1,
                 title: "1",
+                product: "产品1",
+                company: "公司1",
                 date: "2019-11-02",
                 description: "说明",
                 type: 3,
@@ -28,6 +34,8 @@ const data = {
             {
                 id: 1,
                 title: "1",
+                product: "产品1",
+                company: "公司1",
                 date: "2019-11-02",
                 description: "说明",
                 type: 3,
@@ -35,6 +43,8 @@ const data = {
             },
             {
                 id: 1,
+                product: "产品1",
+                company: "公司1",
                 title: "1",
                 date: "2019-11-02",
                 description: "说明",
@@ -44,6 +54,8 @@ const data = {
             {
                 id: 1,
                 title: "1",
+                product: "产品1",
+                company: "公司1",
                 date: "2019-11-02",
                 description: "说明",
                 type: 3,
@@ -56,25 +68,33 @@ const data = {
             {
                 id: 11,
                 name: "1",
+                product: "产品1",
+                company: "公司1",
                 date: "2019-11-02",
                 pic: "/pic/pic1.jpg",
-                type: "产品",
+                proType: "产品",
                 status: 1 //1上架，2下架
             },
             {
                 id: 2,
                 name: "1",
+                product: "产品1",
+                company: "公司1",
                 date: "2019-11-02",
                 pic: "/pic/pic1.jpg",
-                type: "产品",
+                proType: "产品",
+
                 status: 1
             },
             {
                 id: 3,
+                product: "产品1",
+                company: "公司1",
                 name: "1",
                 date: "2019-11-02",
                 pic: "/pic/pic1.jpg",
-                type: "产品",
+                proType: "产品",
+
                 status: 2
             }
         ]

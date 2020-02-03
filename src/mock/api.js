@@ -430,4 +430,9 @@ export const APPHomepageModuleBanner = obj =>
 //app首页上架
 //发布
 export const sendAppHome = p => post("sendAppHome", p);
+//产品类型
+export const getProductList = p => get("getProductList", p);
+//保存app首页添加编辑
+export const saveAppHome = p => post("saveAppHome", p);
+
 //===============================================

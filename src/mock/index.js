@@ -166,11 +166,11 @@ Mock.mock(url + "/supplier_add", "post", param => {
 //-------------------------end------
 
 //------产品搜索的选项
-Mock.mock(/http:\/\/localhost:8080\/product_list/, "get", () => {
+Mock.mock(RegExp(url+'/product_list'), "get", () => {
     returnArray = {
         StatusCode: 200,
         Msg: "query success",
-        Data: ProductList.productListSearch
+        Data: [{label:'产品1',value:1}]
     };
     return returnArray;
 });
@@ -2988,6 +2988,23 @@ Mock.mock(RegExp(url + "/editAvatar"), "post", p => {
 });
 //重置密码
 Mock.mock(RegExp(url + "/resetPassword"), "post", p => {
+    return {
+        StatusCode: 200,
+        Msg: "success"
+    };
+});
+
+//产品类型
+Mock.mock(RegExp(url + "/getProductList"), "get", p => {
+    return {
+        StatusCode: 200,
+        Msg: "success",
+        Data:[{label:"产品类型1",value:1}]
+    };
+});
+
+//保存app首页添加编辑
+Mock.mock(RegExp(url + "/saveAppHome"), "post", p => {
     return {
         StatusCode: 200,
         Msg: "success"

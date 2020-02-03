@@ -14,73 +14,12 @@
         <div class="right">
           <!-- 轮播图管理 -->
           <div class="banner-content" v-if="plate=='banner'">
-            <div class="mask" :hidden="mask.banner">
-              <div class="superInput">
-                <h4>轮播图管理</h4>
-                <div class="s-content">
-                  <el-input v-model="bannerAdd.name" placeholder="请输入名称">
-                    <template slot="prepend">*名称</template>
-                  </el-input>
-                  <div class="sel-box">
-                    <span>*类型</span>
-                    <el-select v-model="bannerAdd.typeVal" placeholder="请选择">
-                      <el-option
-                        v-for="item in bannerAdd.type"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value"
-                      ></el-option>
-                    </el-select>
-                  </div>
-                  <el-select style="width: 100%" v-model="bannerAdd.selectVal" placeholder="请选择">
-                    <el-option
-                      v-for="item in bannerAdd.select"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value"
-                    ></el-option>
-                  </el-select>
-                  <div class="up-pic">
-                    <el-upload
-                      class="avatar-uploader"
-                      action="#"
-                      list-type="picture-card"
-                      :show-file-list="false"
-                      :on-success="handleAvatarSuccess"
-                      :before-upload="beforeAvatarUpload"
-                    >
-                      <img v-if="bannerAdd.imageUrl" :src="bannerAdd.imageUrl" />
-                      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                    </el-upload>
-                  </div>
-                  <div class="sel-box">
-                    <span>*状态</span>
-                    <el-select v-model="bannerAdd.statusVal" placeholder="请选择">
-                      <el-option
-                        v-for="item in bannerAdd.status"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value"
-                      ></el-option>
-                    </el-select>
-                  </div>
-                  <el-input v-model="bannerAdd.sort" placeholder="请输入排序">
-                    <template slot="prepend">排序</template>
-                  </el-input>
-                  <div class="btn-group" style="text-align: right">
-                    <el-button @click="hideMsak('banner')">取消</el-button>
-                    <el-button type="primary" @click="save">确认</el-button>
-                  </div>
-                </div>
-              </div>
-            </div>
             <h3>{{bigTitle}}</h3>
             <div style="text-align: right; margin: 16px 0">
-              <el-button type="warning" icon="el-icon-plus" @click="hideMsak('banner')">新增</el-button>
+              <el-button type="warning" icon="el-icon-plus" @click="addDiaolog(1)">新增</el-button>
             </div>
             <el-table
               :data="bannerTableData"
-              v-if="plate=='banner'"
               @current-change="currentChangeHandle"
               highlight-current-row
               border
@@ -88,7 +27,7 @@
             >
               <el-table-column type="index" label="序号" width="100"></el-table-column>
               <el-table-column prop="name" label="名称"></el-table-column>
-              <el-table-column prop="type" label="类型"></el-table-column>
+              <el-table-column prop="proType" label="类型"></el-table-column>
               <el-table-column prop="pic" label="图片">
                 <template slot-scope="scope">
                   <img :src="scope.row.pic" />
@@ -104,34 +43,9 @@
           </div>
           <!-- 热销热卖 -->
           <div class="selling-content" v-if="plate=='selling'">
-            <div class="mask" :hidden="mask.selling">
-              <div class="superInput">
-                <h4>热销热卖</h4>
-                <div class="s-content">
-                  <div class="sel-box">
-                    <span>公司</span>
-                    <el-select v-model="selling.companyVal" placeholder="请选择">
-                      <el-option
-                        v-for="item in selling.company"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value"
-                      ></el-option>
-                    </el-select>
-                  </div>
-                  <el-input v-model="selling.sort" placeholder="请输入排序">
-                    <template slot="prepend">排序</template>
-                  </el-input>
-                  <div class="btn-group" style="text-align: right">
-                    <el-button @click="hideMsak('selling')">取消</el-button>
-                    <el-button type="primary" @click="save">确认</el-button>
-                  </div>
-                </div>
-              </div>
-            </div>
             <h3>{{bigTitle}}</h3>
             <div style="text-align: right; margin: 16px 0">
-              <el-button type="warning" icon="el-icon-plus" @click="hideMsak('selling')">新增</el-button>
+              <el-button type="warning" icon="el-icon-plus" @click="addDiaolog(1)">新增</el-button>
             </div>
             <el-table
               :data="hotTableData"
@@ -141,54 +55,17 @@
               style="width: 100%"
             >
               <el-table-column type="index" label="序号" width="100"></el-table-column>
-              <el-table-column prop="title" label="公司名称"></el-table-column>
+              <el-table-column prop="company" label="公司名称"></el-table-column>
               <el-table-column prop="date" label="创建时间"></el-table-column>
             </el-table>
           </div>
           <!-- 新品推荐 -->
           <div class="newProduct-content" v-if="plate=='newProduct'">
-            <div class="mask" :hidden="mask.newProduct">
-              <div class="superInput">
-                <h4>产品</h4>
-                <div class="s-content">
-                  <div class="sel-box">
-                    <span>公司</span>
-                    <el-select v-model="newProduct.companyVal" placeholder="请选择">
-                      <el-option
-                        v-for="item in newProduct.company"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value"
-                      ></el-option>
-                    </el-select>
-                  </div>
-                  <div class="sel-box">
-                    <span>产品</span>
-                    <el-select v-model="newProduct.productVal" placeholder="请选择">
-                      <el-option
-                        v-for="item in newProduct.product"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value"
-                      ></el-option>
-                    </el-select>
-                  </div>
-                  <el-input v-model="newProduct.sort" placeholder="请输入排序">
-                    <template slot="prepend">排序</template>
-                  </el-input>
-                  <div class="btn-group" style="text-align: right">
-                    <el-button @click="hideMsak('newProduct')">取消</el-button>
-                    <el-button type="primary" @click="save">确认</el-button>
-                  </div>
-                </div>
-              </div>
-            </div>
             <h3>{{bigTitle}}</h3>
             <div style="text-align: right; margin: 16px 0">
-              <el-button type="warning" icon="el-icon-plus" @click="hideMsak('newProduct')">新增</el-button>
+              <el-button type="warning" icon="el-icon-plus" @click="addDiaolog(1)">新增</el-button>
             </div>
             <el-table
-              v-if="plate=='newProduct'"
               :data="hotTableData"
               @current-change="currentChangeHandle"
               highlight-current-row
@@ -196,7 +73,7 @@
               style="width: 100%"
             >
               <el-table-column type="index" label="序号" width="100"></el-table-column>
-              <el-table-column prop="title" label="产品名称"></el-table-column>
+              <el-table-column prop="product" label="产品名称"></el-table-column>
               <el-table-column prop="description" label="说明"></el-table-column>
               <el-table-column prop="date" label="创建时间">
                 <template slot-scope="scope">
@@ -211,7 +88,7 @@
             <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
               <el-tab-pane label="寿险" name="1">
                 <div style="text-align: right; margin: 16px 0">
-                  <el-button type="warning" @click="hideMsak('hot')" icon="el-icon-plus">新增</el-button>
+                  <el-button type="warning" @click="addDiaolog(1)" icon="el-icon-plus">新增</el-button>
                 </div>
                 <el-table
                   :data="hotTableData"
@@ -221,14 +98,14 @@
                   style="width: 100%"
                 >
                   <el-table-column type="index" label="序号" width="100"></el-table-column>
-                  <el-table-column prop="title" label="产品名称"></el-table-column>
+                  <el-table-column prop="product" label="产品名称"></el-table-column>
                   <el-table-column prop="description" label="说明"></el-table-column>
                   <el-table-column prop="date" label="创建时间"></el-table-column>
                 </el-table>
               </el-tab-pane>
               <el-tab-pane label="医疗险" name="2">
                 <div style="text-align: right; margin: 16px 0">
-                  <el-button type="warning" @click="hideMsak('hot')" icon="el-icon-plus">新增</el-button>
+                  <el-button type="warning" @click="addDiaolog(1)" icon="el-icon-plus">新增</el-button>
                 </div>
                 <el-table
                   :data="hotTableData"
@@ -238,14 +115,14 @@
                   style="width: 100%"
                 >
                   <el-table-column type="index" label="序号" width="100"></el-table-column>
-                  <el-table-column prop="title" label="产品名称"></el-table-column>
+                  <el-table-column prop="product" label="产品名称"></el-table-column>
                   <el-table-column prop="description" label="说明"></el-table-column>
                   <el-table-column prop="date" label="创建时间"></el-table-column>
                 </el-table>
               </el-tab-pane>
               <el-tab-pane label="重疾险" name="3">
                 <div style="text-align: right; margin: 16px 0">
-                  <el-button type="warning" @click="hideMsak('hot')" icon="el-icon-plus">新增</el-button>
+                  <el-button type="warning" @click="addDiaolog(1)" icon="el-icon-plus">新增</el-button>
                 </div>
                 <el-table
                   :data="hotTableData"
@@ -255,14 +132,14 @@
                   style="width: 100%"
                 >
                   <el-table-column type="index" label="序号" width="100"></el-table-column>
-                  <el-table-column prop="title" label="产品名称"></el-table-column>
+                  <el-table-column prop="product" label="产品名称"></el-table-column>
                   <el-table-column prop="description" label="说明"></el-table-column>
                   <el-table-column prop="date" label="创建时间"></el-table-column>
                 </el-table>
               </el-tab-pane>
               <el-tab-pane label="意外险" name="4">
                 <div style="text-align: right; margin: 16px 0">
-                  <el-button type="warning" @click="hideMsak('hot')" icon="el-icon-plus">新增</el-button>
+                  <el-button type="warning" @click="addDiaolog(1)" icon="el-icon-plus">新增</el-button>
                 </div>
                 <el-table
                   :data="hotTableData"
@@ -272,7 +149,7 @@
                   style="width: 100%"
                 >
                   <el-table-column type="index" label="序号" width="100"></el-table-column>
-                  <el-table-column prop="title" label="产品名称"></el-table-column>
+                  <el-table-column prop="product" label="产品名称"></el-table-column>
                   <el-table-column prop="description" label="说明"></el-table-column>
                   <el-table-column prop="date" label="创建时间"></el-table-column>
                 </el-table>
@@ -314,42 +191,6 @@
           </div>
         </div>
       </div>
-      <div class="mask" :hidden="mask.hot">
-        <div class="superInput">
-          <h4>产品</h4>
-          <div class="s-content">
-            <div class="sel-box">
-              <span>公司</span>
-              <el-select v-model="hotPro.companyVal" placeholder="请选择">
-                <el-option
-                  v-for="item in hotPro.company"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-            </div>
-            <div class="sel-box">
-              <span>产品</span>
-              <el-select v-model="hotPro.productVal" placeholder="请选择">
-                <el-option
-                  v-for="item in hotPro.product"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-            </div>
-            <el-input v-model="hotPro.sort" placeholder="请输入排序">
-              <template slot="prepend">排序</template>
-            </el-input>
-            <div class="btn-group">
-              <el-button @click="hideMsak('hot')">取消</el-button>
-              <el-button type="primary" @click="save">确认</el-button>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
     <el-dialog title="删除" :visible.sync="dialogVisible" width="400px">
       <div style="text-align:left">
@@ -360,15 +201,54 @@
         <el-button type="primary" @click="del()">确定</el-button>
       </span>
     </el-dialog>
+    <el-dialog :title="title" :visible.sync="isShow">
+      <el-row class="s-content">
+        <el-col v-for="(item, index) in addForm" :key="index">
+          <form-item
+            :type="item.type"
+            :label="item.label"
+            :options="item.options"
+            v-model="item.value"
+            :required="item.required"
+            :placeholder="item.placeholder"
+            :hide="item.hide"
+          ></form-item>
+        </el-col>
+        <el-col class="upload-img" v-if="plate=='banner'">
+          <span class="label">图片</span>
+          <span class="camera" @click="showImgUpload=true" style="margin-right:0">
+            <img v-if="imgUrl" :src="imgUrl" />
+            <img style="width:30px" v-else :src="require('@/assets/img/camera.png')" />
+          </span>
+          <el-button v-if="imgUrl" type="text" size="mini" style="padding:5px" @click="imgUrl=''">删除</el-button>
+        </el-col>
+      </el-row>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="isShow=false">取消</el-button>
+        <el-button type="primary" @click="save">确认</el-button>
+      </span>
+    </el-dialog>
+    <img-upload
+      :isShow.sync="showImgUpload"
+      @uploadSuccess="uploadSuccess"
+      @closeDialog="closeDialog"
+    ></img-upload>
   </div>
 </template>
 
 <script>
+import FormItem from "@/common/FormItem";
+import ImgUpload from "@/common/ImgUpload";
+
 import {
   APPHomepageModule,
   APPHomepageModuleDelete,
   APPHomepageModuleBanner,
-  sendAppHome
+  sendAppHome,
+  getProductList,
+  apiProductList,
+  baoxiangongsi,
+  saveAppHome
 } from "@/mock/api";
 
 export default {
@@ -385,101 +265,60 @@ export default {
       // 导航分类唯一标识
       type: "1", //1热销热卖，2新品推荐，3热销产品
       category: 1, //1寿险，2医疗险，3重疾险，4意外险
-      // 不同分类的弹窗
-      mask: {
-        hot: true,
-        selling: true,
-        banner: true,
-        newProduct: true
+      isShow: false, //添加修改弹框
+      title: "", //添加修改标题
+      addForm: {
+        name: {
+          label: "名称",
+          value: null,
+          type: "input",
+          placeholder: "请输入名称",
+          required: true
+        },
+        proType: {
+          label: "类型",
+          value: null,
+          type: "select",
+          placeholder: "请选择类型",
+          required: true,
+          options: []
+        },
+        status: {
+          label: "状态",
+          value: null,
+          type: "select",
+          placeholder: "请选择",
+          required: true,
+          options: [
+            { label: "上架", value: 1 },
+            { label: "下架", value: 2 }
+          ]
+        },
+        company: {
+          label: "公司",
+          value: null,
+          type: "select",
+          placeholder: "请选择",
+          options: []
+        },
+        product: {
+          label: "产品",
+          value: null,
+          type: "select",
+          placeholder: "请选择",
+          options: []
+        },
+        order: {
+          label: "排序",
+          value: 0,
+          type: "input",
+          placeholder: "请输入序号",
+          required: false
+        }
       },
+      showImgUpload: false,
+      imgUrl: "", //轮播图添加图片
 
-      // 轮播图管理添加
-      bannerAdd: {
-        name: "",
-        typeVal: "",
-        type: [
-          { label: "产品", value: "产品" },
-          { label: "资讯", value: "资讯" }
-        ],
-        select: [
-          { label: "产品", value: "产品" },
-          { label: "资讯", value: "资讯" }
-        ],
-        selectVal: "",
-        imageUrl: "",
-        status: [
-          { label: "上架", value: "上架" },
-          { label: "下架", value: "下架" }
-        ],
-        statusVal: "",
-        sort: ""
-      },
-      // 热销产品-添加
-      hotPro: {
-        company: [
-          {
-            value: "黄金糕",
-            label: "黄金糕"
-          },
-          {
-            value: "双皮奶",
-            label: "双皮奶"
-          }
-        ],
-        companyVal: "",
-        product: [
-          {
-            value: "龙须面",
-            label: "龙须面"
-          },
-          {
-            value: "北京烤鸭",
-            label: "北京烤鸭"
-          }
-        ],
-        productVal: "",
-        sort: ""
-      },
-      // 热销热卖-添加
-      selling: {
-        company: [
-          {
-            value: "黄金糕",
-            label: "黄金糕"
-          },
-          {
-            value: "双皮奶",
-            label: "双皮奶"
-          }
-        ],
-        companyVal: "",
-        sort: ""
-      },
-      // 新品推荐-添加
-      newProduct: {
-        company: [
-          {
-            value: "黄金糕",
-            label: "黄金糕"
-          },
-          {
-            value: "双皮奶",
-            label: "双皮奶"
-          }
-        ],
-        companyVal: "",
-        product: [
-          {
-            value: "龙须面",
-            label: "龙须面"
-          },
-          {
-            value: "北京烤鸭",
-            label: "北京烤鸭"
-          }
-        ],
-        productVal: ""
-      },
       // 删除，编辑
       // 当前板块
       plate: "banner",
@@ -493,9 +332,11 @@ export default {
       },
       isDisabledForm: { del: true, edit: true, send: true, notSend: true },
       isShowForm: { send: true },
-      dialogVisible: false
+      dialogVisible: false,
+      id: ""
     };
   },
+  components: { FormItem, ImgUpload },
   watch: {
     clickRow(row) {
       if (row.id !== undefined && row.id !== "" && row.id !== null) {
@@ -518,16 +359,29 @@ export default {
     }
   },
   created: function() {
+    this.getProduct();
     this.getAllData();
   },
   methods: {
+    getProduct() {
+      getProductList().then(res => {
+        this.addForm.proType.options = res.Data || [];
+      });
+      apiProductList().then(res => {
+        this.addForm.product.options = res.Data || [];
+      });
+      baoxiangongsi().then(res => {
+        this.addForm.company.options = res.Data.map(i => {
+          return { label: i.name, value: i.id };
+        });
+      });
+    },
     getAllData() {
       this.clickRow = {};
       this.pages.SkipCount = 0;
       this.hotTableData = [];
       this.bannerTableData = [];
       let key = this.plate == "banner" ? "banner" : "hotPro";
-
       switch (key) {
         case "hotPro":
           APPHomepageModule({
@@ -583,24 +437,83 @@ export default {
       });
     },
     // 编辑
-    editHandle() {
+    addDiaolog(n) {
       switch (this.plate) {
         case "banner":
-          console.log("banner");
-          break;
-        case "hotPro":
-          this.mask.hot = !this.mask.hot;
-          console.log("hotPro");
+          this.title = n == 1 ? "添加轮播图" : "编辑轮播图";
+          //轮播图时隐藏选项
+          for (const key in this.addForm) {
+            if (this.addForm.hasOwnProperty(key)) {
+              const element = this.addForm[key];
+              element.hide =
+                key == "product" || key == "company" ? true : false;
+              element.value = n == 1 ? "" : this.clickRow[key];
+              this.imgUrl = n == 1 ? "" : this.clickRow.pic;
+            }
+          }
           break;
         case "selling":
-          console.log("selling");
+          this.title = n == 1 ? "添加热销热卖" : "编辑热销热卖";
+          for (const key in this.addForm) {
+            if (this.addForm.hasOwnProperty(key)) {
+              const element = this.addForm[key];
+              element.hide = key == "company" || key == "order" ? false : true;
+              element.value = n == 1 ? "" : this.clickRow[key];
+            }
+          }
           break;
         case "newProduct":
-          console.log("newProduct");
+          this.title = n == 1 ? "添加新品推荐" : "编辑新品推荐";
+          for (const key in this.addForm) {
+            if (this.addForm.hasOwnProperty(key)) {
+              const element = this.addForm[key];
+              element.hide =
+                key == "product" || key == "order" || key == "company"
+                  ? false
+                  : true;
+              element.value = n == 1 ? "" : this.clickRow[key];
+            }
+          }
+          break;
+        case "hotPro":
+          for (const key in this.addForm) {
+            if (this.addForm.hasOwnProperty(key)) {
+              const element = this.addForm[key];
+              element.hide =
+                key == "product" || key == "order" || key == "company"
+                  ? false
+                  : true;
+              element.value = n == 1 ? "" : this.clickRow[key];
+            }
+          }
+          this.title = n == 1 ? "添加热销产品" : "编辑热销产品";
           break;
       }
+      this.isShow = true;
+      this.id = n == 1 ? "" : this.clickRow.id;
     },
-
+    save() {
+      if (this.plate == "banner") {
+        if (!this.addForm.name.value) return this.$message("请输入名称");
+        if (!this.addForm.proType.value) return this.$message("请选择类型");
+        if (!this.addForm.status.value) return this.$message("请选择状态");
+      }
+      let data = {};
+      for (const key in this.addForm) {
+        if (this.addForm.hasOwnProperty(key)) {
+          const element = this.addForm[key];
+          data[key] = element.value;
+        }
+      }
+      data.id = this.id;
+      data.type = this.type;
+      data.category = this.category;
+      console.log(data);
+      saveAppHome(data).then(res => {
+        this.isShow = false;
+        this.$message(res.data.Msg);
+      });
+    },
     // 分页等
     handleSizeChange(val) {
       this.pages.SkipCount = 0;
@@ -611,44 +524,14 @@ export default {
       this.pages.SkipCount = (val - 1) * this.pages.MaxResultCount;
       this.getAllData();
     },
-    // 新增,显示
-    hideMsak(key) {
-      this.mask[key] = !this.mask[key];
-    },
-    save() {
-      switch (this.plate) {
-        case "banner":
-          console.log(this.bannerAdd);
-          this.mask.banner = !this.mask.banner;
-          break;
-        case "hotPro":
-          console.log(this.hotPro);
-          this.mask.hot = !this.mask.hot;
-          break;
-        case "selling":
-          console.log(this.selling);
-          this.mask.selling = !this.mask.selling;
-          break;
-        case "newProduct":
-          console.log(this.newProduct);
-          this.mask.newProduct = !this.mask.newProduct;
-          break;
-      }
-    },
-    handleAvatarSuccess(res, file) {
-      this.imageUrl = URL.createObjectURL(file.raw);
-    },
-    beforeAvatarUpload(file) {
-      const isJPG = file.type === "image/jpeg";
-      const isLt2M = file.size / 1024 / 1024 < 2;
 
-      if (!isJPG) {
-        this.$message.error("上传头像图片只能是 JPG 格式!");
-      }
-      if (!isLt2M) {
-        this.$message.error("上传头像图片大小不能超过 2MB!");
-      }
-      return isJPG && isLt2M;
+    closeDialog() {
+      this.showImgUpload = false;
+    },
+    uploadSuccess(res) {
+      this.$message(res.Msg);
+      this.imgUrl = res.Data.url;
+      this.showImgUpload = false;
     }
   }
 };
@@ -837,5 +720,33 @@ export default {
 
 .up-pic {
   margin-top: 16px;
+}
+
+.upload-img {
+  text-align: left;
+  cursor: pointer;
+
+  > .label {
+    color: #f29f43;
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  > .camera {
+    display: inline-block;
+    margin: 0 20px;
+    width: 58px;
+    height: 58px;
+    line-height: 58px;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px dashed #757f98;
+    border-radius: 4px;
+
+    > img {
+      vertical-align: middle;
+      width: 100%;
+    }
+  }
 }
 </style>

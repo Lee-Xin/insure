@@ -1,5 +1,5 @@
 <template>
-  <div class="form-wrapper">
+  <div class="form-wrapper" v-if="!hide">
     <div class="label" :class="{required: required}">
       <span v-if="required">*</span>
       {{label}}
@@ -61,7 +61,8 @@ export default {
       default: ""
     },
     definedSlot: [Object],
-    disabled: Boolean
+    disabled: Boolean,
+    hide: Boolean
   },
   data() {
     return {

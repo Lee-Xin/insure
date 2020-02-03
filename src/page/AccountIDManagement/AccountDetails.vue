@@ -23,7 +23,7 @@
             <span class="label">{{item.label}}</span>
             <span class="camera" @click="handleUpload(item)" style="margin-right:0">
               <img v-if="item.url" :src="item.url" />
-              <img v-else :src="require('@/assets/img/camera.png')" />
+              <img style="width:30px" v-else :src="require('@/assets/img/camera.png')" />
             </span>
             <el-button
               v-if="item.url"
@@ -42,7 +42,7 @@
             <span class="label">{{item.label}}</span>
             <span class="camera" @click="handleUpload(item)" style="margin-right:0">
               <img v-if="item.url" :src="item.url" />
-              <img v-else :src="require('@/assets/img/camera.png')" />
+              <img style="width:30px" v-else :src="require('@/assets/img/camera.png')" />
             </span>
             <el-button
               v-if="item.url"
