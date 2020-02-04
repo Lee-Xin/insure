@@ -2134,7 +2134,68 @@ Mock.mock(RegExp(url + "/APPHomepageModule/*"), "get", function(p) {
     };
    
 });
+// 快保首页管理
+// 上架下架
+Mock.mock(RegExp(url + "/sendAutoguardHome"), 'post' , function(par){
+    let returnArray = {
+        "StatusCode": 200,
+        "Msg": "操作成功",
+    }
+    return returnArray
+});
+// Autoguard首页管理-删除
+// 热销产品
+Mock.mock(RegExp(url + "/AutoguardHomepageModuleDelete/*"), "post", function(par) {
+    
+    return {
+        StatusCode: 200,
+        Msg: "删除成功",
+    };
+});
+//app首页配置
+Mock.mock(RegExp(url + "/saveAPPConfig"), "post", function(par) {
+    
+    return {
+        StatusCode: 200,
+        Msg: "success",
+    };
+});
+// Autoguard首页管理-轮播
+// 轮播
+Mock.mock(RegExp(url + "/AutoguardHomepageModuleBanner/*"), "get", function(p) {
+    let param = util.getQueryValue(p.url);
+    return {
+        success: true,
+        result: {
+            totalCount: APPHomepageModule.banner.data.length,
+            items: APPHomepageModule.banner.data.filter((t, index) => {
+                return (
+                    index >= param.SkipCount &&
+                    index < +param.SkipCount + +param.MaxResultCount
+                );
+            })
+        }
+    };
+    
+});
+// Autoguard首页管理
+Mock.mock(RegExp(url + "/AutoguardHomepageModule/*"), "get", function(p) {
 
+    let param = util.getQueryValue(p.url);
+    let items= APPHomepageModule.hot.data.filter((t, index) => {
+        return (
+            index >= param.SkipCount &&
+            index < +param.SkipCount + +param.MaxResultCount&&param.type==t.type&&(param.type!=3||t.category==param.category));
+    })
+    return {
+        success: true,
+        result: {
+            totalCount:items.length,
+            items
+        }
+    };
+   
+});
 //获取险种   机构   供应商  机构类型 保单状态
 
 Mock.mock(url + "/getallparameter", "get", function() {
@@ -3005,6 +3066,44 @@ Mock.mock(RegExp(url + "/getProductList"), "get", p => {
 
 //保存app首页添加编辑
 Mock.mock(RegExp(url + "/saveAppHome"), "post", p => {
+    return {
+        StatusCode: 200,
+        Msg: "success"
+    };
+});
+//保存快保首页添加编辑
+Mock.mock(RegExp(url + "/saveAutoguardHome"), "post", p => {
+    return {
+        StatusCode: 200,
+        Msg: "success"
+    };
+});
+import {RecommendProductsList} from "./RecommendProductsList"
+//新品推荐-列表
+Mock.mock(RegExp(url + "/getRecommendProductsList"), "get", p => {
+    let param = util.getQueryValue(p.url);
+    return {
+        success: true,
+        result: {
+            totalCount: RecommendProductsList.length,
+            items: RecommendProductsList.filter((t, index) => {
+                return (
+                    index >= param.SkipCount &&
+                    index < +param.SkipCount + +param.MaxResultCount
+                );
+            })
+        }
+    };
+});
+//添加编辑
+Mock.mock(RegExp(url + "/saveRecommendProducts"), "post", p => {
+    return {
+        StatusCode: 200,
+        Msg: "success"
+    };
+});
+//删除
+Mock.mock(RegExp(url + "/delRecommendProducts"), "post", p => {
     return {
         StatusCode: 200,
         Msg: "success"

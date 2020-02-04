@@ -73,11 +73,13 @@ import ClassificationOfKnowledge from "@/page/ClaimsManagement/ClassificationOfK
 import ContinuousClaims from "@/page/ClaimsManagement/ContinuousClaims";
 //   APP首页管理 APPIndexManagment
 import APPHomepageModule from "@/page/APPIndexManagment/APPHomepageModule";
+import APPConfig from "@/page/APPIndexManagment/AppConfig";
 import AutoguardHomepageModule from "@/page/APPIndexManagment/AutoguardHomepageModule";
 import ExhibitionTools from "@/page/APPIndexManagment/ExhibitionTools";
 import MyMessage from "@/page/APPIndexManagment/MyMessage";
 import NewProductRecommendation from "@/page/APPIndexManagment/NewProductRecommendation";
 import RecommendedProducts from "@/page/APPIndexManagment/RecommendedProducts";
+import RecommendedProductsDetail from "@/page/APPIndexManagment/RecommendedProductsDetail";
 import TopRecommendations from "@/page/APPIndexManagment/TopRecommendations";
 //   账户管理   AccountManagement
 import InsideStaffAccount from "@/page/AccountManagement/InsideStaffAccount";
@@ -620,7 +622,20 @@ const router = new Router({
         {
             path: "/autoguard_homepage_module",
             name: "autoguard_homepage_module",
-            component: AutoguardHomepageModule
+            component: AutoguardHomepageModule,
+            meta: {
+                title: "快保首页管理",
+                subTitle: "这是快保首页管理页面"
+            }
+        },
+        {
+            path: "/app_homepage_config",
+            name: "app_homepage_config",
+            component: APPConfig,
+            meta: {
+                title: "app首页配置",
+                subTitle: "这是app首页配置页面"
+            }
         },
         {
             path: "/exhibition_tools",
@@ -640,7 +655,20 @@ const router = new Router({
         {
             path: "/recommended_products",
             name: "recommended_products",
-            component: RecommendedProducts
+            component: RecommendedProducts,
+            meta: {
+                title: "保库管理",
+                subTitle: "这是保库管理页面"
+            }
+        },
+        {
+            path: "/recommended_products_detail",
+            name: "recommended_products_detail",
+            component: RecommendedProductsDetail,
+            meta: {
+                title: "产品特色管理",
+                subTitle: "这是产品特色管理页面"
+            }
         },
         {
             path: "/top_recommendations",

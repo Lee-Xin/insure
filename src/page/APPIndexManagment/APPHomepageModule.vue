@@ -4,12 +4,22 @@
       <div class="main-box">
         <!-- 手机模拟 -->
         <div class="simulation">
-          <div class="banner hasMask" @click="showMain('轮播图管理', 'banner',0)">轮播图管理</div>
+          <div class="banner hasMask" @click="showMain('轮播图管理', 'banner',0)">
+            <img :src="require('@/assets/img/banner.png')" />
+          </div>
           <ul>
-            <li class="hasMask" @click="showMain('热销热卖', 'selling',1)">热销热卖</li>
-            <li class="hasMask" @click="showMain('新品推荐', 'newProduct',2)">新品推荐</li>
+            <li class="hasMask iconImg" @click="showMain('热销热卖', 'selling',1)">
+              <img :src="require('@/assets/img/selling.png')" />
+              <div>热销热卖</div>
+            </li>
+            <li class="hasMask iconImg" @click="showMain('新品推荐', 'newProduct',2)">
+              <img :src="require('@/assets/img/newProduct.png')" />
+              <div>新品推荐</div>
+            </li>
           </ul>
-          <div class="hot-product hasMask" @click="showMain('热销产品', 'hotPro',3)">热销产品</div>
+          <div class="hot-product hasMask" @click="showMain('热销产品', 'hotPro',3)">
+            <img :src="require('@/assets/img/hotProduct.png')" />
+          </div>
         </div>
         <div class="right">
           <!-- 轮播图管理 -->
@@ -508,7 +518,6 @@ export default {
       data.id = this.id;
       data.type = this.type;
       data.category = this.category;
-      console.log(data);
       saveAppHome(data).then(res => {
         this.isShow = false;
         this.$message(res.data.Msg);
@@ -571,7 +580,18 @@ export default {
   border: 4px solid #717171;
   box-sizing: border-box;
   overflow-y: auto;
-  /* background: #eee; */
+  background: #fff;
+  img {
+    width: 100%;
+  }
+  .iconImg {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    img {
+      width: 30px;
+    }
+  }
 }
 .main-box .simulation::-webkit-scrollbar {
   display: none;
@@ -583,8 +603,10 @@ export default {
   display: none;
 }
 .simulation .banner {
-  width: 100%;
-  height: 100px;
+  img {
+    width: 100%;
+  }
+
   margin-bottom: 2px;
 }
 .simulation ul {

@@ -428,11 +428,36 @@ export const APPHomepageModuleDelete = obj =>
 export const APPHomepageModuleBanner = obj =>
     get("APPHomepageModuleBanner", obj);
 //app首页上架
-//发布
 export const sendAppHome = p => post("sendAppHome", p);
 //产品类型
 export const getProductList = p => get("getProductList", p);
 //保存app首页添加编辑
 export const saveAppHome = p => post("saveAppHome", p);
+
+// 快保 首页管理
+export const AutoguardHomepageModule = obj =>
+    get("AutoguardHomepageModule", obj);
+// 快保 首页管理-删除
+export const AutoguardHomepageModuleDelete = obj =>
+    posts("AutoguardHomepageModuleDelete", obj);
+// 快保 首页管理-轮播
+export const AutoguardHomepageModuleBanner = obj =>
+    get("AutoguardHomepageModuleBanner", obj);
+//快保首页上架
+
+export const sendAutoguardHome = p => post("sendAutoguardHome", p);
+
+//保存快保首页添加编辑
+export const saveAutoguardHome = p => post("saveAutoguardHome", p);
+//app首页配置
+export const saveAPPConfig = p => post("saveAPPConfig", p);
+//推荐产品
+//列表
+export const getRecommendProductsList = obj =>
+    get("getRecommendProductsList", obj);
+//添加编辑
+export const saveRecommendProducts = p => post("saveRecommendProducts", p);
+//删除
+export const delRecommendProducts = p => post("delRecommendProducts", p);
 
 //===============================================

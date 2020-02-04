@@ -7,7 +7,8 @@ const data = {
                 product: "产品1",
                 company: "公司1",
                 date: "2019-11-02",
-                description: "说明",
+                description: [{ name: 1, value: 11 }],
+                tags: [1],
                 type: 1, //1热销热卖，2新品推荐，3热销产品
                 category: 1 //1寿险，2医疗险，3重疾险，4意外险
             },
@@ -17,7 +18,8 @@ const data = {
                 company: "公司1",
                 title: "1333333",
                 date: "2019-11-02",
-                description: "说明22222222",
+                description: [{ name: 1, value: 11 }],
+                tags: [1],
                 type: 2,
                 category: 1
             },
@@ -27,7 +29,8 @@ const data = {
                 product: "产品1",
                 company: "公司1",
                 date: "2019-11-02",
-                description: "说明",
+                description: [{ name: 1, value: 11 }],
+                tags: [1],
                 type: 3,
                 category: 1
             },
@@ -37,7 +40,8 @@ const data = {
                 product: "产品1",
                 company: "公司1",
                 date: "2019-11-02",
-                description: "说明",
+                description: [{ name: 1, value: 11 }],
+                tags: [1],
                 type: 3,
                 category: 2
             },
@@ -47,7 +51,8 @@ const data = {
                 company: "公司1",
                 title: "1",
                 date: "2019-11-02",
-                description: "说明",
+                description: [{ name: 1, value: 11 }],
+                tags: [1],
                 type: 3,
                 category: 2
             },
@@ -57,7 +62,8 @@ const data = {
                 product: "产品1",
                 company: "公司1",
                 date: "2019-11-02",
-                description: "说明",
+                description: [{ name: 1, value: 11 }],
+                tags: [1],
                 type: 3,
                 category: 2
             }
