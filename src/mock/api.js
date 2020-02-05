@@ -404,15 +404,14 @@ export const editAvatar = p => post("/editAvatar", p);
 export const resetPassword = p => post("/resetPassword", p);
 
 // 我的消息
-export const MyMessage = obj => get("MyMessage", obj);
 // 我的消息搜索
-export const MyMessageSearch = obj => posts("MyMessageSearch", obj);
+export const MyMessageSearch = obj => get("MyMessageSearch", obj);
 // 我的消息-添加
-export const addMyMessage = obj => posts("addMyMessage", obj);
-// 我的消息-添加
-export const sendMyMessage = obj => posts("sendMyMessage", obj);
+export const addMyMessage = obj => post("addMyMessage", obj);
+// 我的消息-推送
+export const sendMyMessage = obj => post("sendMyMessage", obj);
 // 我的消息-删除
-export const addMyMessageDelete = obj => posts("addMyMessageDelete", obj);
+export const addMyMessageDelete = obj => post("addMyMessageDelete", obj);
 // 展业工具
 export const ExhibitionTools = obj => get("ExhibitionTools", obj);
 // 展业工具-搜索
@@ -461,7 +460,7 @@ export const saveRecommendProducts = p => post("saveRecommendProducts", p);
 export const delRecommendProducts = p => post("delRecommendProducts", p);
 //获取详情
 export const getRecommendProductsDetail = obj =>
-    get("RecommendProductsDetail", obj);
+    get("getRecommendProductsDetail", obj);
 //特色添加编辑
 export const saveRecommendProductsDetail = p =>
     post("saveRecommendProductsDetail", p);

@@ -1936,53 +1936,28 @@ Mock.mock(url + "/delyg", "post", function(param) {
 
 //
 // 我的消息
-//
-Mock.mock(RegExp(url + "/MyMessage/*"), "get", function(par) {
-    // par = qs.parse(par.body);
-    console.log(par);
-    if (MyMessage.length > 0) {
-        returnArray = {
-            StatusCode: 200,
-            Msg: "query success",
-            Data: MyMessage
-        };
-    } else {
-        returnArray = {
-            StatusCode: 200,
-            Msg: "暂无数据",
-            Data: MyMessage
-        };
-    }
-    return returnArray;
-});
+
 // 我的消息-搜索
-Mock.mock(url + "/MyMessageSearch", "post", function(par) {
-    console.log(par);
-    let formatPar = JSON.parse(par.body);
-    let tmp = MyMessage.filter(item => {
-        return item.date == formatPar.searchDate;
-    });
-    console.log(tmp);
-    if (tmp.length > 0) {
-        returnArray = {
-            StatusCode: 200,
-            Msg: "query success",
-            Data: tmp
-        };
-    } else {
-        returnArray = {
-            StatusCode: 200,
-            Msg: "暂无数据",
-            Data: tmp
-        };
-    }
-    return returnArray;
+import myMessage from './MyMessage'
+Mock.mock(RegExp(url + "/MyMessageSearch"), "get", function(p) {
+    let param = util.getQueryValue(p.url);
+    return {
+        success: true,
+        result: {
+            totalCount: myMessage.length,
+            items: myMessage.filter((t, index) => {
+                return (
+                    index >= param.SkipCount &&
+                    index < +param.SkipCount + +param.MaxResultCount
+                );
+            })
+        }
+    };
 });
-// 我的消息-添加
-Mock.mock(url + "/addMyMessage", "post", function(par) {
+// 我的消息-添加编辑
+Mock.mock(RegExp(url + "/addMyMessage"), "post", function(par) {
     let formatPar = JSON.parse(par.body);
-    console.log(formatPar);
-    MyMessage.push(formatPar);
+   
     returnArray = {
         StatusCode: 200,
         Msg: "query success",
@@ -1990,11 +1965,10 @@ Mock.mock(url + "/addMyMessage", "post", function(par) {
     };
     return returnArray;
 });
-// 我的消息-添加
-Mock.mock(url + "/sendMyMessage", "post", function(par) {
+// 我的消息-推送
+Mock.mock(RegExp(url + "/sendMyMessage"), "post", function(par) {
     let formatPar = JSON.parse(par.body);
-    console.log(formatPar);
-    MyMessage.push(formatPar);
+    
     returnArray = {
         StatusCode: 200,
         Msg: "query success",
@@ -2003,7 +1977,7 @@ Mock.mock(url + "/sendMyMessage", "post", function(par) {
     return returnArray;
 });
 // 我的消息-删除
-Mock.mock(url + "/addMyMessageDelete", "post", function(par) {
+Mock.mock(RegExp(url + "/addMyMessageDelete"), "post", function(par) {
     let formatPar = JSON.parse(par.body);
     console.log(formatPar);
     return {
@@ -3110,7 +3084,7 @@ Mock.mock(RegExp(url + "/delRecommendProducts"), "post", p => {
     };
 });
 //获取详情
-Mock.mock(RegExp(url + "/RecommendProductsDetail"), "get", p => {
+Mock.mock(RegExp(url + "/getRecommendProductsDetail"), "get", p => {
     let param = util.getQueryValue(p.url);
     return {
         success: true,

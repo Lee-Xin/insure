@@ -645,7 +645,11 @@ const router = new Router({
         {
             path: "/my_message",
             name: "my_message",
-            component: MyMessage
+            component: MyMessage,
+            meta: {
+                title: "我的消息",
+                subTitle: "这是我的消息页面"
+            }
         },
         {
             path: "/new_product_recommendation",
