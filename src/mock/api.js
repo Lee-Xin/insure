@@ -459,5 +459,13 @@ export const getRecommendProductsList = obj =>
 export const saveRecommendProducts = p => post("saveRecommendProducts", p);
 //删除
 export const delRecommendProducts = p => post("delRecommendProducts", p);
-
+//获取详情
+export const getRecommendProductsDetail = obj =>
+    get("RecommendProductsDetail", obj);
+//特色添加编辑
+export const saveRecommendProductsDetail = p =>
+    post("saveRecommendProductsDetail", p);
+//产品特色删除
+export const delRecommendProductsDetail = p =>
+    post("delRecommendProductsDetail", p);
 //===============================================

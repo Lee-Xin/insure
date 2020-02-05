@@ -3078,7 +3078,7 @@ Mock.mock(RegExp(url + "/saveAutoguardHome"), "post", p => {
         Msg: "success"
     };
 });
-import {RecommendProductsList} from "./RecommendProductsList"
+import {RecommendProductsList,RecommendProductsDetail} from "./RecommendProductsList"
 //新品推荐-列表
 Mock.mock(RegExp(url + "/getRecommendProductsList"), "get", p => {
     let param = util.getQueryValue(p.url);
@@ -3104,6 +3104,36 @@ Mock.mock(RegExp(url + "/saveRecommendProducts"), "post", p => {
 });
 //删除
 Mock.mock(RegExp(url + "/delRecommendProducts"), "post", p => {
+    return {
+        StatusCode: 200,
+        Msg: "success"
+    };
+});
+//获取详情
+Mock.mock(RegExp(url + "/RecommendProductsDetail"), "get", p => {
+    let param = util.getQueryValue(p.url);
+    return {
+        success: true,
+        result: {
+            totalCount: RecommendProductsDetail.length,
+            items: RecommendProductsDetail.filter((t, index) => {
+                return (
+                    index >= param.SkipCount &&
+                    index < +param.SkipCount + +param.MaxResultCount
+                );
+            })
+        }
+    };
+});
+//产品特色添加编辑
+Mock.mock(RegExp(url + "/saveRecommendProductsDetail"), "post", p => {
+    return {
+        StatusCode: 200,
+        Msg: "success"
+    };
+});
+//产品特色删除
+Mock.mock(RegExp(url + "/delRecommendProductsDetail"), "post", p => {
     return {
         StatusCode: 200,
         Msg: "success"

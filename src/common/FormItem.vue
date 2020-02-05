@@ -14,6 +14,19 @@
     >
       <component v-if="definedSlot" :is="definedSlot.component" :slot="definedSlot.name"></component>
     </el-input>
+    <el-input
+      class="form-item"
+      :class="{isError: errorText !== ''}"
+      v-model="computedValue"
+      v-if="type === 'textarea'"
+      type="textarea"
+      resize="none"
+      rows="6"
+      :placeholder="placeholder"
+      :disabled="disabled"
+    >
+      <component v-if="definedSlot" :is="definedSlot.component" :slot="definedSlot.name"></component>
+    </el-input>
     <el-select
       class="form-item"
       :class="{isError: errorText !== ''}"
@@ -98,7 +111,6 @@ export default {
   width: 100%;
   line-height: 36px;
   margin-bottom: 20px;
-  height: 36px;
   font-size: 14px;
   /deep/.el-input__icon {
     line-height: 36px;
@@ -120,6 +132,7 @@ export default {
   .el-cascader,
   .el-selecr,
   .el-input,
+  .el-textarea,
   .el-date-editor {
     width: auto;
     min-width: 100px;

@@ -1,130 +1,13 @@
 <template>
   <div>
-    <template v-if="mainToggle">
-      <div>
-        <div class="main-box">
-          <!-- 手机模拟 -->
-          <div class="simulation">
-            <ul>
-              <li v-for="(item, index) of tableData" :key="index">
-                <h4>{{item.name}}</h4>
-                <div class="desc">
-                  <p v-for="(item1, index1) of item.description" :key="index1">{{item1}}</p>
-                </div>
-                <div class="tags">
-                  <span v-for="(item3, index3) of item.tags" :key="index3">{{item3}}</span>
-                </div>
-              </li>
-            </ul>
-          </div>
-          <!-- 热销产品 -->
-          <div class="data-operating body-box">
-            <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
-              <el-tab-pane label="保库险种管理" name="one">
-                <div style="text-align: right; margin: 16px 0">
-                  <el-button type="warning" @click="hideMsak()" icon="el-icon-plus">新增险种</el-button>
-                </div>
-                <el-table
-                  :data="tableData"
-                  @current-change="currentChangeHandle"
-                  highlight-current-row
-                  border
-                  style="width: 100%"
-                >
-                  <el-table-column type="index" label="编号" width="50"></el-table-column>
-                  <el-table-column prop="name" label="产品名称"></el-table-column>
-                  <el-table-column prop="description" label="说明"></el-table-column>
-                  <el-table-column prop="tags" label="标签"></el-table-column>
-                  <el-table-column prop="num" label="排序号" width="100"></el-table-column>
-                  <el-table-column prop="createTime" label="创建时间"></el-table-column>
-                  <el-table-column label="操作">
-                    <template slot-scope="scope">
-                      <el-button @click="detailHandle(scope.row)" type="text" size="small">查看产品详情</el-button>
-                    </template>
-                  </el-table-column>
-                </el-table>
-              </el-tab-pane>
-            </el-tabs>
-          </div>
-        </div>
-
-        <div class="feng-pages">
-          <div>
-            <el-button type="danger" @click="deleteHandle">删除</el-button>
-            <el-button type="primary" @click="editHandle">编辑</el-button>
-          </div>
-          <el-pagination
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
-            :current-page="currentPage"
-            :page-sizes="[10, 20, 30, 40]"
-            :page-size="100"
-            layout="total, sizes, prev, pager, next, jumper"
-            :total="pagesTotal"
-          ></el-pagination>
-        </div>
-      </div>
-      <div class="mask" :hidden="isMask">
-        <div class="superInput">
-          <h4>产品</h4>
-          <div class="s-content">
-            <div class="sel-box">
-              <span>公司</span>
-              <el-select v-model="recAddPro.companyVal" placeholder="请选择">
-                <el-option
-                  v-for="item in recAddPro.company"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-            </div>
-            <div class="sel-box">
-              <span>产品</span>
-              <el-select v-model="recAddPro.productVal" placeholder="请选择">
-                <el-option
-                  v-for="item in recAddPro.product"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-            </div>
-            <el-input v-model="recAddPro.sort" placeholder="请输入排序">
-              <template slot="prepend">排序</template>
-            </el-input>
-            <el-input v-model="recAddPro.link" placeholder="请输入">
-              <template slot="prepend">链接</template>
-            </el-input>
-            <div class="input-group">
-              <el-input v-model="recAddPro.title1" placeholder="标题名称"></el-input>
-              <el-input v-model="recAddPro.para1" placeholder="详情参数"></el-input>
-              <el-input v-model="recAddPro.title2" placeholder="标题名称"></el-input>
-              <el-input v-model="recAddPro.para2" placeholder="详情参数"></el-input>
-              <el-input v-model="recAddPro.title3" placeholder="标题名称"></el-input>
-              <el-input v-model="recAddPro.para3" placeholder="详情参数"></el-input>
-              <el-input v-model="recAddPro.title4" placeholder="标题名称"></el-input>
-              <el-input v-model="recAddPro.para4" placeholder="详情参数"></el-input>
-              <el-input v-model="recAddPro.title5" placeholder="标题名称"></el-input>
-              <el-input v-model="recAddPro.title6" placeholder="标题名称"></el-input>
-              <el-input v-model="recAddPro.title7" placeholder="标题名称"></el-input>
-            </div>
-            <div class="btn-group">
-              <el-button @click="hideMsak">取消</el-button>
-              <el-button type="primary" @click="save">确认</el-button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </template>
-    <template v-else>
+    <template>
       <div>
         <div class="main-box">
           <!-- 手机模拟 -->
           <div class="simulation detail-pages">
             <h4>产品特色</h4>
             <ul>
-              <li v-for="(item, index) of detailData" :key="index">
+              <li v-for="(item, index) of tableData" :key="index">
                 <h4>{{item.title}}</h4>
                 <p>{{item.description}}</p>
               </li>
@@ -132,13 +15,13 @@
           </div>
           <!-- 热销产品 -->
           <div class="data-operating body-box">
-            <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+            <el-tabs v-model="activeName" type="card">
               <el-tab-pane label="产品特色" name="one">
                 <div style="text-align: right; margin: 16px 0">
-                  <el-button type="success" @click="hideMsak()" icon="el-icon-plus">新增产品特色</el-button>
+                  <el-button type="success" @click="addDiaolog(1)" icon="el-icon-plus">新增产品特色</el-button>
                 </div>
                 <el-table
-                  :data="detailData"
+                  :data="tableData"
                   @current-change="currentChangeHandle"
                   highlight-current-row
                   border
@@ -150,310 +33,216 @@
                 </el-table>
               </el-tab-pane>
             </el-tabs>
-          </div>
-        </div>
-
-        <div class="feng-pages">
-          <div>
-            <el-button type="danger" @click="deleteHandle">删除</el-button>
-            <el-button type="primary" @click="editHandle">编辑</el-button>
-            <el-button type="primary" @click="backHandle">返回</el-button>
-          </div>
-          <el-pagination
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
-            :current-page="currentPage"
-            :page-sizes="[10, 20, 30, 40]"
-            :page-size="100"
-            layout="total, sizes, prev, pager, next, jumper"
-            :total="pagesTotal"
-          ></el-pagination>
-        </div>
-      </div>
-      <div class="mask" :hidden="isMask">
-        <div class="superInput">
-          <h4>产品</h4>
-          <div class="s-content">
-            <el-input v-model="detailAdd.sort" placeholder="请输入排序">
-              <template slot="prepend">排序</template>
-            </el-input>
-            <el-input v-model="detailAdd.title" placeholder="请输入标题名称"></el-input>
-            <el-input type="textarea" :rows="2" placeholder="请输入说明" v-model="detailAdd.description"></el-input>
-            <div class="btn-group">
-              <el-button @click="hideMsak">取消</el-button>
-              <el-button type="primary" @click="save">确认</el-button>
+            <div class="feng-pages">
+              <div class="block">
+                <div>
+                  <el-button
+                    @click="dialogVisible=true"
+                    type="danger"
+                    :disabled="isDisabledForm.del"
+                  >删除</el-button>
+                  <el-button
+                    type="primary"
+                    @click="addDiaolog(2)"
+                    :disabled="isDisabledForm.edit"
+                  >编辑</el-button>
+                  <el-button type="primary" @click="$router.go(-1)">返回</el-button>
+                </div>
+                <el-pagination
+                  @size-change="handleSizeChange"
+                  @current-change="handleCurrentChange"
+                  :current-page="currentPage"
+                  :page-sizes="[10, 20, 30, 40]"
+                  :page-size="100"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  :total="pagesTotal"
+                ></el-pagination>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </template>
+    <el-dialog title="删除" :visible.sync="dialogVisible" width="400px">
+      <div style="text-align:left">
+        <span>请确认删除此项数据。</span>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="del()">确定</el-button>
+      </span>
+    </el-dialog>
+    <el-dialog :title="title" :visible.sync="isShow">
+      <el-row class="s-content">
+        <el-col v-for="(item, index) in addForm" :key="index">
+          <form-item
+            :type="item.type"
+            :label="item.label"
+            :options="item.options"
+            v-model="item.value"
+            :required="item.required"
+            :placeholder="item.placeholder"
+            :hide="item.hide"
+            :disabled="item.disabled"
+          ></form-item>
+        </el-col>
+      </el-row>
+
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="isShow=false">取消</el-button>
+        <el-button type="primary" @click="save">确认</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import {
-  APPHomepageModule,
-  APPHomepageModuleDelete,
-  APPHomepageModuleBanner
-} from "@/request/api";
+  getRecommendProductsDetail,
+  saveRecommendProductsDetail,
+  delRecommendProductsDetail
+} from "@/mock/api";
 
+import FormItem from "@/common/FormItem";
 export default {
   name: "RecommendedProductsDetail",
   data() {
     return {
-      title_f: "这是保库管理",
-      activeName: "one",
-      isMask: true,
-      // 分页总数
-      pagesTotal: 0,
-      tableData: [
-        {
-          id: 1,
-          name: "百年康盛保终身重大疾病保险",
-          description: [
-            "承保年龄0-60周岁",
-            "交费期间,3年交、5年交、10年交、15年交、20年、30年",
-            "保险期间终身",
-            "最低保额10万"
-          ],
-          tags: ["重疾险", "多次赔"],
-          num: 1,
-          createTime: "2019-11-14"
+      addForm: {
+        order: {
+          label: "排序",
+          value: 0,
+          type: "input",
+          placeholder: "请输入序号",
+          required: false
         },
-        {
-          id: 2,
-          name: "百年康盛保终身重大疾病保险",
-          description: [
-            "承保年龄0-60周岁",
-            "交费期间,3年交、5年交、10年交、15年交、20年、30年",
-            "保险期间终身",
-            "最低保额10万"
-          ],
-          tags: ["重疾险", "多次赔"],
-          num: 1,
-          createTime: "2019-11-14"
+        title: {
+          label: "标题",
+          value: "",
+          type: "input",
+          placeholder: "请输入",
+          required: false
         },
-        {
-          id: 3,
-          name: "百年康盛保终身重大疾病保险",
-          description: [
-            "承保年龄0-60周岁",
-            "交费期间,3年交、5年交、10年交、15年交、20年、30年",
-            "保险期间终身",
-            "最低保额10万"
-          ],
-          tags: ["重疾险", "多次赔"],
-          num: 1,
-          createTime: "2019-11-14"
-        },
-        {
-          id: 3,
-          name: "百年康盛保终身重大疾病保险",
-          description: [
-            "承保年龄0-60周岁",
-            "交费期间,3年交、5年交、10年交、15年交、20年、30年",
-            "保险期间终身",
-            "最低保额10万"
-          ],
-          tags: ["重疾险", "多次赔"],
-          num: 1,
-          createTime: "2019-11-14"
+        description: {
+          label: "说明",
+          value: "",
+          type: "textarea",
+          placeholder: "请输入",
+          required: false
         }
-      ],
-      hotTableData: [],
-      bannerTableData: [],
-      // 导航分类唯一标识
-      type: "one",
-      // 添加
-      recAddPro: {
-        company: [
-          {
-            value: "黄金糕",
-            label: "黄金糕"
-          },
-          {
-            value: "双皮奶",
-            label: "双皮奶"
-          }
-        ],
-        companyVal: "",
-        product: [
-          {
-            value: "龙须面",
-            label: "龙须面"
-          },
-          {
-            value: "北京烤鸭",
-            label: "北京烤鸭"
-          }
-        ],
-        productVal: "",
-        sort: "",
-        link: "",
-        title1: "",
-        title2: "",
-        title3: "",
-        title4: "",
-        title5: "",
-        title6: "",
-        title7: "",
-        para1: "",
-        para2: "",
-        para3: ""
       },
-      // 删除，编辑
-      // 选中行
-      selectTr: null,
-      // 分页
+      isDisabledForm: { del: true, edit: true, send: true, notSend: true },
+      isShowForm: { send: true },
+      dialogVisible: false,
+      id: "",
+      isShow: false,
+      pagesTotal: 0,
       currentPage: 1,
       pages: {
-        page: 1,
-        pageSize: 10
+        SkipCount: 0, //开始的索引
+        MaxResultCount: 10
       },
-      // 显示产品详情
-      mainToggle: true,
-      // 详情页数据
-      detailData: [
-        {
-          sort: 1,
-          title: "轻症赔付比例逐渐增高",
-          description:
-            "35种轻症赔付3次第一次35%保额赔付，第二次40%保额赔付，第三次45%保额赔付"
-        },
-        {
-          sort: 2,
-          title: "中症赔付比例高",
-          description: "20种中症赔付2次，每次60%赔付"
-        },
-        {
-          sort: 2,
-          title: "中症赔付比例高",
-          description:
-            "100种重症5次赔付，分5组每次赔付基本保额，癌症单列，首次患恶性肿瘤赔付基本保额，首次恶性肿瘤确诊之日起间隔5年后，不论恶性肿瘤复发、转移、持续、新发；再次发生恶性肿瘤，给付恶性肿瘤二次基本保额赔付，二次恶性肿瘤确诊之日起间隔5年后，不论恶性肿瘤复发、转移、持续、新发；再次发生恶性肿瘤，给付恶性肿瘤三次基本保额赔付。%赔付"
-        },
-        {
-          sort: 2,
-          title: "中症赔付比例高",
-          description:
-            "100种重症5次赔付，分5组每次赔付基本保额，癌症单列，首次患恶性肿瘤赔付基本保额，首次恶性肿瘤确诊之日起间隔5年后，不论恶性肿瘤复发、转移、持续、新发；再次发生恶性肿瘤，给付恶性肿瘤二次基本保额赔付，二次恶性肿瘤确诊之日起间隔5年后，不论恶性肿瘤复发、转移、持续、新发；再次发生恶性肿瘤，给付恶性肿瘤三次基本保额赔付。%赔付"
-        },
-        {
-          sort: 2,
-          title: "中症赔付比例高",
-          description: "20种中症赔付2次，每次60%赔付"
-        }
-      ],
-      // 详情页添加
-      detailAdd: {
-        sort: "",
-        title: "",
-        description: ""
-      }
+      clickRow: {},
+      title: "",
+      activeName: "one",
+      tableData: []
     };
+  },
+  components: { FormItem },
+  watch: {
+    clickRow(row) {
+      if (row.id !== undefined && row.id !== "" && row.id !== null) {
+        this.isDisabledForm = {
+          del: false,
+          edit: false,
+          send: false,
+          notSend: false
+        };
+        this.isShowForm.send = row.status == 2 ? true : false;
+      } else {
+        this.isDisabledForm = {
+          del: true,
+          edit: true,
+          send: true,
+          notSend: true
+        };
+        this.isShowForm = { send: true };
+      }
+    }
   },
   created: function() {
     this.getAllData();
   },
   methods: {
-    getAllData(key) {
-      switch (key) {
-        case "hotPro":
-          APPHomepageModule({ type: this.type, ...this.pages }).then(res => {
-            this.hotTableData = res.Data;
-            this.pagesTotal = res.Data.total;
-          });
-          break;
-        case "banner":
-        default:
-          APPHomepageModuleBanner({ type: this.type, ...this.pages }).then(
-            res => {
-              this.bannerTableData = res.Data.data;
-              this.pagesTotal = res.Data.total;
-            }
-          );
-      }
-    },
-    handleClick() {
-      //
-    },
-    // 导航切换
-    detailHandle(tab, event) {
-      console.log(tab, event);
-      this.mainToggle = !this.mainToggle;
-    },
-    // 返回
-    backHandle() {
-      this.mainToggle = !this.mainToggle;
+    getAllData() {
+      getRecommendProductsDetail({
+        SkipCount: this.pages.SkipCount,
+        MaxResultCount: this.pages.MaxResultCount
+      }).then(res => {
+        this.tableData = res.result.items;
+        this.pagesTotal = res.result.totalCount;
+      });
     },
     currentChangeHandle(obj) {
-      this.selectTr = obj;
+      this.clickRow = obj || {};
     },
     // 删除
-    deleteHandle() {
-      if (!this.selectTr) {
-        this.$message("请选择一项");
-        return;
-      }
-      APPHomepageModuleDelete({ type: this.type, id: this.selectTr.id }).then(
-        res => {
-          console.log(res);
-          this.$message(res.Msg);
-          this.hotTableData = res.Data;
-        }
-      );
+    del() {
+      delRecommendProductsDetail({ id: this.clickRow.id }).then(res => {
+        this.$message(res.data.Msg);
+        this.dialogVisible = false;
+        this.getAllData();
+      });
     },
     // 编辑
-    editHandle() {
-      if (!this.selectTr) {
-        this.$message("请选择一项");
-        return;
+    addDiaolog(n) {
+      for (const key in this.addForm) {
+        if (this.addForm.hasOwnProperty(key)) {
+          const element = this.addForm[key];
+
+          element.value = n == 1 ? "" : this.clickRow[key];
+        }
       }
-      console.log(this.selectTr);
-      switch (this.plate) {
-        case "banner":
-          console.log("banner");
-          break;
-        case "hotPro":
-          this.mask.hot = !this.mask.hot;
-          console.log("hotPro");
-          break;
-        case "selling":
-          console.log("selling");
-          break;
-        case "newProduct":
-          console.log("newProduct");
-          break;
-      }
+      this.addForm.title.disabled = n == 1 ? false : true;
+      this.title = n == 1 ? "添加特色" : "编辑特色";
+      this.isShow = true;
+      this.id = n == 1 ? "" : this.clickRow.id;
+    },
+    save() {
+      let data = {};
+      Object.keys(this.addForm).map(key => {
+        data[key] = this.addForm[key];
+      });
+
+      saveRecommendProductsDetail(data).then(res => {
+        this.isShow = false;
+        this.$message(res.data.Msg);
+      });
     },
     // 分页等
     handleSizeChange(val) {
-      this.pages.pageSize = val;
+      this.pages.SkipCount = 0;
+      this.pages.MaxResultCount = val;
       this.getAllData();
     },
     handleCurrentChange(val) {
-      this.pages.page = val;
+      this.pages.SkipCount = (val - 1) * this.pages.MaxResultCount;
       this.getAllData();
-    },
-    // 新增,显示
-    hideMsak() {
-      this.isMask = !this.isMask;
-    },
-    save() {
-      //
     }
   }
 };
 </script>
 
-<style scoped>
+<style scoped lang=less>
 .body-box {
   font-size: 16px;
   width: 100%;
   border-top: 4px solid #2c8cf0;
   border-radius: 5px 5px 0 0;
-  padding: 20px 0;
+  padding: 10px;
   box-sizing: border-box;
   text-align: left;
+  background: #fff;
 }
 .body-box h3 {
   font-weight: normal;
@@ -544,9 +333,27 @@ export default {
   flex-grow: 1;
 }
 .feng-pages {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 30px;
+  height: 80px;
+  line-height: normal !important;
+
+  text-align: center;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.28);
+
+  .block {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: right;
+    background-color: #fff;
+  }
+
+  .center {
+    justify-content: center !important;
+  }
 }
 
 .mask {
