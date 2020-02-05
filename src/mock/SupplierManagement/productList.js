@@ -1,15 +1,23 @@
 const productList = [
-    {'id':1,'supplier_name':'安盛天平财产保险股份有限公司','productName':'光大永明海外专项就医综合医疗保险（2018版）','product_niceName':'','supplier_niceName':'光大永明','main_risks_attached':'全部',
+    {'id':1,'supplier_name':'安盛天平财产保险股份有限公司1','productName':'光大永明海外专项就医综合医疗保险（2018版）','product_niceName':'','supplier_niceName':'光大永明','main_risks_attached':'全部',
     'type': '/全部/全部','product_code':'','pay_way':'','zhonganCode':'','nature_product':'','insured_age':'0-60岁','During_period_fee':'1年交','during_period_insurance':'1年','sales_status':'不限'},
-    {'id':2,'supplier_name':'安盛天平财产保险股份有限公司','productName':'光大永明海外专项就医综合医疗保险（2018版）','supplier_niceName':'光大永明','main_risks_attached':'全部',
+    {'id':2,'supplier_name':'安盛天平财产保险股份有限公司2','productName':'光大永明海外专项就医综合医疗保险（2018版）','supplier_niceName':'光大永明','main_risks_attached':'全部',
         'type': '/全部/定期寿险','insured_age':'0-60岁','During_period_fee':'1年交','during_period_insurance':'1年','sales_status':'在售'},
-    {'id':3,'supplier_name':'安盛天平财产保险股份有限公司','productName':'光大永明海外专项就医综合医疗保险（2018版）','supplier_niceName':'泰康养老','main_risks_attached':'全部',
+    {'id':3,'supplier_name':'安盛天平财产保险股份有限公司3','productName':'光大永明海外专项就医综合医疗保险（2018版）','supplier_niceName':'泰康养老','main_risks_attached':'全部',
         'type': '/寿险/全部','insured_age':'0-60岁','During_period_fee':'1年交','during_period_insurance':'1年','sales_status':'停售'},
-    {'id':4,'supplier_name':'安盛天平财产保险股份有限公司','productName':'光大永明海外专项就医综合医疗保险（2018版）','supplier_niceName':'光大永明','main_risks_attached':'全部',
+    {'id':4,'supplier_name':'安盛天平财产保险股份有限公司4','productName':'光大永明海外专项就医综合医疗保险（2018版）','supplier_niceName':'光大永明','main_risks_attached':'全部',
         'type': '/寿险/定期寿险','insured_age':'0-60岁','During_period_fee':'1年交','during_period_insurance':'1年','sales_status':'在售'},
-    {'id':5,'supplier_name':'安盛天平财产保险股份有限公司','productName':'光大永明海外专项就医综合医疗保险（2018版）','supplier_niceName':'百年人寿','main_risks_attached':'全部',
+    {'id':5,'supplier_name':'安盛天平财产保险股份有限公司5','productName':'光大永明海外专项就医综合医疗保险（2018版）','supplier_niceName':'百年人寿','main_risks_attached':'全部',
         'type': '/','insured_age':'0-60岁','During_period_fee':'1年交','during_period_insurance':'1年','sales_status':'不限'},
-    {'id':6,'supplier_name':'安盛天平财产保险股份有限公司','productName':'光大永明海外专项就医综合医疗保险（2018版）','supplier_niceName':'光大永明','main_risks_attached':'全部',
+    {'id':6,'supplier_name':'安盛天平财产保险股份有限公司6','productName':'光大永明海外专项就医综合医疗保险（2018版）','supplier_niceName':'光大永明','main_risks_attached':'全部',
+        'type': '/','insured_age':'0-60岁','During_period_fee':'1年交','during_period_insurance':'1年','sales_status':'在售'},
+    {'id':7,'supplier_name':'安盛天平财产保险股份有限公司7','productName':'光大永明海外专项就医综合医疗保险（2018版）','supplier_niceName':'光大永明','main_risks_attached':'全部',
+        'type': '/','insured_age':'0-60岁','During_period_fee':'1年交','during_period_insurance':'1年','sales_status':'在售'},
+    {'id':8,'supplier_name':'安盛天平财产保险股份有限公司8','productName':'光大永明海外专项就医综合医疗保险（2018版）','supplier_niceName':'光大永明','main_risks_attached':'全部',
+        'type': '/','insured_age':'0-60岁','During_period_fee':'1年交','during_period_insurance':'1年','sales_status':'在售'},
+    {'id':9,'supplier_name':'安盛天平财产保险股份有限公司9','productName':'光大永明海外专项就医综合医疗保险（2018版）','supplier_niceName':'光大永明','main_risks_attached':'全部',
+        'type': '/','insured_age':'0-60岁','During_period_fee':'1年交','during_period_insurance':'1年','sales_status':'在售'},
+    {'id':10,'supplier_name':'安盛天平财产保险股份有限公司10','productName':'光大永明海外专项就医综合医疗保险（2018版）','supplier_niceName':'光大永明','main_risks_attached':'全部',
         'type': '/','insured_age':'0-60岁','During_period_fee':'1年交','during_period_insurance':'1年','sales_status':'在售'},
 ];
 const productListSearch = {
@@ -31,7 +39,34 @@ const productListSearch = {
         'second_type':
             ['全部','定期寿险']},
     'sales_status': ['不限','在售','停售'],
-    'nature_product': ['单列产品','正常产品']
+    'nature_product': ['单列产品','正常产品'],
+    'product_type': [{
+        id: 1,
+        name: '寿险',
+        children: [{
+            id: 4,
+            name: '-------- 新寿险'
+        }]
+    }, {
+        id: 2,
+        name: '寿险2',
+        children: [
+            {
+                id: 3,
+                name: '-------- 新寿险2'
+            }
+        ]
+    }],
+    'product_type_data': [
+        {
+            label: '寿险 --------- 新寿险',
+            value: 0
+        },
+        {
+            label: '寿险2 --------- 新寿险2',
+            value: 1
+        }
+    ]
 }
 export default {
     productList,

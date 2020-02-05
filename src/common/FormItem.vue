@@ -125,6 +125,7 @@ export default {
     border: 1px solid #bebebe;
     border-right-width: 0;
     cursor: default;
+    white-space: nowrap;
     &.required {
       color: #ef8411;
     }
@@ -142,7 +143,6 @@ export default {
     flex-grow: 1;
     &.el-input-group {
       vertical-align: middle;
-      margin-top: -3px;
     }
     &.isError {
       .el-input__inner {
@@ -151,6 +151,9 @@ export default {
       .el-select {
         border-color: #ee3f14;
       }
+    }
+    .el-input-group__append {
+        line-height: 34px;
     }
   }
   .error {

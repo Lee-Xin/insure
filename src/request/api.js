@@ -23,9 +23,14 @@ export const apiSupplierListGetById = p => getUrl('/SupplierService/GetById', p)
 export const apiSupplierAdd = p => post('/SupplierService/Create', p);
 //---产品列表
 export const apiProductList = () => get('/product_list');
+export const apiGetProductType = () => get('/product_type_data');
 export const apiProductListSearch = p => post('/product_list_search',p);
 export const apiProductListPageInation = p => getUrl('/product_list_pageInation', p);
 export const apiProductListAdd = p => post('/product_list_add', p);
+export const apiProductTypeTree = () => get('/product_type');
+export const apiAddProductType = p => post('/product_type_add', p);
+export const apiDeleteProductType = p => post('/product_type_delete', p);
+export const apiEditProductType = p => post('/product_type_edit', p);
 //----------------上游折标-----------------
 //---上游折标search参数
 export const apiUpstreamFoldingSearch = p => getUrl('/upstream_folding', p);

@@ -82,6 +82,7 @@
             },
             confirmAdd(row) {
                 this.$emit('importData', row);
+                this.cancel_popup();
             }
         }
     }
