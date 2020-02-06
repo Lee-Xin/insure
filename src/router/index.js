@@ -212,7 +212,11 @@ const router = new Router({
         {
             path: "/continuation_rate_bonus",
             name: "continuation_rate_bonus",
-            component: ContinuationRateBonus
+            component: ContinuationRateBonus,
+            meta: {
+                title: '继续率奖金',
+                subTitle: '这是继续率奖金页面'
+            }
         },
         {
             path: "/new_incentives",
