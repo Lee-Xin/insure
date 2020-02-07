@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="productList">
     <page-hr></page-hr>
-    <div>
-      <product-list-search @showAddProduct="isAddProduct" v-if="showSearch"></product-list-search>
-      <new-product @changeSearch="showSearchBox" v-if="!showSearch"></new-product>
+    <div class="content_box">
+      <span class="content_title_1">快速搜索</span>
+      <product-list-search></product-list-search>
     </div>
   </div>
 </template>
@@ -11,30 +11,39 @@
 <script>
     import PageHr from "@/common/PageHr";
     import ProductListSearch from "@/page/SupplierManagement/component/ProductListSearch";
-    import NewProduct from "@/page/SupplierManagement/page/NewProduct";
 
     export default {
         name: "ProductList",
         data() {
             return {
                 title: '产品列表',
-                title_f: '这是产品列表页面',
-                showSearch: true
+                title_f: '这是产品列表页面'
             }
         },
-        components: {NewProduct, ProductListSearch, PageHr},
-        methods: {
-            isAddProduct () {
-                this.showSearch = false
-            },
-            showSearchBox(){
-                // window.console.log('afaesgf')
-                this.showSearch = true
-            }
-        }
+        components: {ProductListSearch, PageHr}
     }
 </script>
 
 <style scoped>
-
+  .productList {
+    height: 100%;
+    background-color: #fff;
+  }
+  .content_box {
+    width: 100%;
+    height: 100%;
+    padding: 0 16px;
+    box-sizing: border-box;
+  }
+  .content_title_1 {
+    width: 100%;
+    height: 18px;
+    display: block;
+    line-height: 18px;
+    font-size: 18px;
+    color: #ef8412;
+    text-align: left;
+    padding: 0 8px;
+    margin: 20px 0;
+  }
 </style>

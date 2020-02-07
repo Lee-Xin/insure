@@ -166,40 +166,33 @@ Mock.mock(url + "/supplier_add", "post", param => {
 //-------------------------end------
 
 //------产品搜索的选项
-Mock.mock(RegExp(url+'/product_list'), "get", () => {
+Mock.mock(RegExp(url + '/product_list'), "get", () => {
     returnArray = {
-        StatusCode: 200,
-        Msg: "query success",
-        Data: [{label:'产品1',value:1}]
+        success: true,
+        result: {
+            totalCount: ProductList.productList.length,
+            items: ProductList.productList
+        }
+    };
+    return returnArray;
+});
+Mock.mock(RegExp(url + '/product_type_data'), "get", () => {
+    returnArray = {
+        success: true,
+        result: {
+            totalCount: ProductList.productListSearch.product_type_data.length,
+            items: ProductList.productListSearch.product_type_data
+        }
     };
     return returnArray;
 });
 //产品查询
 Mock.mock(url + "/product_list_search", "post", function(param) {
-    param = qs.parse(param.body);
-    let newParam = {};
-    // window.console.log(param)
-    for (let item in param) {
-        if (param[item] !== "") {
-            newParam[item] = param[item];
-        }
-    }
-    // window.console.log(newParam);
-    returnArray["Data"] = [];
-    ProductList.productList.forEach(item => {
-        let judge = true;
-        for (let p in newParam) {
-            if (item[p] !== newParam[p]) {
-                judge = false;
-                break;
-            }
-        }
-        if (judge) {
-            returnArray["StatusCode"] = 200;
-            returnArray["Msg"] = "查询成功";
-            returnArray["Data"].push(item);
-        }
-    });
+    returnArray = {
+        StatusCode: 200,
+        Msg: "query success",
+        Data: ProductList.productListSearch
+    };
     return returnArray;
 });
 Mock.mock(RegExp(url + "/product_list_pageInation/*"), "get", options => {
@@ -2112,7 +2105,7 @@ Mock.mock(RegExp(url + "/sendAutoguardHome"), 'post' , function(par){
 // Autoguard首页管理-删除
 // 热销产品
 Mock.mock(RegExp(url + "/AutoguardHomepageModuleDelete/*"), "post", function(par) {
-    
+
     return {
         StatusCode: 200,
         Msg: "删除成功",
@@ -2120,7 +2113,7 @@ Mock.mock(RegExp(url + "/AutoguardHomepageModuleDelete/*"), "post", function(par
 });
 //app首页配置
 Mock.mock(RegExp(url + "/saveAPPConfig"), "post", function(par) {
-    
+
     return {
         StatusCode: 200,
         Msg: "success",
@@ -2142,7 +2135,7 @@ Mock.mock(RegExp(url + "/AutoguardHomepageModuleBanner/*"), "get", function(p) {
             })
         }
     };
-    
+
 });
 // Autoguard首页管理
 Mock.mock(RegExp(url + "/AutoguardHomepageModule/*"), "get", function(p) {
@@ -2160,7 +2153,7 @@ Mock.mock(RegExp(url + "/AutoguardHomepageModule/*"), "get", function(p) {
             items
         }
     };
-   
+
 });
 //获取险种   机构   供应商  机构类型 保单状态
 

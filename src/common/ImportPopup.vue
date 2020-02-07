@@ -82,6 +82,7 @@
             },
             confirmAdd(row) {
                 this.$emit('importData', row);
+                this.cancel_popup();
             }
         }
     }
@@ -139,7 +140,7 @@
         width: 100%;
         padding: 0 20px;
         box-sizing: border-box;
-        height: calc(100% - 170px);
+        height: calc(100% - 280px);
         overflow: hidden;
     }
 
