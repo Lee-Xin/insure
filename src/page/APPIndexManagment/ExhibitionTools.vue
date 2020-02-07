@@ -1,29 +1,37 @@
 <template>
   <div>
-    <main-title :title="title" :title_f="title_f"></main-title>
     <div class="body-box">
-      <h3>快速搜索</h3>
-      <div class="date-select">
-        供应商
-        <el-select v-model="supplierVal" placeholder="请选择" style="margin-right: 30px">
-          <el-option
-            v-for="item in supplier"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          ></el-option>
-        </el-select>类型
-        <el-select v-model="typeVal" placeholder="请选择">
-          <el-option v-for="item in type" :key="item.value" :label="item.label" :value="item.value"></el-option>
-        </el-select>
-      </div>
-      <div class="btn-group" style="margin-bottom: 20px">
-        <el-button type="warning" icon="el-icon-plus" @click="addMsg">新增</el-button>
-        <el-button type="primary" icon="el-icon-search" @click="searchHandle">搜索</el-button>
+      <h3 style="margin-bottom:20px">快速搜索</h3>
+      <el-form ref="form" :model="form" class="search_form">
+        <el-form-item>
+          <div class="cell_before">选择供应商</div>
+          <el-select v-model="form.supplier" placeholder="请选择保险公司" clearable filterable>
+            <el-option
+              v-for="item in supplierList"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+
+        <el-form-item>
+          <div class="cell_before">类型</div>
+
+          <el-select v-model="form.type" placeholder="请选择" clearable filterable>
+            <el-option v-for="item in typeList" :key="item.id" :label="item.name" :value="item.id"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="handleQuery">搜索</el-button>
+        </el-form-item>
+      </el-form>
+      <div style="text-align:right;margin:20px 0;">
+        <el-button type="primary" @click="addDiaolog(1)">添加</el-button>
       </div>
       <el-table
         :data="tableData"
-        @current-change="selectOption"
+        @current-change="handleClick"
         highlight-current-row
         border
         style="width: 100%"
@@ -33,334 +41,344 @@
         <el-table-column prop="type" label="类型"></el-table-column>
         <el-table-column prop="remarks" label="备注"></el-table-column>
       </el-table>
-
-      <div class="feng-pages">
-        <div>
-          <el-button type="danger" @click="deleteHandle">删除</el-button>
-          <el-button type="primary" @click="editHandle">编辑</el-button>
-          <el-button type="primary" @click="viewHandle">查看</el-button>
-        </div>
-        <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="currentPage"
-          :page-sizes="[10, 20, 30, 40]"
-          :page-size="100"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="40"
-        ></el-pagination>
-      </div>
-
-      <div class="mask" :hidden="isMask">
-        <div class="masks"></div>
-        <div class="superInput">
-          <h4>展业工具</h4>
-          <div class="s-content">
-            <div>
-              <span style="color: red">*类型</span>
-              <el-select v-model="newType" placeholder="请选择">
-                <el-option
-                  v-for="item in type"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-            </div>
-            <div>
-              <span>供应商</span>
-              <el-select v-model="newSupplier" placeholder="请选择">
-                <el-option
-                  v-for="item in supplier"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-            </div>
-            <div>
-              <span>线上线下</span>
-              <el-select v-model="newOnline" placeholder="请选择">
-                <el-option
-                  v-for="item in supplier"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-            </div>
-            <div>
-              <span>划款顺序</span>
-              <el-select v-model="newOrder" placeholder="请选择">
-                <el-option
-                  v-for="item in supplier"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-            </div>
-            <div>
-              <span>添加列</span>
-              <el-tag
-                :key="tag"
-                v-for="tag in dynamicTags"
-                closable
-                :disable-transitions="false"
-                @close="handleClose(tag)"
-              >{{tag}}</el-tag>
-              <el-input
-                class="input-new-tag"
-                v-if="inputVisible"
-                v-model="inputValue"
-                ref="saveTagInput"
-                size="small"
-                @keyup.enter.native="handleInputConfirm"
-                @blur="handleInputConfirm"
-              ></el-input>
-              <el-button v-else class="button-new-tag" size="small" @click="showInput">+ 新增</el-button>
-            </div>
-            <div>
-              <span>行数</span>
-              <el-input v-model="rowsVal" type="number" min="1" placeholder></el-input>
-              <el-button type="primary" style="margin-left: 20px" @click="addRow">确定</el-button>
-            </div>
-            <div class="expansion">
-              <el-table :data="newTable" border style="width: 100%">
-                <el-table-column v-for="(item, index) of dynamicTags" :key="index" :label="item" >
-                  <template>
-                    <el-input
-                      type="textarea"
-                      autosize
-                      placeholder="请输入内容"
-                      v-model="newTableInput" style="heigth: 33px">
-                    </el-input>
-                  </template>
-                </el-table-column>
-              </el-table>
-            </div>
-            <div>
-              <el-input placeholder v-model="addMessage.content" class="colorRed">
-                <template slot="prepend">备注</template>
-              </el-input>
-            </div>
-            <div class="btn-group">
-              <el-button @click="addMsg">取消</el-button>
-              <el-button type="primary" @click="save">确认</el-button>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
+    <page-ination @changeSize="changeSize" @changeCurrentPage="changeCurrentPage" :total="totalNum">
+      <div>
+        <el-button @click="dialogVisible=true" type="danger" :disabled="isDisabledForm.del">删除</el-button>
+        <el-button type="primary" @click="addDiaolog(2)" :disabled="isDisabledForm.edit">编辑</el-button>
+        <el-button type="primary" @click="addDiaolog(3)" :disabled="isDisabledForm.view">查看</el-button>
+      </div>
+    </page-ination>
+    <el-dialog title="删除" :visible.sync="dialogVisible" width="400px">
+      <div style="text-align:left">
+        <span>请确认删除此项数据。</span>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="del()">确定</el-button>
+      </span>
+    </el-dialog>
+    <el-dialog :title="addForm.title" :visible.sync="addForm.isShow" width="1000px">
+      <el-form ref="addForm" :model="addForm.data" class="dialog_from_center300">
+        <el-form-item>
+          <div class="cell_before yellow">*类型</div>
+          <el-select
+            v-model="addForm.data.type"
+            placeholder="请选择"
+            clearable
+            filterable
+            :disabled="disabled"
+          >
+            <el-option v-for="item in typeList" :key="item.id" :label="item.name" :value="item.id"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <div class="cell_before">选择供应商</div>
+          <el-select
+            v-model="addForm.data.supplier"
+            placeholder="请选择"
+            :disabled="disabled"
+            clearable
+            filterable
+          >
+            <el-option
+              v-for="item in supplierList"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-row>
+          <el-col :span="2" style="text-align:left">
+            <el-button type="warning" @click="addTagsIsShow=true" :disabled="disabled">添加列</el-button>
+          </el-col>
+          <el-col :span="22" style="text-align:left">
+            <el-tag
+              style="margin-bottom:10px"
+              v-for="(tag,i) in tags"
+              :key="i"
+              closable
+              @close="delCol(i)"
+            >{{tag}}</el-tag>
+          </el-col>
+        </el-row>
+        <el-row style="margin-top:20px">
+          <el-col style="text-align:left">
+            <el-button>添加行</el-button>
+            <el-input style="width:300px" v-model="rows"></el-input>
+            <el-button
+              type="primary"
+              @click="addRow"
+              v-if="tags.length&&rows"
+              :disabled="disabled"
+            >确认</el-button>
+          </el-col>
+        </el-row>
+        <el-table :data="addForm.data.tableList" border style="width: 100%;margin:20px 0;">
+          <el-table-column type="index" label="序号" width="100"></el-table-column>
+          <el-table-column v-for="(item,i) in tags" :label="item" :key="i">
+            <template slot-scope="scope">
+              <el-input v-model="addForm.data.tableList[scope.$index][item]" :disabled="disabled"></el-input>
+            </template>
+          </el-table-column>
+          <el-table-column label="删除行">
+            <template slot-scope="scope">
+              <el-button type="danger" @click="delRow(scope.$index)" :disabled="disabled">删除</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+        <el-form-item>
+          <div class="cell_before">备注</div>
+          <el-input v-model="addForm.data.remarks" placeholder="请输入" clearable :disabled="disabled"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="addForm.isShow = false">取消</el-button>
+        <el-button type="primary" @click="confirm">确定</el-button>
+      </span>
+    </el-dialog>
+    <el-dialog title="添加表头名称" :visible.sync="addTagsIsShow" width="400px">
+      <div style="text-align:left">
+        <el-input v-model="tagsName"></el-input>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="addTagsIsShow = false;tagsName=''">取消</el-button>
+        <el-button type="primary" @click="addCol">确定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import MainTitle from "@/common/MainTitle";
 import {
   ExhibitionTools,
-  ExhibitionToolsSearch,
-  ExhibitionToolsDelete
-} from "@/request/api";
-
+  getallparameter,
+  getExhibitionToolTypeList,
+  ExhibitionToolsDelete,
+  addExhibitionTools
+} from "@/mock/api";
+import PageInation from "../../common/PageInation";
 export default {
   name: "ExhibitionTools",
   data() {
     return {
-      title: "展业工具",
-      title_f: "这是展业工具页面",
-      supplier: [
-        {
-          value: "黄金糕",
-          label: "黄金糕"
-        },
-        {
-          value: "双皮奶",
-          label: "双皮奶"
-        },
-        {
-          value: "蚵仔煎",
-          label: "蚵仔煎"
-        },
-        {
-          value: "龙须面",
-          label: "龙须面"
-        },
-        {
-          value: "北京烤鸭",
-          label: "北京烤鸭"
-        }
-      ],
-      type: [
-        {
-          value: "黄金糕",
-          label: "黄金糕"
-        },
-        {
-          value: "双皮奶",
-          label: "双皮奶"
-        },
-        {
-          value: "蚵仔煎",
-          label: "蚵仔煎"
-        },
-        {
-          value: "龙须面",
-          label: "龙须面"
-        },
-        {
-          value: "北京烤鸭",
-          label: "北京烤鸭"
-        }
-      ],
-      // 搜索
-      supplierVal: "",
-      typeVal: "",
-      // 新建
-      newSupplier: "",
-      newType: "",
-      newOnline: "",
-      newOrder: "",
-      rowsVal: "",
-      addMessage: {
-        content: "", // 富文本
-        title: "" // 添加信息，文本框
+      form: {
+        supplier: "",
+        type: "",
+        MaxResultCount: 50, //页码数
+        Sorting: 1, //排序
+        SkipCount: 0 //开始的索引
       },
+      totalNum: 0,
+      supplierList: [],
+      typeList: [],
       tableData: [],
-      // 选中项
-      selectedItem: "",
-      // 分页
-      currentPage: 1,
-      pages: {
-        page: 1,
-        pageSize: 10
+      isDisabledForm: {
+        del: true,
+        edit: true,
+        view: true,
+        send: true,
+        notSend: true
       },
-      // 显示遮罩
-      isMask: true,
-      // 新增添加列
-      dynamicTags: [],
-      inputVisible: false,
-      inputValue: "",
-      newTable: [],
-      newTableInput: ''
+      isShowForm: { send: true },
+      clickRow: {},
+      dialogVisible: false,
+      addForm: {
+        title: "",
+        isShow: false,
+        n: "",
+        data: {
+          type: "",
+          supplier: "",
+          remarks: "",
+          tableList: [],
+          id: null
+        }
+      },
+      tags: [],
+      addTagsIsShow: false,
+      tagsName: "",
+      rows: "",
+      disabled: false
     };
   },
-  components: { MainTitle },
-  methods: {
-    save() {
-      this.addMessage.date = new Date()
-        .toLocaleDateString()
-        .replace(/\//g, "-");
-      console.log(this.addMessage);
-      // addMyMessage(this.addMessage).then(res => {
-      //   console.log(res);
-      //   this.getAllData();
-      //   this.addMsg();
-      // });
-    },
-    // 获取所有数据
-    getAllData() {
-      console.log(this.pages);
-      ExhibitionTools({...this.pages}).then(res => {
-        this.tableData = res.Data;
-      });
-    },
-    selectOption(item) {
-      this.selectedItem = item;
-    },
-    // 删除
-    deleteHandle() {
-      if (!this.selectedItem) {
-        this.$message("请选择一项");
-        return;
-      }
-      ExhibitionToolsDelete(this.selectedItem).then(res => {
-        this.tableData = res.Data;
-        this.selectedItem = null;
-        this.$message(res.Msg);
-      });
-    },
-    // 编辑
-    editHandle () {
-      if (!this.selectedItem) {
-        this.$message("请选择一项");
-        return;
-      }
-      this.isMask = !this.isMask;
-    },
-    // 查看
-    viewHandle () {
-      if (!this.selectedItem) {
-        this.$message("请选择一项");
-        return;
-      }
-    },
-    // 显示弹窗
-    addMsg() {
-      this.isMask = !this.isMask;
-      this.addMessage.title = "";
-      this.addMessage.content = "";
-    },
-    // 搜索
-    searchHandle() {
-      if(this.supplierVal == "" && this.typeVal == ""){
-        this.getAllData()
+  watch: {
+    clickRow(row) {
+      if (row.id !== undefined && row.id !== "" && row.id !== null) {
+        this.isDisabledForm = {
+          del: false,
+          edit: false,
+          send: false,
+          notSend: false,
+          view: false
+        };
+        this.isShowForm.send = row.status == 2 ? true : false;
       } else {
-        ExhibitionToolsSearch({
-          type: this.typeVal,
-          supplier: this.supplierVal
-        }).then(res => {
-          this.tableData = res.Data;
+        this.isDisabledForm = {
+          del: true,
+          edit: true,
+          send: true,
+          notSend: true,
+          view: true
+        };
+        this.isShowForm = { send: true };
+      }
+    }
+  },
+  components: { PageInation },
+  created: function() {
+    this.getData();
+    this.getList();
+  },
+  methods: {
+    getData() {
+      getallparameter().then(res => {
+        this.supplierList = res.Data.gongyingshang;
+      });
+      getExhibitionToolTypeList().then(res => {
+        this.typeList = res.Data;
+      });
+    },
+    handleQuery() {
+      this.form.SkipCount = 0;
+      this.getList();
+    },
+    changeSize(val) {
+      this.form.SkipCount = 0;
+      this.form.MaxResultCount = val;
+      this.getList(this.form);
+    },
+    //  当前页发生改变时
+    changeCurrentPage(val) {
+      this.form.SkipCount = (val - 1) * this.form.MaxResultCount;
+      this.getList(this.form);
+    },
+
+    // 获取所有数据
+    getList() {
+      this.clickRow = {};
+      ExhibitionTools(this.form).then(res => {
+        this.tableData = res.result.items;
+        this.totalNum = res.result.totalCount;
+      });
+    },
+    addDiaolog(n) {
+      if (n == 1) {
+        this.addForm.title = "添加";
+        this.disabled = false;
+        this.addForm.data.tableList = [];
+        this.addForm.data.type = "";
+        this.addForm.data.supplier = "";
+        this.addForm.data.remarks = "";
+        this.tags = [];
+        this.addForm.data.id = "";
+        this.addForm.n = 1;
+      } else if (n == 2) {
+        this.addForm.title = "编辑";
+        this.disabled = false;
+        this.addForm.data.tableList = this.clickRow.list;
+        console.log(this.addForm.data.tableList);
+        this.addForm.data.type = this.clickRow.type;
+        this.addForm.data.supplier = this.clickRow.supplier;
+        this.addForm.data.remarks = this.clickRow.remarks;
+        this.tags = this.clickRow.list.length
+          ? Object.keys(this.clickRow.list[0])
+          : [];
+        this.addForm.data.id = this.clickRow.id;
+        this.addForm.n = 2;
+      } else {
+        this.disabled = true;
+        this.addForm.title = "查看";
+        this.addForm.data.tableList = this.clickRow.list;
+        this.addForm.data.type = this.clickRow.type;
+        this.addForm.data.supplier = this.clickRow.supplier;
+        this.addForm.data.remarks = this.clickRow.remarks;
+        this.tags = this.clickRow.list.length
+          ? Object.keys(this.clickRow.list[0])
+          : [];
+        this.addForm.data.id = this.clickRow.id;
+        this.addForm.n = 3;
+      }
+      this.addForm.isShow = true;
+    },
+    handleClick(row, column, event) {
+      this.clickRow = row;
+    },
+    del() {
+      ExhibitionToolsDelete({ id: this.clickRow.id }).then(res => {
+        this.$message(res.data.Msg);
+        this.dialogVisible = false;
+        this.getList();
+      });
+    },
+    confirm() {
+      if (this.addForm.n == 3) {
+        this.addForm.isShow = false;
+      } else {
+        console.log(this.addForm.data);
+        if (!this.addForm.data.type) return this.$message("请选择类型");
+        addExhibitionTools(this.addForm.data).then(res => {
+          this.$message(res.data.Msg);
+          this.addForm.isShow = false;
         });
       }
     },
-    handleSizeChange(val) {
-      this.pages.pageSize = val;
-      this.getAllData();
+    addCol() {
+      let tableList = this.addForm.data.tableList;
+      if (tableList.length) {
+        let isNotPass = Object.keys(tableList[0]).some(
+          i => i === this.tagsName
+        );
+        if (isNotPass) return this.$message(`表头${this.tagsName}已存在`);
+        this.tags.push(this.tagsName);
+        let list = [];
+        tableList.map((item, i) => {
+          let obj = {};
+          Object.keys(item).map(item2 => {
+            obj[item2] = item[item2];
+          });
+          obj[this.tagsName] = "";
+          list.push(obj);
+        });
+        this.addForm.data.tableList = list;
+        this.tagsName = "";
+        this.addTagsIsShow = false;
+      } else {
+        this.tags.push(this.tagsName);
+        this.tagsName = "";
+        this.addTagsIsShow = false;
+      }
     },
-    handleCurrentChange(val) {
-      this.pages.page = val;
-      this.getAllData();
-    },
-    superChangeVal(e) {
-      console.log(e);
-    },
-    // 添加列
-    handleClose(tag) {
-      this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
-    },
-
-    showInput() {
-      this.inputVisible = true;
-      this.$nextTick(_ => {
-        this.$refs.saveTagInput.$refs.input.focus();
+    delCol(i) {
+      let delItem = this.tags.splice(i, 1);
+      let tableList = this.addForm.data.tableList;
+      tableList.map((item, i, arr) => {
+        delete arr[i][delItem];
       });
     },
+    addRow() {
+      let rows = parseInt(this.rows);
+      if (isNaN(rows)) return this.$message("添加的行数必须是正整数");
+      this.rows = rows;
+      let tableList = this.addForm.data.tableList;
 
-    handleInputConfirm() {
-      let inputValue = this.inputValue;
-      if (inputValue) {
-        if(this.dynamicTags.includes(inputValue)){
-          this.$message("已存在");
-        } else {
-          this.dynamicTags.push(inputValue);
-        }
+      for (let i = 0; i < rows; i++) {
+        let data = {};
+        this.tags.map(item => {
+          data[item] = "";
+        });
+        tableList.push(data);
       }
-      this.inputVisible = false;
-      this.inputValue = "";
     },
-    // 添加行
-    addRow () {
-      this.newTable = [...this.newTable, ...new Array(Number(this.rowsVal))]
+    delRow(i) {
+      this.addForm.data.tableList.splice(i, 1);
     }
-  },
-  created: function() {
-    this.getAllData()
   }
 };
 </script>
 
-<style scoped>
+<style scoped lang=less>
 .body-box {
   font-size: 16px;
   width: 100%;
@@ -369,6 +387,7 @@ export default {
   padding: 20px;
   box-sizing: border-box;
   text-align: left;
+  background: #fff;
 }
 .body-box h3 {
   font-weight: normal;
@@ -460,10 +479,9 @@ export default {
 .el-tag {
   margin-right: 8px;
 }
-.el-table{
+.el-table {
   margin: 0;
 }
 .el-table {
-
 }
 </style>

@@ -232,6 +232,42 @@ h3.title {
     }
 
   }
+
+  .dialog_from_center300 {
+    width: 960px;
+
+    .el-form-item__content {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      align-items: center;
+
+      .cell_before {
+        border: 1px solid #bebebe;
+        height: 36px;
+        line-height: 36px;
+        box-sizing: border-box;
+        border-right: none;
+        text-align: center;
+        background-color: #fafafa;
+        margin-right: -1px;
+        width: 110px !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+
+      &>div:last-child {
+        flex-grow: 1;
+      }
+    }
+
+    .el-date-editor,
+    .el-select,
+    .el-input {
+      width: 100%;
+    }
+
+  }
 }
 
 .content_box {

@@ -414,10 +414,13 @@ export const sendMyMessage = obj => post("sendMyMessage", obj);
 export const addMyMessageDelete = obj => post("addMyMessageDelete", obj);
 // 展业工具
 export const ExhibitionTools = obj => get("ExhibitionTools", obj);
+//保存添加编辑
+export const addExhibitionTools = obj => post("addExhibitionTools", obj);
+
 // 展业工具-搜索
 export const ExhibitionToolsSearch = obj => posts("ExhibitionToolsSearch", obj);
 // 展业工具-删除
-export const ExhibitionToolsDelete = obj => posts("ExhibitionToolsDelete", obj);
+export const ExhibitionToolsDelete = obj => post("ExhibitionToolsDelete", obj);
 // app 首页管理-热销产品
 export const APPHomepageModule = obj => get("APPHomepageModule", obj);
 // app 首页管理-热销产品-删除
@@ -467,4 +470,9 @@ export const saveRecommendProductsDetail = p =>
 //产品特色删除
 export const delRecommendProductsDetail = p =>
     post("delRecommendProductsDetail", p);
+//展望工具
+//类型
+export const getExhibitionToolTypeList = p =>
+    get("getExhibitionToolTypeList", p);
+
 //===============================================

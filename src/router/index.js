@@ -640,7 +640,11 @@ const router = new Router({
         {
             path: "/exhibition_tools",
             name: "exhibition_tools",
-            component: ExhibitionTools
+            component: ExhibitionTools,
+            meta: {
+                title: "展业工具",
+                subTitle: "这是展业工具页面"
+            }
         },
         {
             path: "/my_message",

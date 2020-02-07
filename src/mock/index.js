@@ -1988,21 +1988,21 @@ Mock.mock(RegExp(url + "/addMyMessageDelete"), "post", function(par) {
     };
 });
 // 展业工具
-Mock.mock(RegExp(url + "/ExhibitionTools/*"), "get", function(par) {
-    if (ExhibitionTools.length > 0) {
-        returnArray = {
-            StatusCode: 200,
-            Msg: "query success",
-            Data: ExhibitionTools
-        };
-    } else {
-        returnArray = {
-            StatusCode: 200,
-            Msg: "暂无数据",
-            Data: ExhibitionTools
-        };
-    }
-    return returnArray;
+Mock.mock(RegExp(url + "/ExhibitionTools/*"), "get", function(p) {
+    let param = util.getQueryValue(p.url);
+    return {
+        success: true,
+        result: {
+            totalCount: ExhibitionTools.length,
+            items: ExhibitionTools.filter((t, index) => {
+                return (
+                    index >= param.SkipCount &&
+                    index < +param.SkipCount + +param.MaxResultCount
+                );
+            })
+        }
+    };
+    
 });
 // 展业工具-搜索
 Mock.mock(RegExp(url + "/ExhibitionToolsSearch/*"), "post", function(par) {
@@ -2030,28 +2030,20 @@ Mock.mock(RegExp(url + "/ExhibitionToolsSearch/*"), "post", function(par) {
     return returnArray;
 });
 // 展业工具-删除
-Mock.mock(url + "/ExhibitionToolsDelete", "post", function(par) {
-    console.log(par);
-    let formatPar = JSON.parse(par.body);
-    if (ExhibitionTools.length > 0) {
-        ExhibitionTools.map((item, index) => {
-            if (item.id == formatPar.id) {
-                ExhibitionTools.splice(index, 1);
-            }
-        });
-        returnArray = {
-            StatusCode: 200,
-            Msg: "删除成功",
-            Data: ExhibitionTools
-        };
-    } else {
-        returnArray = {
-            StatusCode: 200,
-            Msg: "暂无数据",
-            Data: ExhibitionTools
-        };
+Mock.mock(RegExp(url + "/ExhibitionToolsDelete"), "post", function(par) {
+    let returnArray = {
+        "StatusCode": 200,
+        "Msg": "操作成功",
     }
-    return returnArray;
+    return returnArray
+});
+//保存添加编辑
+Mock.mock(RegExp(url + "/addExhibitionTools"), "post", function(par) {
+    let returnArray = {
+        "StatusCode": 200,
+        "Msg": "操作成功",
+    }
+    return returnArray
 });
 // app首页管理
 // 上架下架
@@ -3111,6 +3103,15 @@ Mock.mock(RegExp(url + "/delRecommendProductsDetail"), "post", p => {
     return {
         StatusCode: 200,
         Msg: "success"
+    };
+});
+//展望工具
+//类型
+Mock.mock(RegExp(url + "/getExhibitionToolTypeList"), "get", p => {
+    return {
+        StatusCode: 200,
+        Msg: "success",
+        Data:[{id:1,name:"类型1"}]
     };
 });
 export default Mock;
