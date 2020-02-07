@@ -221,7 +221,11 @@ const router = new Router({
         {
             path: "/new_incentives",
             name: "new_incentives",
-            component: NewIncentives
+            component: NewIncentives,
+            meta: {
+                title: '新增奖励',
+                subTitle: '这是新增奖励页面'
+            }
         },
         {
             path: "/quarterly_promotion_award",
